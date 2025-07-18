@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>معرض الأعمال - المشاريع المنفذة</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#3b82f6',
+secondary: '#8b5cf6'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px',
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+}
+}
+}
+}
+</script>
+<style>
+:where([class^="ri-"])::before {
+content: "\f3c2";
+}
+.project-card {
+transition: all 0.3s ease;
+}
+.project-card:hover {
+transform: translateY(-8px);
+box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+.filter-btn.active {
+background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+color: white;
+}
+.modal {
+backdrop-filter: blur(10px);
+}
+.modal-content {
+max-height: 90vh;
+overflow-y: auto;
+}
+</style>
+</head>
+<body class="bg-gray-50 font-sans">
+<nav class="bg-white shadow-sm border-b">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<div class="flex items-center">
+<div class="text-2xl font-['Pacifico'] text-primary">logo</div>
+</div>
+<div class="hidden md:flex items-center space-x-8 space-x-reverse">
+<a href="index.html" class="text-gray-700 hover:text-primary transition-colors" data-lang-key="home">الرئيسية</a>
+<a href="portfolio.html" class="text-primary font-medium" data-lang-key="portfolio">معرض الأعمال</a>
+<a href="services.html" class="text-gray-700 hover:text-primary transition-colors" data-lang-key="services">الخدمات</a>
+<a href="about.html" class="text-gray-700 hover:text-primary transition-colors" data-lang-key="about">من نحن</a>
+<a href="contact.html" class="text-gray-700 hover:text-primary transition-colors" data-lang-key="contact">تواصل معنا</a>
+<button id="language-switch" class="flex items-center text-gray-700 hover:text-primary transition-colors mr-8">
+<i class="ri-translate-2-line ml-2"></i>
+<span data-lang-key="current-lang">English</span>
+</button>
+</div>
+<button class="md:hidden w-6 h-6 flex items-center justify-center">
+<i class="ri-menu-line text-xl"></i>
+</button>
+</div>
+</div>
+</nav>
+<div class="bg-gradient-to-br from-blue-50 to-purple-50 py-16">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">معرض الأعمال</h1>
+<p class="text-xl text-gray-600 max-w-3xl mx-auto mb-12">استكشف مجموعة من المشاريع المميزة التي قمنا بتطويرها وتنفيذها بأعلى معايير الجودة والإبداع</p>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="flex flex-col lg:flex-row gap-8">
+<div class="lg:w-1/4">
+<div class="bg-white rounded-lg shadow-sm p-6 sticky top-6">
+<h3 class="text-lg font-semibold text-gray-900 mb-4">تصفية المشاريع</h3>
+<div class="mb-6">
+<label class="block text-sm font-medium text-gray-700 mb-2">البحث</label>
+<div class="relative">
+<input type="text" placeholder="ابحث عن مشروع..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm">
+<div class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center">
+<i class="ri-search-line text-gray-400"></i>
+</div>
+</div>
+</div>
+<div class="mb-6">
+<label class="block text-sm font-medium text-gray-700 mb-3">نوع المشروع</label>
+<div class="space-y-2">
+<button class="filter-btn active w-full text-right px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-sm">الكل</button>
+<button class="filter-btn w-full text-right px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-sm">مواقع تجارية</button>
+<button class="filter-btn w-full text-right px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-sm">تطبيقات ويب</button>
+<button class="filter-btn w-full text-right px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-sm">مواقع شخصية</button>
+<button class="filter-btn w-full text-right px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-sm">منصات تعليمية</button>
+<button class="filter-btn w-full text-right px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-sm">تحليل البيانات</button>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-3">التقنيات المستخدمة</label>
+<div class="space-y-2">
+<label class="flex items-center">
+<input type="checkbox" class="sr-only">
+<div class="w-4 h-4 border-2 border-gray-300 rounded ml-3 flex items-center justify-center cursor-pointer hover:border-primary transition-colors">
+<i class="ri-check-line text-xs text-white hidden"></i>
+</div>
+<span class="text-sm text-gray-700">React</span>
+</label>
+<label class="flex items-center">
+<input type="checkbox" class="sr-only">
+<div class="w-4 h-4 border-2 border-gray-300 rounded ml-3 flex items-center justify-center cursor-pointer hover:border-primary transition-colors">
+<i class="ri-check-line text-xs text-white hidden"></i>
+</div>
+<span class="text-sm text-gray-700">Vue.js</span>
+</label>
+<label class="flex items-center">
+<input type="checkbox" class="sr-only">
+<div class="w-4 h-4 border-2 border-gray-300 rounded ml-3 flex items-center justify-center cursor-pointer hover:border-primary transition-colors">
+<i class="ri-check-line text-xs text-white hidden"></i>
+</div>
+<span class="text-sm text-gray-700">Laravel</span>
+</label>
+<label class="flex items-center">
+<input type="checkbox" class="sr-only">
+<div class="w-4 h-4 border-2 border-gray-300 rounded ml-3 flex items-center justify-center cursor-pointer hover:border-primary transition-colors">
+<i class="ri-check-line text-xs text-white hidden"></i>
+</div>
+<span class="text-sm text-gray-700">WordPress</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:w-3/4">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" id="projects-grid">
+<div class="project-card bg-white rounded-xl shadow-sm overflow-hidden cursor-pointer" data-project="1">
+<div class="aspect-video bg-gray-100 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=modern%20e-commerce%20website%20interface%20with%20clean%20design%2C%20shopping%20cart%2C%20product%20gallery%2C%20elegant%20layout%2C%20professional%20business%20website%2C%20white%20background%2C%20minimalist%20design%2C%20high%20quality%20web%20design&width=400&height=225&seq=1&orientation=landscape" alt="متجر إلكتروني" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<h3 class="text-xl font-semibold text-gray-900 mb-2">متجر الأزياء العصرية</h3>
+<p class="text-gray-600 mb-4 text-sm leading-relaxed">منصة تجارة إلكترونية متكاملة لبيع الأزياء النسائية والرجالية مع نظام دفع آمن وإدارة المخزون</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">React</span>
+<span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">Node.js</span>
+<span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">MongoDB</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-gray-500">مارس 2024</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-arrow-left-line text-primary"></i>
+</div>
+</div>
+</div>
+</div>
+<div class="project-card bg-white rounded-xl shadow-sm overflow-hidden cursor-pointer" data-project="2">
+<div class="aspect-video bg-gray-100 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=educational%20learning%20platform%20interface%2C%20online%20courses%2C%20student%20dashboard%2C%20modern%20education%20website%2C%20clean%20UI%20design%2C%20books%20and%20learning%20materials%2C%20professional%20academic%20platform%2C%20white%20background&width=400&height=225&seq=2&orientation=landscape" alt="منصة تعليمية" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<h3 class="text-xl font-semibold text-gray-900 mb-2">منصة التعلم الذكي</h3>
+<p class="text-gray-600 mb-4 text-sm leading-relaxed">منصة تعليمية تفاعلية تقدم دورات متخصصة في البرمجة والتصميم مع نظام تتبع التقدم</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Vue.js</span>
+<span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Laravel</span>
+<span class="px-3 py-1 bg-red-100 text-red-800 text-xs rounded-full">MySQL</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-gray-500">فبراير 2024</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-arrow-left-line text-primary"></i>
+</div>
+</div>
+</div>
+</div>
+<div class="project-card bg-white rounded-xl shadow-sm overflow-hidden cursor-pointer" data-project="3">
+<div class="aspect-video bg-gray-100 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=healthcare%20medical%20website%20interface%2C%20doctor%20appointment%20booking%2C%20medical%20services%2C%20hospital%20management%20system%2C%20clean%20professional%20medical%20design%2C%20health%20care%20platform%2C%20white%20background&width=400&height=225&seq=3&orientation=landscape" alt="نظام طبي" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<h3 class="text-xl font-semibold text-gray-900 mb-2">نظام إدارة العيادات</h3>
+<p class="text-gray-600 mb-4 text-sm leading-relaxed">نظام شامل لإدارة العيادات الطبية مع حجز المواعيد وإدارة ملفات المرضى والفواتير</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">React</span>
+<span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">TypeScript</span>
+<span class="px-3 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">Tailwind CSS</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-gray-500">يناير 2024</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-arrow-left-line text-primary"></i>
+</div>
+</div>
+</div>
+</div>
+<div class="project-card bg-white rounded-xl shadow-sm overflow-hidden cursor-pointer" data-project="4">
+<div class="aspect-video bg-gray-100 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=restaurant%20food%20delivery%20app%20interface%2C%20menu%20ordering%20system%2C%20food%20delivery%20platform%2C%20restaurant%20management%2C%20modern%20food%20app%20design%2C%20culinary%20website%2C%20white%20background&width=400&height=225&seq=4&orientation=landscape" alt="تطبيق مطاعم" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<h3 class="text-xl font-semibold text-gray-900 mb-2">تطبيق توصيل الطعام</h3>
+<p class="text-gray-600 mb-4 text-sm leading-relaxed">تطبيق متكامل لطلب وتوصيل الطعام مع نظام تتبع الطلبات ودفع إلكتروني آمن</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">React Native</span>
+<span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">Express.js</span>
+<span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">MongoDB</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-gray-500">ديسمبر 2023</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-arrow-left-line text-primary"></i>
+</div>
+</div>
+</div>
+</div>
+<div class="project-card bg-white rounded-xl shadow-sm overflow-hidden cursor-pointer" data-project="5">
+<div class="aspect-video bg-gray-100 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=real%20estate%20property%20website%20interface%2C%20house%20listings%2C%20property%20management%2C%20real%20estate%20platform%2C%20modern%20property%20search%2C%20real%20estate%20business%20website%2C%20white%20background&width=400&height=225&seq=5&orientation=landscape" alt="موقع عقاري" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<h3 class="text-xl font-semibold text-gray-900 mb-2">منصة العقارات الذكية</h3>
+<p class="text-gray-600 mb-4 text-sm leading-relaxed">موقع عقاري شامل لعرض وبيع العقارات مع خرائط تفاعلية ونظام بحث متقدم</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Next.js</span>
+<span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Django</span>
+<span class="px-3 py-1 bg-red-100 text-red-800 text-xs rounded-full">Redis</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-gray-500">نوفمبر 2023</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-arrow-left-line text-primary"></i>
+</div>
+</div>
+</div>
+</div>
+<div class="project-card bg-white rounded-xl shadow-sm overflow-hidden cursor-pointer" data-project="6">
+<div class="aspect-video bg-gray-100 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=corporate%20business%20website%20interface%2C%20professional%20company%20website%2C%20business%20services%2C%20corporate%20identity%2C%20modern%20business%20design%2C%20company%20portfolio%2C%20white%20background&width=400&height=225&seq=6&orientation=landscape" alt="موقع شركة" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<h3 class="text-xl font-semibold text-gray-900 mb-2">موقع الشركة التقنية</h3>
+<p class="text-gray-600 mb-4 text-sm leading-relaxed">موقع مؤسسي احترافي لشركة تقنية مع عرض الخدمات والمشاريع ونظام إدارة المحتوى</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">WordPress</span>
+<span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">PHP</span>
+<span class="px-3 py-1 bg-red-100 text-red-800 text-xs rounded-full">MySQL</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-gray-500">أكتوبر 2023</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-arrow-left-line text-primary"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center mt-12">
+<button class="!rounded-button whitespace-nowrap bg-primary text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors font-medium">
+تحميل المزيد من المشاريع
+</button>
+</div>
+</div>
+</div>
+</div>
+<div id="project-modal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+<div class="modal-content bg-white rounded-xl max-w-4xl w-full">
+<div class="flex items-center justify-between p-6 border-b">
+<h2 id="modal-title" class="text-2xl font-bold text-gray-900"></h2>
+<button id="close-modal" class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div>
+<img id="modal-image" src="" alt="" class="w-full rounded-lg shadow-sm">
+<div class="flex gap-4 mt-4">
+<button id="visit-site-btn" class="!rounded-button whitespace-nowrap flex-1 bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-medium">
+<div class="w-5 h-5 flex items-center justify-center ml-2">
+<i class="ri-external-link-line"></i>
+</div>
+زيارة الموقع
+</button>
+<button class="!rounded-button whitespace-nowrap flex-1 border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium">
+<div class="w-5 h-5 flex items-center justify-center ml-2">
+<i class="ri-share-line"></i>
+</div>
+مشاركة
+</button>
+</div>
+</div>
+<div>
+<div class="mb-6">
+<h3 class="text-lg font-semibold text-gray-900 mb-3">وصف المشروع</h3>
+<p id="modal-description" class="text-gray-600 leading-relaxed"></p>
+</div>
+<div class="mb-6">
+<h3 class="text-lg font-semibold text-gray-900 mb-3">التقنيات المستخدمة</h3>
+<div id="modal-technologies" class="flex flex-wrap gap-2"></div>
+</div>
+<div class="mb-6">
+<h3 class="text-lg font-semibold text-gray-900 mb-3">التحديات والحلول</h3>
+<ul id="modal-challenges" class="space-y-2 text-gray-600"></ul>
+</div>
+<div>
+<h3 class="text-lg font-semibold text-gray-900 mb-3">تاريخ التنفيذ</h3>
+<p id="modal-date" class="text-gray-600"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="bg-gray-900 text-white py-12 mt-16">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<div>
+<div class="text-2xl font-['Pacifico'] text-primary mb-4">logo</div>
+<p class="text-gray-400 leading-relaxed">نحن نقدم حلول تقنية مبتكرة ومتطورة لتلبية احتياجات عملائنا وتحقيق أهدافهم الرقمية</p>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4">الخدمات</h3>
+<ul class="space-y-2 text-gray-400">
+<li><a href="#" class="hover:text-white transition-colors">تطوير المواقع</a></li>
+<li><a href="#" class="hover:text-white transition-colors">تطبيقات الجوال</a></li>
+<li><a href="#" class="hover:text-white transition-colors">التجارة الإلكترونية</a></li>
+<li><a href="#" class="hover:text-white transition-colors">التسويق الرقمي</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4">الشركة</h3>
+<ul class="space-y-2 text-gray-400">
+<li><a href="#" class="hover:text-white transition-colors">من نحن</a></li>
+<li><a href="#" class="hover:text-white transition-colors">فريق العمل</a></li>
+<li><a href="#" class="hover:text-white transition-colors">الوظائف</a></li>
+<li><a href="#" class="hover:text-white transition-colors">اتصل بنا</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4">تابعنا</h3>
+<div class="flex gap-4">
+<a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary transition-colors">
+<i class="ri-facebook-fill"></i>
+</a>
+<a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary transition-colors">
+<i class="ri-twitter-fill"></i>
+</a>
+<a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary transition-colors">
+<i class="ri-linkedin-fill"></i>
+</a>
+<a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary transition-colors">
+<i class="ri-instagram-fill"></i>
+</a>
+</div>
+</div>
+</div>
+<div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+<p>&copy; 2024 جميع الحقوق محفوظة. تم التطوير بواسطة فريقنا المتخصص</p>
+</div>
+</div>
+</footer>
+<script id="filter-functionality">
+document.addEventListener('DOMContentLoaded', function() {
+const filterButtons = document.querySelectorAll('.filter-btn');
+filterButtons.forEach(button => {
+button.addEventListener('click', function() {
+filterButtons.forEach(btn => btn.classList.remove('active'));
+this.classList.add('active');
+});
+});
+});
+</script>
+<script id="checkbox-functionality">
+document.addEventListener('DOMContentLoaded', function() {
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+checkboxes.forEach(checkbox => {
+const customBox = checkbox.nextElementSibling;
+const checkIcon = customBox.querySelector('i');
+checkbox.addEventListener('change', function() {
+if (this.checked) {
+customBox.classList.add('bg-primary', 'border-primary');
+customBox.classList.remove('border-gray-300');
+checkIcon.classList.remove('hidden');
+} else {
+customBox.classList.remove('bg-primary', 'border-primary');
+customBox.classList.add('border-gray-300');
+checkIcon.classList.add('hidden');
+}
+});
+customBox.addEventListener('click', function() {
+checkbox.click();
+});
+});
+});
+</script>
+<script id="language-switcher">
+document.addEventListener('DOMContentLoaded', function() {
+  const translations = {
+    ar: {
+      'home': 'الرئيسية',
+      'portfolio': 'معرض الأعمال',
+      'services': 'الخدمات',
+      'about': 'من نحن',
+      'contact': 'تواصل معنا',
+      'current-lang': 'English',
+      'load-more': 'تحميل المزيد من المشاريع',
+      'project-type': 'نوع المشروع',
+      'all': 'الكل',
+      'search': 'البحث',
+      'search-placeholder': 'ابحث عن مشروع...',
+      'technologies': 'التقنيات المستخدمة',
+      'visit-site': 'زيارة الموقع',
+      'share': 'مشاركة',
+      'project-desc': 'وصف المشروع',
+      'challenges': 'التحديات والحلول',
+      'implementation-date': 'تاريخ التنفيذ'
+    },
+    en: {
+      'home': 'Home',
+      'portfolio': 'Portfolio',
+      'services': 'Services',
+      'about': 'About',
+      'contact': 'Contact',
+      'current-lang': 'العربية',
+      'load-more': 'Load More Projects',
+      'project-type': 'Project Type',
+      'all': 'All',
+      'search': 'Search',
+      'search-placeholder': 'Search for a project...',
+      'technologies': 'Technologies Used',
+      'visit-site': 'Visit Site',
+      'share': 'Share',
+      'project-desc': 'Project Description',
+      'challenges': 'Challenges & Solutions',
+      'implementation-date': 'Implementation Date'
+    }
+  };
+  let currentLang = 'ar';
+  const htmlElement = document.documentElement;
+  const languageSwitch = document.getElementById('language-switch');
+  function switchLanguage() {
+    currentLang = currentLang === 'ar' ? 'en' : 'ar';
+    htmlElement.setAttribute('lang', currentLang);
+    htmlElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+    
+    document.querySelectorAll('[data-lang-key]').forEach(element => {
+      const key = element.getAttribute('data-lang-key');
+      if (translations[currentLang][key]) {
+        element.textContent = translations[currentLang][key];
+      }
+    });
+    if (currentLang === 'en') {
+      document.querySelectorAll('.space-x-reverse').forEach(el => {
+        el.classList.remove('space-x-reverse');
+        el.classList.add('space-x');
+      });
+    } else {
+      document.querySelectorAll('.space-x').forEach(el => {
+        el.classList.remove('space-x');
+        el.classList.add('space-x-reverse');
+      });
+    }
+  }
+  languageSwitch.addEventListener('click', switchLanguage);
+});
+</script>
+<script id="modal-functionality">
+document.addEventListener('DOMContentLoaded', function() {
+const modal = document.getElementById('project-modal');
+const closeModal = document.getElementById('close-modal');
+const projectCards = document.querySelectorAll('.project-card');
+
+const projectData = {
+1: {
+title: 'متجر الأزياء العصرية',
+image: 'https://readdy.ai/api/search-image?query=modern%20e-commerce%20website%20interface%20with%20clean%20design%2C%20shopping%20cart%2C%20product%20gallery%2C%20elegant%20layout%2C%20professional%20business%20website%2C%20white%20background%2C%20minimalist%20design%2C%20high%20quality%20web%20design&width=600&height=400&seq=1&orientation=landscape',
+description: 'منصة تجارة إلكترونية متكاملة تم تطويرها خصيصاً لبيع الأزياء النسائية والرجالية. تتميز المنصة بتصميم عصري وواجهة مستخدم سهلة الاستخدام، مع نظام دفع آمن متعدد الخيارات وإدارة متقدمة للمخزون. تشمل المنصة أيضاً نظام تقييم المنتجات، عربة تسوق ذكية، وخدمة عملاء متكاملة.',
+technologies: ['React', 'Node.js', 'MongoDB', 'Stripe API', 'AWS'],
+challenges: [
+'تطوير نظام دفع آمن ومتوافق مع معايير PCI DSS',
+'تحسين أداء الموقع للتعامل مع آلاف المنتجات',
+'تطوير نظام إدارة مخزون ذكي مع تنبيهات تلقائية',
+'تصميم واجهة مستخدم متجاوبة تعمل على جميع الأجهزة'
+],
+date: 'مارس 2024',
+liveUrl: '#'
+},
+2: {
+title: 'منصة التعلم الذكي',
+image: 'https://readdy.ai/api/search-image?query=educational%20learning%20platform%20interface%2C%20online%20courses%2C%20student%20dashboard%2C%20modern%20education%20website%2C%20clean%20UI%20design%2C%20books%20and%20learning%20materials%2C%20professional%20academic%20platform%2C%20white%20background&width=600&height=400&seq=2&orientation=landscape',
+description: 'منصة تعليمية تفاعلية متطورة تقدم دورات متخصصة في البرمجة والتصميم والتسويق الرقمي. تتضمن المنصة نظام تتبع التقدم، اختبارات تفاعلية، منتديات نقاش، ونظام شهادات معتمدة. كما تدعم التعلم المباشر والمسجل مع أدوات تفاعلية متقدمة.',
+technologies: ['Vue.js', 'Laravel', 'MySQL', 'WebRTC', 'Redis'],
+challenges: [
+'تطوير نظام بث مباشر عالي الجودة للمحاضرات',
+'إنشاء نظام تقييم ذكي يتكيف مع مستوى الطالب',
+'تصميم لوحة تحكم شاملة للمدرسين والطلاب',
+'تطوير نظام إشعارات متقدم لمتابعة التقدم'
+],
+date: 'فبراير 2024',
+liveUrl: '#'
+},
+3: {
+title: 'نظام إدارة العيادات',
+image: 'https://readdy.ai/api/search-image?query=healthcare%20medical%20website%20interface%2C%20doctor%20appointment%20booking%2C%20medical%20services%2C%20hospital%20management%20system%2C%20clean%20professional%20medical%20design%2C%20health%20care%20platform%2C%20white%20background&width=600&height=400&seq=3&orientation=landscape',
+description: 'نظام شامل ومتطور لإدارة العيادات الطبية يشمل حجز المواعيد الإلكتروني، إدارة ملفات المرضى الرقمية، نظام الفواتير والمدفوعات، وتقارير طبية مفصلة. يدعم النظام عدة أطباء وتخصصات مع واجهات منفصلة للأطباء والمرضى والإدارة.',
+technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Lucide Icons', 'Vite'],
+challenges: [
+'ضمان أمان وخصوصية البيانات الطبية الحساسة',
+'تطوير نظام مواعيد ذكي يتجنب التعارض',
+'إنشاء تقارير طبية مفصلة وقابلة للتخصيص',
+'تطوير واجهات متعددة للأطباء والمرضى والإدارة'
+],
+date: 'يناير 2024',
+liveUrl: 'https://singular-sawine-0bc006.netlify.app'
+},
+4: {
+title: 'تطبيق توصيل الطعام',
+image: 'https://readdy.ai/api/search-image?query=restaurant%20food%20delivery%20app%20interface%2C%20menu%20ordering%20system%2C%20food%20delivery%20platform%2C%20restaurant%20management%2C%20modern%20food%20app%20design%2C%20culinary%20website%2C%20white%20background&width=600&height=400&seq=4&orientation=landscape',
+description: 'تطبيق متكامل لطلب وتوصيل الطعام يربط بين المطاعم والعملاء وسائقي التوصيل. يتضمن التطبيق نظام تتبع الطلبات في الوقت الفعلي، دفع إلكتروني آمن، تقييم المطاعم والوجبات، وبرنامج نقاط ومكافآت للعملاء المميزين.',
+technologies: ['React Native', 'Express.js', 'MongoDB', 'Socket.io', 'Google Maps API'],
+challenges: [
+'تطوير نظام تتبع مباشر للطلبات باستخدام GPS',
+'إنشاء خوارزمية ذكية لتوزيع الطلبات على السائقين',
+'تطوير واجهات منفصلة للعملاء والمطاعم والسائقين',
+'ضمان سرعة التطبيق وسلاسة التجربة'
+],
+date: 'ديسمبر 2023',
+liveUrl: '#'
+},
+5: {
+  title: 'Housing-Student',
+  image: 'https://readdy.ai/api/search-image?query=student%20housing%20platform%2C%20college%20apartment%20search%2C%20university%20residences%2C%20modern%20design%2C%20housing%20listing%20website%2C%20clean%20UI%2C%20white%20background&width=600&height=400&seq=5&orientation=landscape',
+  description: 'منصة مخصصة لسكن الطلاب توفر واجهة سهلة للبحث عن شقق وسكن جامعي مع معلومات مفصلة وخرائط تفاعلية وروابط مباشرة.',
+  technologies: ['HTML', 'CSS', 'JavaScript', 'GitHub Pages'],
+  challenges: [
+    'تصميم واجهة مخصصة للطلاب سهلة التصفح',
+    'ربط الموقع بـ GitHub Pages للنشر السريع',
+    'توفير عرض مرئي واضح لمواقع السكن',
+    'تحسين الأداء وتجربة المستخدم'
+  ],
+  date: 'يوليو 2025',
+  liveUrl: 'https://aboelyazed21.github.io/Housing-Student/'
+},
+6: {
+title: 'موقع الشركة التقنية',
+image: 'https://readdy.ai/api/search-image?query=corporate%20business%20website%20interface%2C%20professional%20company%20website%2C%20business%20services%2C%20corporate%20identity%2C%20modern%20business%20design%2C%20company%20portfolio%2C%20white%20background&width=600&height=400&seq=6&orientation=landscape',
+description: 'موقع مؤسسي احترافي ومتطور لشركة تقنية رائدة مع عرض شامل للخدمات والمشاريع ونظام إدارة محتوى متقدم. يتضمن الموقع مدونة تقنية، معرض أعمال تفاعلي، نظام طلب خدمات، وقسم خاص للعملاء مع تقارير مشاريعهم.',
+technologies: ['WordPress', 'PHP', 'MySQL', 'Elementor', 'WooCommerce'],
+challenges: [
+'تطوير نظام إدارة محتوى مخصص ومرن',
+'إنشاء معرض أعمال تفاعلي وجذاب',
+'تحسين الموقع لمحركات البحث (SEO)',
+'تطوير نظام طلب خدمات مع تتبع المشاريع'
+],
+date: 'أكتوبر 2023',
+liveUrl: '#'
+}
+};
+
+projectCards.forEach(card => {
+card.addEventListener('click', function() {
+const projectId = this.dataset.project;
+const project = projectData[projectId];
+if (project) {
+document.getElementById('modal-title').textContent = project.title;
+document.getElementById('modal-image').src = project.image;
+document.getElementById('modal-description').textContent = project.description;
+document.getElementById('modal-date').textContent = project.date;
+
+const visitSiteBtn = document.getElementById('visit-site-btn');
+if (project.liveUrl && project.liveUrl !== '#') {
+visitSiteBtn.onclick = function() {
+window.open(project.liveUrl, '_blank');
+};
+visitSiteBtn.style.opacity = '1';
+visitSiteBtn.style.cursor = 'pointer';
+} else {
+visitSiteBtn.onclick = function() {
+alert('الرابط غير متوفر حالياً');
+};
+visitSiteBtn.style.opacity = '0.6';
+visitSiteBtn.style.cursor = 'not-allowed';
+}
+
+const technologiesContainer = document.getElementById('modal-technologies');
+technologiesContainer.innerHTML = '';
+project.technologies.forEach(tech => {
+const span = document.createElement('span');
+span.className = 'px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full';
+span.textContent = tech;
+technologiesContainer.appendChild(span);
+});
+
+const challengesContainer = document.getElementById('modal-challenges');
+challengesContainer.innerHTML = '';
+project.challenges.forEach(challenge => {
+const li = document.createElement('li');
+li.className = 'flex items-start';
+li.innerHTML = `
+<div class="w-2 h-2 bg-primary rounded-full mt-2 ml-3 flex-shrink-0"></div>
+<span>${challenge}</span>
+`;
+challengesContainer.appendChild(li);
+});
+
+modal.classList.remove('hidden');
+modal.classList.add('flex');
+}
+});
+});
+
+closeModal.addEventListener('click', function() {
+modal.classList.add('hidden');
+modal.classList.remove('flex');
+});
+
+modal.addEventListener('click', function(e) {
+if (e.target === modal) {
+modal.classList.add('hidden');
+modal.classList.remove('flex');
+}
+});
+});
+</script>
+</body>
+</html>
