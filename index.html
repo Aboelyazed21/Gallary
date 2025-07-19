@@ -1,642 +1,1078 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>معرض الأعمال - المشاريع المنفذة</title>
-<script src="https://cdn.tailwindcss.com/3.4.16"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
-<script>
-tailwind.config = {
-theme: {
-extend: {
-colors: {
-primary: '#3b82f6',
-secondary: '#8b5cf6'
-},
-borderRadius: {
-'none': '0px',
-'sm': '4px',
-DEFAULT: '8px',
-'md': '12px',
-'lg': '16px',
-'xl': '20px',
-'2xl': '24px',
-'3xl': '32px',
-'full': '9999px',
-'button': '8px'
-}
-}
-}
-}
-</script>
-<style>
-:where([class^="ri-"])::before {
-content: "\f3c2";
-}
-.project-card {
-transition: all 0.3s ease;
-}
-.project-card:hover {
-transform: translateY(-8px);
-box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-.filter-btn.active {
-background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-color: white;
-}
-.modal {
-backdrop-filter: blur(10px);
-}
-.modal-content {
-max-height: 90vh;
-overflow-y: auto;
-}
-</style>
-</head>
-<body class="bg-gray-50 font-sans">
-<nav class="bg-white shadow-sm border-b">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex justify-between items-center h-16">
-<div class="flex items-center">
-<div class="text-2xl font-['Pacifico'] text-primary"><li>ENG ZEZO</li></div>
-</div>
-<div class="hidden md:flex items-center space-x-8 space-x-reverse">
-<a href="index.html" class="text-gray-700 hover:text-primary transition-colors" data-lang-key="home">الرئيسية</a>
-<a href="portfolio.html" class="text-primary font-medium" data-lang-key="portfolio">معرض الأعمال</a>
-<a href="services.html" class="text-gray-700 hover:text-primary transition-colors" data-lang-key="services">الخدمات</a>
-<a href="about.html" class="text-gray-700 hover:text-primary transition-colors" data-lang-key="about">من نحن</a>
-<a href="contact.html" class="text-gray-700 hover:text-primary transition-colors" data-lang-key="contact">تواصل معنا</a>
-<button id="language-switch" class="flex items-center text-gray-700 hover:text-primary transition-colors mr-8">
-<i class="ri-translate-2-line ml-2"></i>
-<span data-lang-key="current-lang">English</span>
-</button>
-</div>
-<button class="md:hidden w-6 h-6 flex items-center justify-center">
-<i class="ri-menu-line text-xl"></i>
-</button>
-</div>
-</div>
-</nav>
-<div class="bg-gradient-to-br from-blue-50 to-purple-50 py-16">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-<h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">معرض الأعمال</h1>
-<p class="text-xl text-gray-600 max-w-3xl mx-auto mb-12">استكشف مجموعة من المشاريع المميزة التي قمنا بتطويرها وتنفيذها بأعلى معايير الجودة والإبداع</p>
-</div>
-</div>
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-<div class="flex flex-col lg:flex-row gap-8">
-<div class="lg:w-1/4">
-<div class="bg-white rounded-lg shadow-sm p-6 sticky top-6">
-<h3 class="text-lg font-semibold text-gray-900 mb-4">تصفية المشاريع</h3>
-<div class="mb-6">
-<label class="block text-sm font-medium text-gray-700 mb-2">البحث</label>
-<div class="relative">
-<input type="text" placeholder="ابحث عن مشروع..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm">
-<div class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center">
-<i class="ri-search-line text-gray-400"></i>
-</div>
-</div>
-</div>
-<div class="mb-6">
-<label class="block text-sm font-medium text-gray-700 mb-3">نوع المشروع</label>
-<div class="space-y-2">
-<button class="filter-btn active w-full text-right px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-sm">الكل</button>
-<button class="filter-btn w-full text-right px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-sm">مواقع تجارية</button>
-<button class="filter-btn w-full text-right px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-sm">تطبيقات ويب</button>
-<button class="filter-btn w-full text-right px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-sm">مواقع شخصية</button>
-<button class="filter-btn w-full text-right px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-sm">منصات تعليمية</button>
-<button class="filter-btn w-full text-right px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-sm">تحليل البيانات</button>
-</div>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-700 mb-3">التقنيات المستخدمة</label>
-<div class="space-y-2">
-<label class="flex items-center">
-<input type="checkbox" class="sr-only">
-<div class="w-4 h-4 border-2 border-gray-300 rounded ml-3 flex items-center justify-center cursor-pointer hover:border-primary transition-colors">
-<i class="ri-check-line text-xs text-white hidden"></i>
-</div>
-<span class="text-sm text-gray-700">React</span>
-</label>
-<label class="flex items-center">
-<input type="checkbox" class="sr-only">
-<div class="w-4 h-4 border-2 border-gray-300 rounded ml-3 flex items-center justify-center cursor-pointer hover:border-primary transition-colors">
-<i class="ri-check-line text-xs text-white hidden"></i>
-</div>
-<span class="text-sm text-gray-700">Vue.js</span>
-</label>
-<label class="flex items-center">
-<input type="checkbox" class="sr-only">
-<div class="w-4 h-4 border-2 border-gray-300 rounded ml-3 flex items-center justify-center cursor-pointer hover:border-primary transition-colors">
-<i class="ri-check-line text-xs text-white hidden"></i>
-</div>
-<span class="text-sm text-gray-700">Laravel</span>
-</label>
-<label class="flex items-center">
-<input type="checkbox" class="sr-only">
-<div class="w-4 h-4 border-2 border-gray-300 rounded ml-3 flex items-center justify-center cursor-pointer hover:border-primary transition-colors">
-<i class="ri-check-line text-xs text-white hidden"></i>
-</div>
-<span class="text-sm text-gray-700">WordPress</span>
-</label>
-</div>
-</div>
-</div>
-</div>
-<div class="lg:w-3/4">
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" id="projects-grid">
-<div class="project-card bg-white rounded-xl shadow-sm overflow-hidden cursor-pointer" data-project="1">
-<div class="aspect-video bg-gray-100 overflow-hidden">
-<img src="https://readdy.ai/api/search-image?query=modern%20e-commerce%20website%20interface%20with%20clean%20design%2C%20shopping%20cart%2C%20product%20gallery%2C%20elegant%20layout%2C%20professional%20business%20website%2C%20white%20background%2C%20minimalist%20design%2C%20high%20quality%20web%20design&width=400&height=225&seq=1&orientation=landscape" alt="متجر إلكتروني" class="w-full h-full object-cover object-top">
-</div>
-<div class="p-6">
-<h3 class="text-xl font-semibold text-gray-900 mb-2">متجر الأزياء العصرية</h3>
-<p class="text-gray-600 mb-4 text-sm leading-relaxed">منصة تجارة إلكترونية متكاملة لبيع الأزياء النسائية والرجالية مع نظام دفع آمن وإدارة المخزون</p>
-<div class="flex flex-wrap gap-2 mb-4">
-<span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">React</span>
-<span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">Node.js</span>
-<span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">MongoDB</span>
-</div>
-<div class="flex items-center justify-between">
-<span class="text-sm text-gray-500">مارس 2024</span>
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-arrow-left-line text-primary"></i>
-</div>
-</div>
-</div>
-</div>
-<div class="project-card bg-white rounded-xl shadow-sm overflow-hidden cursor-pointer" data-project="2">
-<div class="aspect-video bg-gray-100 overflow-hidden">
-<img src="https://readdy.ai/api/search-image?query=educational%20learning%20platform%20interface%2C%20online%20courses%2C%20student%20dashboard%2C%20modern%20education%20website%2C%20clean%20UI%20design%2C%20books%20and%20learning%20materials%2C%20professional%20academic%20platform%2C%20white%20background&width=400&height=225&seq=2&orientation=landscape" alt="منصة تعليمية" class="w-full h-full object-cover object-top">
-</div>
-<div class="p-6">
-<h3 class="text-xl font-semibold text-gray-900 mb-2">منصة التعلم الذكي</h3>
-<p class="text-gray-600 mb-4 text-sm leading-relaxed">منصة تعليمية تفاعلية تقدم دورات متخصصة في البرمجة والتصميم مع نظام تتبع التقدم</p>
-<div class="flex flex-wrap gap-2 mb-4">
-<span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Vue.js</span>
-<span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Laravel</span>
-<span class="px-3 py-1 bg-red-100 text-red-800 text-xs rounded-full">MySQL</span>
-</div>
-<div class="flex items-center justify-between">
-<span class="text-sm text-gray-500">فبراير 2024</span>
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-arrow-left-line text-primary"></i>
-</div>
-</div>
-</div>
-</div>
-<div class="project-card bg-white rounded-xl shadow-sm overflow-hidden cursor-pointer" data-project="3">
-<div class="aspect-video bg-gray-100 overflow-hidden">
-<img src="https://readdy.ai/api/search-image?query=healthcare%20medical%20website%20interface%2C%20doctor%20appointment%20booking%2C%20medical%20services%2C%20hospital%20management%20system%2C%20clean%20professional%20medical%20design%2C%20health%20care%20platform%2C%20white%20background&width=400&height=225&seq=3&orientation=landscape" alt="نظام طبي" class="w-full h-full object-cover object-top">
-</div>
-<div class="p-6">
-<h3 class="text-xl font-semibold text-gray-900 mb-2">نظام إدارة العيادات</h3>
-<p class="text-gray-600 mb-4 text-sm leading-relaxed">نظام شامل لإدارة العيادات الطبية مع حجز المواعيد وإدارة ملفات المرضى والفواتير</p>
-<div class="flex flex-wrap gap-2 mb-4">
-<span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">React</span>
-<span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">TypeScript</span>
-<span class="px-3 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">Tailwind CSS</span>
-</div>
-<div class="flex items-center justify-between">
-<span class="text-sm text-gray-500">يناير 2024</span>
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-arrow-left-line text-primary"></i>
-</div>
-</div>
-</div>
-</div>
-<div class="project-card bg-white rounded-xl shadow-sm overflow-hidden cursor-pointer" data-project="4">
-<div class="aspect-video bg-gray-100 overflow-hidden">
-<img src="https://readdy.ai/api/search-image?query=restaurant%20food%20delivery%20app%20interface%2C%20menu%20ordering%20system%2C%20food%20delivery%20platform%2C%20restaurant%20management%2C%20modern%20food%20app%20design%2C%20culinary%20website%2C%20white%20background&width=400&height=225&seq=4&orientation=landscape" alt="تطبيق مطاعم" class="w-full h-full object-cover object-top">
-</div>
-<div class="p-6">
-<h3 class="text-xl font-semibold text-gray-900 mb-2">تطبيق توصيل الطعام</h3>
-<p class="text-gray-600 mb-4 text-sm leading-relaxed">تطبيق متكامل لطلب وتوصيل الطعام مع نظام تتبع الطلبات ودفع إلكتروني آمن</p>
-<div class="flex flex-wrap gap-2 mb-4">
-<span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">React Native</span>
-<span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">Express.js</span>
-<span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">MongoDB</span>
-</div>
-<div class="flex items-center justify-between">
-<span class="text-sm text-gray-500">ديسمبر 2023</span>
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-arrow-left-line text-primary"></i>
-</div>
-</div>
-</div>
-</div>
-<div class="project-card bg-white rounded-xl shadow-sm overflow-hidden cursor-pointer" data-project="5">
-<div class="aspect-video bg-gray-100 overflow-hidden">
-<img src="https://readdy.ai/api/search-image?query=real%20estate%20property%20website%20interface%2C%20house%20listings%2C%20property%20management%2C%20real%20estate%20platform%2C%20modern%20property%20search%2C%20real%20estate%20business%20website%2C%20white%20background&width=400&height=225&seq=5&orientation=landscape" alt="موقع عقاري" class="w-full h-full object-cover object-top">
-</div>
-<div class="p-6">
-<h3 class="text-xl font-semibold text-gray-900 mb-2">منصة العقارات الذكية</h3>
-<p class="text-gray-600 mb-4 text-sm leading-relaxed">موقع عقاري شامل لعرض وبيع العقارات مع خرائط تفاعلية ونظام بحث متقدم</p>
-<div class="flex flex-wrap gap-2 mb-4">
-<span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Next.js</span>
-<span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Django</span>
-<span class="px-3 py-1 bg-red-100 text-red-800 text-xs rounded-full">Redis</span>
-</div>
-<div class="flex items-center justify-between">
-<span class="text-sm text-gray-500">نوفمبر 2023</span>
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-arrow-left-line text-primary"></i>
-</div>
-</div>
-</div>
-</div>
-<div class="project-card bg-white rounded-xl shadow-sm overflow-hidden cursor-pointer" data-project="6">
-<div class="aspect-video bg-gray-100 overflow-hidden">
-<img src="https://readdy.ai/api/search-image?query=corporate%20business%20website%20interface%2C%20professional%20company%20website%2C%20business%20services%2C%20corporate%20identity%2C%20modern%20business%20design%2C%20company%20portfolio%2C%20white%20background&width=400&height=225&seq=6&orientation=landscape" alt="موقع شركة" class="w-full h-full object-cover object-top">
-</div>
-<div class="p-6">
-<h3 class="text-xl font-semibold text-gray-900 mb-2">موقع الشركة التقنية</h3>
-<p class="text-gray-600 mb-4 text-sm leading-relaxed">موقع مؤسسي احترافي لشركة تقنية مع عرض الخدمات والمشاريع ونظام إدارة المحتوى</p>
-<div class="flex flex-wrap gap-2 mb-4">
-<span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">WordPress</span>
-<span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">PHP</span>
-<span class="px-3 py-1 bg-red-100 text-red-800 text-xs rounded-full">MySQL</span>
-</div>
-<div class="flex items-center justify-between">
-<span class="text-sm text-gray-500">أكتوبر 2023</span>
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-arrow-left-line text-primary"></i>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="text-center mt-12">
-<button class="!rounded-button whitespace-nowrap bg-primary text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors font-medium">
-تحميل المزيد من المشاريع
-</button>
-</div>
-</div>
-</div>
-</div>
-<div id="project-modal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
-<div class="modal-content bg-white rounded-xl max-w-4xl w-full">
-<div class="flex items-center justify-between p-6 border-b">
-<h2 id="modal-title" class="text-2xl font-bold text-gray-900"></h2>
-<button id="close-modal" class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors">
-<i class="ri-close-line text-xl"></i>
-</button>
-</div>
-<div class="p-6">
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-<div>
-<img id="modal-image" src="" alt="" class="w-full rounded-lg shadow-sm">
-<div class="flex gap-4 mt-4">
-<button id="visit-site-btn" class="!rounded-button whitespace-nowrap flex-1 bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-medium">
-<div class="w-5 h-5 flex items-center justify-center ml-2">
-<i class="ri-external-link-line"></i>
-</div>
-زيارة الموقع
-</button>
-<button class="!rounded-button whitespace-nowrap flex-1 border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium">
-<div class="w-5 h-5 flex items-center justify-center ml-2">
-<i class="ri-share-line"></i>
-</div>
-مشاركة
-</button>
-</div>
-</div>
-<div>
-<div class="mb-6">
-<h3 class="text-lg font-semibold text-gray-900 mb-3">وصف المشروع</h3>
-<p id="modal-description" class="text-gray-600 leading-relaxed"></p>
-</div>
-<div class="mb-6">
-<h3 class="text-lg font-semibold text-gray-900 mb-3">التقنيات المستخدمة</h3>
-<div id="modal-technologies" class="flex flex-wrap gap-2"></div>
-</div>
-<div class="mb-6">
-<h3 class="text-lg font-semibold text-gray-900 mb-3">التحديات والحلول</h3>
-<ul id="modal-challenges" class="space-y-2 text-gray-600"></ul>
-</div>
-<div>
-<h3 class="text-lg font-semibold text-gray-900 mb-3">تاريخ التنفيذ</h3>
-<p id="modal-date" class="text-gray-600"></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<footer class="bg-gray-900 text-white py-12 mt-16">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-<div>
-<div class="text-2xl font-['Pacifico'] text-primary mb-4"><li>Aboelyazed Hatem</li></div>
-<p class="text-gray-400 leading-relaxed">نحن نقدم حلول تقنية مبتكرة ومتطورة لتلبية احتياجات عملائنا وتحقيق أهدافهم الرقمية</p>
-</div>
-<div>
-<h3 class="text-lg font-semibold mb-4">الخدمات</h3>
-<ul class="space-y-2 text-gray-400">
-<li><a href="#" class="hover:text-white transition-colors">تطوير المواقع</a></li>
-<li><a href="#" class="hover:text-white transition-colors">تطبيقات الجوال</a></li>
-<li><a href="#" class="hover:text-white transition-colors">التجارة الإلكترونية</a></li>
-<li><a href="#" class="hover:text-white transition-colors">التسويق الرقمي</a></li>
-</ul>
-</div>
-<div>
-<h3 class="text-lg font-semibold mb-4">الشركة</h3>
-<ul class="space-y-2 text-gray-400">
-<li><a href="#" class="hover:text-white transition-colors">من نحن</a></li>
-<li><a href="#" class="hover:text-white transition-colors">فريق العمل</a></li>
-<li><a href="#" class="hover:text-white transition-colors">الوظائف</a></li>
-<li><a href="#" class="hover:text-white transition-colors">اتصل بنا</a></li>
-</ul>
-</div>
-<div>
-<h3 class="text-lg font-semibold mb-4">تابعنا</h3>
-<div class="flex gap-4">
-<a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary transition-colors">
-<i class="ri-facebook-fill"></i>
-</a>
-<a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary transition-colors">
-<i class="ri-twitter-fill"></i>
-</a>
-<a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary transition-colors">
-<i class="ri-linkedin-fill"></i>
-</a>
-<a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary transition-colors">
-<i class="ri-instagram-fill"></i>
-</a>
-</div>
-</div>
-</div>
-<div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-<p>&copy; Copy Right ::<LI>Aboelyazed hatem</LI></p>
-</div>
-</div>
-</footer>
-<script id="filter-functionality">
-document.addEventListener('DOMContentLoaded', function() {
-const filterButtons = document.querySelectorAll('.filter-btn');
-filterButtons.forEach(button => {
-button.addEventListener('click', function() {
-filterButtons.forEach(btn => btn.classList.remove('active'));
-this.classList.add('active');
-});
-});
-});
-</script>
-<script id="checkbox-functionality">
-document.addEventListener('DOMContentLoaded', function() {
-const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-checkboxes.forEach(checkbox => {
-const customBox = checkbox.nextElementSibling;
-const checkIcon = customBox.querySelector('i');
-checkbox.addEventListener('change', function() {
-if (this.checked) {
-customBox.classList.add('bg-primary', 'border-primary');
-customBox.classList.remove('border-gray-300');
-checkIcon.classList.remove('hidden');
-} else {
-customBox.classList.remove('bg-primary', 'border-primary');
-customBox.classList.add('border-gray-300');
-checkIcon.classList.add('hidden');
-}
-});
-customBox.addEventListener('click', function() {
-checkbox.click();
-});
-});
-});
-</script>
-<script id="language-switcher">
-document.addEventListener('DOMContentLoaded', function() {
-  const translations = {
-    ar: {
-      'home': 'الرئيسية',
-      'portfolio': 'معرض الأعمال',
-      'services': 'الخدمات',
-      'about': 'من نحن',
-      'contact': 'تواصل معنا',
-      'current-lang': 'English',
-      'load-more': 'تحميل المزيد من المشاريع',
-      'project-type': 'نوع المشروع',
-      'all': 'الكل',
-      'search': 'البحث',
-      'search-placeholder': 'ابحث عن مشروع...',
-      'technologies': 'التقنيات المستخدمة',
-      'visit-site': 'زيارة الموقع',
-      'share': 'مشاركة',
-      'project-desc': 'وصف المشروع',
-      'challenges': 'التحديات والحلول',
-      'implementation-date': 'تاريخ التنفيذ'
-    },
-    en: {
-      'home': 'Home',
-      'portfolio': 'Portfolio',
-      'services': 'Services',
-      'about': 'About',
-      'contact': 'Contact',
-      'current-lang': 'العربية',
-      'load-more': 'Load More Projects',
-      'project-type': 'Project Type',
-      'all': 'All',
-      'search': 'Search',
-      'search-placeholder': 'Search for a project...',
-      'technologies': 'Technologies Used',
-      'visit-site': 'Visit Site',
-      'share': 'Share',
-      'project-desc': 'Project Description',
-      'challenges': 'Challenges & Solutions',
-      'implementation-date': 'Implementation Date'
-    }
-  };
-  let currentLang = 'ar';
-  const htmlElement = document.documentElement;
-  const languageSwitch = document.getElementById('language-switch');
-  function switchLanguage() {
-    currentLang = currentLang === 'ar' ? 'en' : 'ar';
-    htmlElement.setAttribute('lang', currentLang);
-    htmlElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض الأعمال - المشاريع المنفذة</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
     
-    document.querySelectorAll('[data-lang-key]').forEach(element => {
-      const key = element.getAttribute('data-lang-key');
-      if (translations[currentLang][key]) {
-        element.textContent = translations[currentLang][key];
-      }
-    });
-    if (currentLang === 'en') {
-      document.querySelectorAll('.space-x-reverse').forEach(el => {
-        el.classList.remove('space-x-reverse');
-        el.classList.add('space-x');
-      });
-    } else {
-      document.querySelectorAll('.space-x').forEach(el => {
-        el.classList.remove('space-x');
-        el.classList.add('space-x-reverse');
-      });
-    }
-  }
-  languageSwitch.addEventListener('click', switchLanguage);
-});
-</script>
-<script id="modal-functionality">
-document.addEventListener('DOMContentLoaded', function() {
-const modal = document.getElementById('project-modal');
-const closeModal = document.getElementById('close-modal');
-const projectCards = document.querySelectorAll('.project-card');
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        secondary: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                        }
+                    },
+                    fontFamily: {
+                        'cairo': ['Cairo', 'sans-serif'],
+                        'pacifico': ['Pacifico', 'cursive']
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'slide-down': 'slideDown 0.8s ease-out',
+                        'slide-right': 'slideRight 0.8s ease-out',
+                        'slide-left': 'slideLeft 0.8s ease-out',
+                        'scale-in': 'scaleIn 0.5s ease-out',
+                        'bounce-in': 'bounceIn 1s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'gradient': 'gradient 3s ease infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(50px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        slideDown: {
+                            '0%': { transform: 'translateY(-50px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        slideRight: {
+                            '0%': { transform: 'translateX(-50px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' }
+                        },
+                        slideLeft: {
+                            '0%': { transform: 'translateX(50px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' }
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.8)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(59, 130, 246, 0.5)' },
+                            '100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)' }
+                        },
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dark .project-card:hover {
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .filter-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .filter-btn:hover::before {
+            left: 100%;
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .modal {
+            backdrop-filter: blur(15px);
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .modal-content {
+            animation: scaleIn 0.3s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .tech-tag {
+            transition: all 0.3s ease;
+        }
+        
+        .tech-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar {
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .navbar.scrolled {
+            background: rgba(17, 24, 39, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .parallax {
+            transform: translateZ(0);
+            will-change: transform;
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+        
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
 
-const projectData = {
-1: {
-title: 'متجر الأزياء العصرية',
-image: 'https://readdy.ai/api/search-image?query=modern%20e-commerce%20website%20interface%20with%20clean%20design%2C%20shopping%20cart%2C%20product%20gallery%2C%20elegant%20layout%2C%20professional%20business%20website%2C%20white%20background%2C%20minimalist%20design%2C%20high%20quality%20web%20design&width=600&height=400&seq=1&orientation=landscape',
-description: 'منصة تجارة إلكترونية متكاملة تم تطويرها خصيصاً لبيع الأزياء النسائية والرجالية. تتميز المنصة بتصميم عصري وواجهة مستخدم سهلة الاستخدام، مع نظام دفع آمن متعدد الخيارات وإدارة متقدمة للمخزون. تشمل المنصة أيضاً نظام تقييم المنتجات، عربة تسوق ذكية، وخدمة عملاء متكاملة.',
-technologies: ['React', 'Node.js', 'MongoDB', 'Stripe API', 'AWS'],
-challenges: [
-'تطوير نظام دفع آمن ومتوافق مع معايير PCI DSS',
-'تحسين أداء الموقع للتعامل مع آلاف المنتجات',
-'تطوير نظام إدارة مخزون ذكي مع تنبيهات تلقائية',
-'تصميم واجهة مستخدم متجاوبة تعمل على جميع الأجهزة'
-],
-date: 'مارس 2024',
-liveUrl: '#'
-},
-2: {
-title: 'منصة التعلم الذكي',
-image: 'https://readdy.ai/api/search-image?query=educational%20learning%20platform%20interface%2C%20online%20courses%2C%20student%20dashboard%2C%20modern%20education%20website%2C%20clean%20UI%20design%2C%20books%20and%20learning%20materials%2C%20professional%20academic%20platform%2C%20white%20background&width=600&height=400&seq=2&orientation=landscape',
-description: 'منصة تعليمية تفاعلية متطورة تقدم دورات متخصصة في البرمجة والتصميم والتسويق الرقمي. تتضمن المنصة نظام تتبع التقدم، اختبارات تفاعلية، منتديات نقاش، ونظام شهادات معتمدة. كما تدعم التعلم المباشر والمسجل مع أدوات تفاعلية متقدمة.',
-technologies: ['Vue.js', 'Laravel', 'MySQL', 'WebRTC', 'Redis'],
-challenges: [
-'تطوير نظام بث مباشر عالي الجودة للمحاضرات',
-'إنشاء نظام تقييم ذكي يتكيف مع مستوى الطالب',
-'تصميم لوحة تحكم شاملة للمدرسين والطلاب',
-'تطوير نظام إشعارات متقدم لمتابعة التقدم'
-],
-date: 'فبراير 2024',
-liveUrl: '#'
-},
-3: {
-title: 'نظام إدارة العيادات',
-image: 'https://readdy.ai/api/search-image?query=healthcare%20medical%20website%20interface%2C%20doctor%20appointment%20booking%2C%20medical%20services%2C%20hospital%20management%20system%2C%20clean%20professional%20medical%20design%2C%20health%20care%20platform%2C%20white%20background&width=600&height=400&seq=3&orientation=landscape',
-description: 'نظام شامل ومتطور لإدارة العيادات الطبية يشمل حجز المواعيد الإلكتروني، إدارة ملفات المرضى الرقمية، نظام الفواتير والمدفوعات، وتقارير طبية مفصلة. يدعم النظام عدة أطباء وتخصصات مع واجهات منفصلة للأطباء والمرضى والإدارة.',
-technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Lucide Icons', 'Vite'],
-challenges: [
-'ضمان أمان وخصوصية البيانات الطبية الحساسة',
-'تطوير نظام مواعيد ذكي يتجنب التعارض',
-'إنشاء تقارير طبية مفصلة وقابلة للتخصيص',
-'تطوير واجهات متعددة للأطباء والمرضى والإدارة'
-],
-date: 'يناير 2024',
-liveUrl: 'https://singular-sawine-0bc006.netlify.app'
-},
-4: {
-title: 'تطبيق توصيل الطعام',
-image: 'https://readdy.ai/api/search-image?query=restaurant%20food%20delivery%20app%20interface%2C%20menu%20ordering%20system%2C%20food%20delivery%20platform%2C%20restaurant%20management%2C%20modern%20food%20app%20design%2C%20culinary%20website%2C%20white%20background&width=600&height=400&seq=4&orientation=landscape',
-description: 'تطبيق متكامل لطلب وتوصيل الطعام يربط بين المطاعم والعملاء وسائقي التوصيل. يتضمن التطبيق نظام تتبع الطلبات في الوقت الفعلي، دفع إلكتروني آمن، تقييم المطاعم والوجبات، وبرنامج نقاط ومكافآت للعملاء المميزين.',
-technologies: ['React Native', 'Express.js', 'MongoDB', 'Socket.io', 'Google Maps API'],
-challenges: [
-'تطوير نظام تتبع مباشر للطلبات باستخدام GPS',
-'إنشاء خوارزمية ذكية لتوزيع الطلبات على السائقين',
-'تطوير واجهات منفصلة للعملاء والمطاعم والسائقين',
-'ضمان سرعة التطبيق وسلاسة التجربة'
-],
-date: 'ديسمبر 2023',
-liveUrl: '#'
-},
-5: {
-  title: 'Housing-Student',
-  image: 'https://readdy.ai/api/search-image?query=student%20housing%20platform%2C%20college%20apartment%20search%2C%20university%20residences%2C%20modern%20design%2C%20housing%20listing%20website%2C%20clean%20UI%2C%20white%20background&width=600&height=400&seq=5&orientation=landscape',
-  description: 'منصة مخصصة لسكن الطلاب توفر واجهة سهلة للبحث عن شقق وسكن جامعي مع معلومات مفصلة وخرائط تفاعلية وروابط مباشرة.',
-  technologies: ['HTML', 'CSS', 'JavaScript', 'GitHub Pages'],
-  challenges: [
-    'تصميم واجهة مخصصة للطلاب سهلة التصفح',
-    'ربط الموقع بـ GitHub Pages للنشر السريع',
-    'توفير عرض مرئي واضح لمواقع السكن',
-    'تحسين الأداء وتجربة المستخدم'
-  ],
-  date: 'يوليو 2025',
-  liveUrl: 'https://aboelyazed21.github.io/Housing-Student/'
-},
-6: {
-title: 'موقع الشركة التقنية',
-image: 'https://readdy.ai/api/search-image?query=corporate%20business%20website%20interface%2C%20professional%20company%20website%2C%20business%20services%2C%20corporate%20identity%2C%20modern%20business%20design%2C%20company%20portfolio%2C%20white%20background&width=600&height=400&seq=6&orientation=landscape',
-description: 'موقع مؤسسي احترافي ومتطور لشركة تقنية رائدة مع عرض شامل للخدمات والمشاريع ونظام إدارة محتوى متقدم. يتضمن الموقع مدونة تقنية، معرض أعمال تفاعلي، نظام طلب خدمات، وقسم خاص للعملاء مع تقارير مشاريعهم.',
-technologies: ['WordPress', 'PHP', 'MySQL', 'Elementor', 'WooCommerce'],
-challenges: [
-'تطوير نظام إدارة محتوى مخصص ومرن',
-'إنشاء معرض أعمال تفاعلي وجذاب',
-'تحسين الموقع لمحركات البحث (SEO)',
-'تطوير نظام طلب خدمات مع تتبع المشاريع'
-],
-date: 'أكتوبر 2023',
-liveUrl: '#'
-}
-};
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center animate-slide-right">
+                    <div class="text-2xl font-pacifico text-gradient">
+                        ENG ZEZO
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8 space-x-reverse animate-slide-down">
+                    <a href="#" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative">
+                        <span data-lang-key="home">الرئيسية</span>
+                    </a>
+                    <a href="#" class="nav-link text-primary-500 dark:text-primary-400 font-medium relative">
+                        <span data-lang-key="portfolio">معرض الأعمال</span>
+                    </a>
+                    <a href="#" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative">
+                        <span data-lang-key="services">الخدمات</span>
+                    </a>
+                    <a href="#" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative">
+                        <span data-lang-key="about">من نحن</span>
+                    </a>
+                    <a href="#" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative">
+                        <span data-lang-key="contact">تواصل معنا</span>
+                    </a>
+                    
+                    <div class="flex items-center space-x-4 space-x-reverse">
+                        <button id="language-switch" class="flex items-center text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 mr-8">
+                            <i class="ri-translate-2-line ml-2 text-lg"></i>
+                            <span data-lang-key="current-lang">English</span>
+                        </button>
+                        
+                        <button id="dark-mode-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300">
+                            <i class="ri-sun-line dark:hidden text-lg"></i>
+                            <i class="ri-moon-line hidden dark:block text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <button class="md:hidden w-8 h-8 flex items-center justify-center text-gray-700 dark:text-gray-300">
+                    <i class="ri-menu-line text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
 
-projectCards.forEach(card => {
-card.addEventListener('click', function() {
-const projectId = this.dataset.project;
-const project = projectData[projectId];
-if (project) {
-document.getElementById('modal-title').textContent = project.title;
-document.getElementById('modal-image').src = project.image;
-document.getElementById('modal-description').textContent = project.description;
-document.getElementById('modal-date').textContent = project.date;
+    <!-- Hero Section -->
+    <section class="relative pt-20 pb-16 overflow-hidden">
+        <div class="absolute inset-0 gradient-bg opacity-10"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="animate-bounce-in">
+                <h1 class="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6 animate-slide-up">
+                    <span class="text-gradient" data-lang-key="portfolio-title">معرض الأعمال</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed animate-slide-up" style="animation-delay: 0.2s">
+                    <span data-lang-key="portfolio-subtitle">استكشف مجموعة من المشاريع المميزة التي قمنا بتطويرها وتنفيذها بأعلى معايير الجودة والإبداع</span>
+                </p>
+            </div>
+            
+            <!-- Floating Elements -->
+            <div class="absolute top-20 left-10 w-20 h-20 bg-primary-500/20 rounded-full animate-float"></div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-secondary-500/20 rounded-full animate-float" style="animation-delay: 1s"></div>
+            <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-pink-500/20 rounded-full animate-float" style="animation-delay: 2s"></div>
+        </div>
+    </section>
 
-const visitSiteBtn = document.getElementById('visit-site-btn');
-if (project.liveUrl && project.liveUrl !== '#') {
-visitSiteBtn.onclick = function() {
-window.open(project.liveUrl, '_blank');
-};
-visitSiteBtn.style.opacity = '1';
-visitSiteBtn.style.cursor = 'pointer';
-} else {
-visitSiteBtn.onclick = function() {
-alert('الرابط غير متوفر حالياً');
-};
-visitSiteBtn.style.opacity = '0.6';
-visitSiteBtn.style.cursor = 'not-allowed';
-}
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Filter -->
+            <aside class="lg:w-1/4 animate-slide-right">
+                <div class="glass-effect rounded-2xl p-6 sticky top-24 border border-gray-200 dark:border-gray-700">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6 animate-fade-in">
+                        <span data-lang-key="filter-projects">تصفية المشاريع</span>
+                    </h3>
+                    
+                    <!-- Search -->
+                    <div class="mb-6 animate-slide-up" style="animation-delay: 0.1s">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <span data-lang-key="search">البحث</span>
+                        </label>
+                        <div class="relative">
+                            <input 
+                                type="text" 
+                                id="search-input"
+                                placeholder="ابحث عن مشروع..." 
+                                data-lang-placeholder="search-placeholder"
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm transition-all duration-300"
+                            >
+                            <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
+                                <i class="ri-search-line text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
 
-const technologiesContainer = document.getElementById('modal-technologies');
-technologiesContainer.innerHTML = '';
-project.technologies.forEach(tech => {
-const span = document.createElement('span');
-span.className = 'px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full';
-span.textContent = tech;
-technologiesContainer.appendChild(span);
-});
+                    <!-- Categories -->
+                    <div class="mb-6 animate-slide-up" style="animation-delay: 0.2s">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                            <span data-lang-key="project-type">نوع المشروع</span>
+                        </label>
+                        <div class="space-y-2" id="category-filters">
+                            <button class="filter-btn active w-full text-right px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="all">
+                                <span data-lang-key="all">الكل</span>
+                            </button>
+                            <button class="filter-btn w-full text-right px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="مواقع تجارية">
+                                مواقع تجارية
+                            </button>
+                            <button class="filter-btn w-full text-right px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="تطبيقات ويب">
+                                تطبيقات ويب
+                            </button>
+                            <button class="filter-btn w-full text-right px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="مواقع شخصية">
+                                مواقع شخصية
+                            </button>
+                            <button class="filter-btn w-full text-right px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="منصات تعليمية">
+                                منصات تعليمية
+                            </button>
+                        </div>
+                    </div>
 
-const challengesContainer = document.getElementById('modal-challenges');
-challengesContainer.innerHTML = '';
-project.challenges.forEach(challenge => {
-const li = document.createElement('li');
-li.className = 'flex items-start';
-li.innerHTML = `
-<div class="w-2 h-2 bg-primary rounded-full mt-2 ml-3 flex-shrink-0"></div>
-<span>${challenge}</span>
-`;
-challengesContainer.appendChild(li);
-});
+                    <!-- Technologies -->
+                    <div class="animate-slide-up" style="animation-delay: 0.3s">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                            <span data-lang-key="technologies">التقنيات المستخدمة</span>
+                        </label>
+                        <div class="space-y-3" id="tech-filters">
+                            <label class="flex items-center cursor-pointer group">
+                                <input type="checkbox" class="sr-only tech-checkbox" data-tech="React">
+                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded ml-3 flex items-center justify-center transition-all duration-300 group-hover:border-primary-500">
+                                    <i class="ri-check-line text-xs text-white hidden"></i>
+                                </div>
+                                <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-500 transition-colors duration-300">React</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer group">
+                                <input type="checkbox" class="sr-only tech-checkbox" data-tech="Vue.js">
+                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded ml-3 flex items-center justify-center transition-all duration-300 group-hover:border-primary-500">
+                                    <i class="ri-check-line text-xs text-white hidden"></i>
+                                </div>
+                                <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-500 transition-colors duration-300">Vue.js</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer group">
+                                <input type="checkbox" class="sr-only tech-checkbox" data-tech="Laravel">
+                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded ml-3 flex items-center justify-center transition-all duration-300 group-hover:border-primary-500">
+                                    <i class="ri-check-line text-xs text-white hidden"></i>
+                                </div>
+                                <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-500 transition-colors duration-300">Laravel</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer group">
+                                <input type="checkbox" class="sr-only tech-checkbox" data-tech="WordPress">
+                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded ml-3 flex items-center justify-center transition-all duration-300 group-hover:border-primary-500">
+                                    <i class="ri-check-line text-xs text-white hidden"></i>
+                                </div>
+                                <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-500 transition-colors duration-300">WordPress</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </aside>
 
-modal.classList.remove('hidden');
-modal.classList.add('flex');
-}
-});
-});
+            <!-- Projects Grid -->
+            <section class="lg:w-3/4 animate-slide-left">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" id="projects-grid">
+                    <!-- Project cards will be dynamically generated -->
+                </div>
+                
+                <div class="text-center mt-12 animate-fade-in">
+                    <button class="btn-glow bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-8 py-4 rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:scale-105">
+                        <span data-lang-key="load-more">تحميل المزيد من المشاريع</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
 
-closeModal.addEventListener('click', function() {
-modal.classList.add('hidden');
-modal.classList.remove('flex');
-});
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+        <div class="modal-content glass-effect bg-white dark:bg-gray-800 rounded-2xl max-w-5xl w-full border border-gray-200 dark:border-gray-700">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                <h2 id="modal-title" class="text-2xl font-bold text-gray-900 dark:text-white"></h2>
+                <button id="close-modal" class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
+            </div>
 
-modal.addEventListener('click', function(e) {
-if (e.target === modal) {
-modal.classList.add('hidden');
-modal.classList.remove('flex');
-}
-});
-});
-</script>
+            <!-- Modal Content -->
+            <div class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Image and Actions -->
+                    <div class="animate-slide-right">
+                        <img id="modal-image" src="" alt="" class="w-full rounded-xl shadow-lg">
+                        <div class="flex gap-4 mt-6">
+                            <button id="visit-site-btn" class="btn-glow flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 font-medium flex items-center justify-center">
+                                <i class="ri-external-link-line ml-2"></i>
+                                <span data-lang-key="visit-site">زيارة الموقع</span>
+                            </button>
+                            <button id="share-btn" class="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 font-medium flex items-center justify-center">
+                                <i class="ri-share-line ml-2"></i>
+                                <span data-lang-key="share">مشاركة</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="animate-slide-left">
+                        <!-- Description -->
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                                <span data-lang-key="project-desc">وصف المشروع</span>
+                            </h3>
+                            <p id="modal-description" class="text-gray-600 dark:text-gray-300 leading-relaxed"></p>
+                        </div>
+
+                        <!-- Technologies -->
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                                <span data-lang-key="technologies">التقنيات المستخدمة</span>
+                            </h3>
+                            <div id="modal-technologies" class="flex flex-wrap gap-2"></div>
+                        </div>
+
+                        <!-- Challenges -->
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                                <span data-lang-key="challenges">التحديات والحلول</span>
+                            </h3>
+                            <ul id="modal-challenges" class="space-y-2 text-gray-600 dark:text-gray-300"></ul>
+                        </div>
+
+                        <!-- Date -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                                <span data-lang-key="implementation-date">تاريخ التنفيذ</span>
+                            </h3>
+                            <p id="modal-date" class="text-gray-600 dark:text-gray-300"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-16 mt-20 relative overflow-hidden">
+        <div class="absolute inset-0 gradient-bg opacity-5"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div class="animate-slide-up">
+                    <div class="text-2xl font-pacifico text-gradient mb-4">
+                        Aboelyazed Hatem
+                    </div>
+                    <p class="text-gray-400 leading-relaxed">
+                        <span data-lang-key="company-description">نحن نقدم حلول تقنية مبتكرة ومتطورة لتلبية احتياجات عملائنا وتحقيق أهدافهم الرقمية</span>
+                    </p>
+                </div>
+
+                <!-- Services -->
+                <div class="animate-slide-up" style="animation-delay: 0.1s">
+                    <h3 class="text-lg font-semibold mb-4">
+                        <span data-lang-key="services-title">الخدمات</span>
+                    </h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="web-development">تطوير المواقع</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="mobile-apps">تطبيقات الجوال</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="ecommerce">التجارة الإلكترونية</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="digital-marketing">التسويق الرقمي</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div class="animate-slide-up" style="animation-delay: 0.2s">
+                    <h3 class="text-lg font-semibold mb-4">
+                        <span data-lang-key="company-title">الشركة</span>
+                    </h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="about-us">من نحن</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="team">فريق العمل</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="careers">الوظائف</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="contact-us">اتصل بنا</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social -->
+                <div class="animate-slide-up" style="animation-delay: 0.3s">
+                    <h3 class="text-lg font-semibold mb-4">
+                        <span data-lang-key="follow-us">تابعنا</span>
+                    </h3>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-12 h-12 bg-gray-800 dark:bg-gray-900 rounded-xl flex items-center justify-center hover:bg-primary-500 transition-all duration-300 transform hover:scale-110">
+                            <i class="ri-facebook-fill text-lg"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 dark:bg-gray-900 rounded-xl flex items-center justify-center hover:bg-primary-500 transition-all duration-300 transform hover:scale-110">
+                            <i class="ri-twitter-fill text-lg"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 dark:bg-gray-900 rounded-xl flex items-center justify-center hover:bg-primary-500 transition-all duration-300 transform hover:scale-110">
+                            <i class="ri-linkedin-fill text-lg"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 dark:bg-gray-900 rounded-xl flex items-center justify-center hover:bg-primary-500 transition-all duration-300 transform hover:scale-110">
+                            <i class="ri-instagram-fill text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 dark:border-gray-700 mt-12 pt-8 text-center text-gray-400 animate-fade-in">
+                <p>&copy; 2024 Aboelyazed Hatem. <span data-lang-key="copyright">جميع الحقوق محفوظة</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Project Data
+        const projectData = {
+            1: {
+                title: 'متجر الأزياء العصرية',
+                image: 'https://images.pexels.com/photos/325876/pexels-photo-325876.jpeg?auto=compress&cs=tinysrgb&w=600',
+                description: 'منصة تجارة إلكترونية متكاملة تم تطويرها خصيصاً لبيع الأزياء النسائية والرجالية. تتميز المنصة بتصميم عصري وواجهة مستخدم سهلة الاستخدام، مع نظام دفع آمن متعدد الخيارات وإدارة متقدمة للمخزون.',
+                technologies: ['React', 'Node.js', 'MongoDB', 'Stripe API', 'AWS'],
+                challenges: [
+                    'تطوير نظام دفع آمن ومتوافق مع معايير PCI DSS',
+                    'تحسين أداء الموقع للتعامل مع آلاف المنتجات',
+                    'تطوير نظام إدارة مخزون ذكي مع تنبيهات تلقائية'
+                ],
+                date: 'مارس 2024',
+                category: 'مواقع تجارية',
+                liveUrl: '#'
+            },
+            2: {
+                title: 'منصة التعلم الذكي',
+                image: 'https://images.pexels.com/photos/159775/library-la-trobe-study-students-159775.jpeg?auto=compress&cs=tinysrgb&w=600',
+                description: 'منصة تعليمية تفاعلية متطورة تقدم دورات متخصصة في البرمجة والتصميم والتسويق الرقمي. تتضمن المنصة نظام تتبع التقدم، اختبارات تفاعلية، منتديات نقاش، ونظام شهادات معتمدة.',
+                technologies: ['Vue.js', 'Laravel', 'MySQL', 'WebRTC', 'Redis'],
+                challenges: [
+                    'تطوير نظام بث مباشر عالي الجودة للمحاضرات',
+                    'إنشاء نظام تقييم ذكي يتكيف مع مستوى الطالب',
+                    'تصميم لوحة تحكم شاملة للمدرسين والطلاب'
+                ],
+                date: 'فبراير 2024',
+                category: 'منصات تعليمية',
+                liveUrl: '#'
+            },
+            3: {
+                title: 'نظام إدارة العيادات',
+                image: 'https://images.pexels.com/photos/356040/pexels-photo-356040.jpeg?auto=compress&cs=tinysrgb&w=600',
+                description: 'نظام شامل ومتطور لإدارة العيادات الطبية يشمل حجز المواعيد الإلكتروني، إدارة ملفات المرضى الرقمية، نظام الفواتير والمدفوعات، وتقارير طبية مفصلة.',
+                technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
+                challenges: [
+                    'ضمان أمان وخصوصية البيانات الطبية الحساسة',
+                    'تطوير نظام مواعيد ذكي يتجنب التعارض',
+                    'إنشاء تقارير طبية مفصلة وقابلة للتخصيص'
+                ],
+                date: 'يناير 2024',
+                category: 'تطبيقات ويب',
+                liveUrl: 'https://singular-sawine-0bc006.netlify.app'
+            },
+            4: {
+                title: 'تطبيق توصيل الطعام',
+                image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600',
+                description: 'تطبيق متكامل لطلب وتوصيل الطعام يربط بين المطاعم والعملاء وسائقي التوصيل. يتضمن التطبيق نظام تتبع الطلبات في الوقت الفعلي، دفع إلكتروني آمن.',
+                technologies: ['React Native', 'Express.js', 'MongoDB', 'Socket.io', 'Google Maps API'],
+                challenges: [
+                    'تطوير نظام تتبع مباشر للطلبات باستخدام GPS',
+                    'إنشاء خوارزمية ذكية لتوزيع الطلبات على السائقين',
+                    'تطوير واجهات منفصلة للعملاء والمطاعم والسائقين'
+                ],
+                date: 'ديسمبر 2023',
+                category: 'تطبيقات ويب',
+                liveUrl: '#'
+            },
+            5: {
+                title: 'Housing-Student',
+                image: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600',
+                description: 'منصة مخصصة لسكن الطلاب توفر واجهة سهلة للبحث عن شقق وسكن جامعي مع معلومات مفصلة وخرائط تفاعلية وروابط مباشرة.',
+                technologies: ['HTML', 'CSS', 'JavaScript', 'GitHub Pages'],
+                challenges: [
+                    'تصميم واجهة مخصصة للطلاب سهلة التصفح',
+                    'ربط الموقع بـ GitHub Pages للنشر السريع',
+                    'توفير عرض مرئي واضح لمواقع السكن'
+                ],
+                date: 'يوليو 2025',
+                category: 'مواقع شخصية',
+                liveUrl: 'https://aboelyazed21.github.io/Housing-Student/'
+            },
+            6: {
+                title: 'موقع الشركة التقنية',
+                image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600',
+                description: 'موقع مؤسسي احترافي ومتطور لشركة تقنية رائدة مع عرض شامل للخدمات والمشاريع ونظام إدارة محتوى متقدم.',
+                technologies: ['WordPress', 'PHP', 'MySQL', 'Elementor', 'WooCommerce'],
+                challenges: [
+                    'تطوير نظام إدارة محتوى مخصص ومرن',
+                    'إنشاء معرض أعمال تفاعلي وجذاب',
+                    'تحسين الموقع لمحركات البحث (SEO)'
+                ],
+                date: 'أكتوبر 2023',
+                category: 'مواقع تجارية',
+                liveUrl: '#'
+            }
+        };
+
+        // Translations
+        const translations = {
+            ar: {
+                'home': 'الرئيسية',
+                'portfolio': 'معرض الأعمال',
+                'services': 'الخدمات',
+                'about': 'من نحن',
+                'contact': 'تواصل معنا',
+                'current-lang': 'English',
+                'portfolio-title': 'معرض الأعمال',
+                'portfolio-subtitle': 'استكشف مجموعة من المشاريع المميزة التي قمنا بتطويرها وتنفيذها بأعلى معايير الجودة والإبداع',
+                'filter-projects': 'تصفية المشاريع',
+                'search': 'البحث',
+                'search-placeholder': 'ابحث عن مشروع...',
+                'project-type': 'نوع المشروع',
+                'all': 'الكل',
+                'technologies': 'التقنيات المستخدمة',
+                'load-more': 'تحميل المزيد من المشاريع',
+                'visit-site': 'زيارة الموقع',
+                'share': 'مشاركة',
+                'project-desc': 'وصف المشروع',
+                'challenges': 'التحديات والحلول',
+                'implementation-date': 'تاريخ التنفيذ',
+                'company-description': 'نحن نقدم حلول تقنية مبتكرة ومتطورة لتلبية احتياجات عملائنا وتحقيق أهدافهم الرقمية',
+                'services-title': 'الخدمات',
+                'web-development': 'تطوير المواقع',
+                'mobile-apps': 'تطبيقات الجوال',
+                'ecommerce': 'التجارة الإلكترونية',
+                'digital-marketing': 'التسويق الرقمي',
+                'company-title': 'الشركة',
+                'about-us': 'من نحن',
+                'team': 'فريق العمل',
+                'careers': 'الوظائف',
+                'contact-us': 'اتصل بنا',
+                'follow-us': 'تابعنا',
+                'copyright': 'جميع الحقوق محفوظة'
+            },
+            en: {
+                'home': 'Home',
+                'portfolio': 'Portfolio',
+                'services': 'Services',
+                'about': 'About',
+                'contact': 'Contact',
+                'current-lang': 'العربية',
+                'portfolio-title': 'Portfolio',
+                'portfolio-subtitle': 'Explore a collection of outstanding projects we have developed and implemented with the highest standards of quality and creativity',
+                'filter-projects': 'Filter Projects',
+                'search': 'Search',
+                'search-placeholder': 'Search for a project...',
+                'project-type': 'Project Type',
+                'all': 'All',
+                'technologies': 'Technologies Used',
+                'load-more': 'Load More Projects',
+                'visit-site': 'Visit Site',
+                'share': 'Share',
+                'project-desc': 'Project Description',
+                'challenges': 'Challenges & Solutions',
+                'implementation-date': 'Implementation Date',
+                'company-description': 'We provide innovative and advanced technical solutions to meet our clients\' needs and achieve their digital goals',
+                'services-title': 'Services',
+                'web-development': 'Web Development',
+                'mobile-apps': 'Mobile Apps',
+                'ecommerce': 'E-commerce',
+                'digital-marketing': 'Digital Marketing',
+                'company-title': 'Company',
+                'about-us': 'About Us',
+                'team': 'Team',
+                'careers': 'Careers',
+                'contact-us': 'Contact Us',
+                'follow-us': 'Follow Us',
+                'copyright': 'All rights reserved'
+            }
+        };
+
+        // Global Variables
+        let currentLang = 'ar';
+        let isDarkMode = false;
+        let filteredProjects = Object.values(projectData);
+        let selectedCategory = 'all';
+        let selectedTechnologies = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDarkMode();
+            initializeLanguage();
+            initializeFilters();
+            initializeModal();
+            initializeScrollEffects();
+            renderProjects();
+            animateOnScroll();
+        });
+
+        // Dark Mode Functions
+        function initializeDarkMode() {
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                isDarkMode = true;
+                document.documentElement.classList.add('dark');
+            }
+
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        }
+
+        // Language Functions
+        function initializeLanguage() {
+            const languageSwitch = document.getElementById('language-switch');
+            languageSwitch.addEventListener('click', toggleLanguage);
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.documentElement.setAttribute('lang', currentLang);
+            document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            
+            updateTranslations();
+            updateSpacing();
+        }
+
+        function updateTranslations() {
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[currentLang][key]) {
+                    element.textContent = translations[currentLang][key];
+                }
+            });
+
+            document.querySelectorAll('[data-lang-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-lang-placeholder');
+                if (translations[currentLang][key]) {
+                    element.placeholder = translations[currentLang][key];
+                }
+            });
+        }
+
+        function updateSpacing() {
+            if (currentLang === 'en') {
+                document.querySelectorAll('.space-x-reverse').forEach(el => {
+                    el.classList.remove('space-x-reverse');
+                    el.classList.add('space-x-8');
+                });
+            } else {
+                document.querySelectorAll('.space-x-8').forEach(el => {
+                    el.classList.remove('space-x-8');
+                    el.classList.add('space-x-reverse');
+                });
+            }
+        }
+
+        // Filter Functions
+        function initializeFilters() {
+            // Category filters
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedCategory = this.dataset.category;
+                    filterProjects();
+                });
+            });
+
+            // Technology filters
+            document.querySelectorAll('.tech-checkbox').forEach(checkbox => {
+                const customBox = checkbox.nextElementSibling;
+                const checkIcon = customBox.querySelector('i');
+                
+                checkbox.addEventListener('change', function() {
+                    const tech = this.dataset.tech;
+                    if (this.checked) {
+                        selectedTechnologies.push(tech);
+                        customBox.classList.add('bg-primary-500', 'border-primary-500');
+                        customBox.classList.remove('border-gray-300', 'dark:border-gray-600');
+                        checkIcon.classList.remove('hidden');
+                    } else {
+                        selectedTechnologies = selectedTechnologies.filter(t => t !== tech);
+                        customBox.classList.remove('bg-primary-500', 'border-primary-500');
+                        customBox.classList.add('border-gray-300', 'dark:border-gray-600');
+                        checkIcon.classList.add('hidden');
+                    }
+                    filterProjects();
+                });
+
+                customBox.addEventListener('click', function() {
+                    checkbox.click();
+                });
+            });
+
+            // Search filter
+            document.getElementById('search-input').addEventListener('input', function() {
+                filterProjects();
+            });
+        }
+
+        function filterProjects() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            
+            filteredProjects = Object.values(projectData).filter(project => {
+                const matchesSearch = project.title.toLowerCase().includes(searchTerm) ||
+                                    project.description.toLowerCase().includes(searchTerm);
+                
+                const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory;
+                
+                const matchesTechnology = selectedTechnologies.length === 0 ||
+                                        selectedTechnologies.some(tech => project.technologies.includes(tech));
+                
+                return matchesSearch && matchesCategory && matchesTechnology;
+            });
+
+            renderProjects();
+        }
+
+        // Render Projects
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+            grid.innerHTML = '';
+
+            filteredProjects.forEach((project, index) => {
+                const projectCard = createProjectCard(project, index + 1);
+                grid.appendChild(projectCard);
+            });
+
+            // Re-animate cards
+            setTimeout(() => {
+                document.querySelectorAll('.project-card').forEach((card, index) => {
+                    card.style.animationDelay = `${index * 0.1}s`;
+                    card.classList.add('animate-scale-in');
+                });
+            }, 100);
+        }
+
+        function createProjectCard(project, id) {
+            const card = document.createElement('div');
+            card.className = 'project-card bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden cursor-pointer border border-gray-200 dark:border-gray-700';
+            card.dataset.project = id;
+
+            card.innerHTML = `
+                <div class="aspect-video bg-gray-100 dark:bg-gray-700 overflow-hidden">
+                    <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">${project.title}</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">${project.description.substring(0, 120)}...</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        ${project.technologies.slice(0, 3).map(tech => 
+                            `<span class="tech-tag px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 text-xs rounded-full">${tech}</span>`
+                        ).join('')}
+                        ${project.technologies.length > 3 ? 
+                            `<span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs rounded-full">+${project.technologies.length - 3}</span>` 
+                            : ''
+                        }
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">${project.date}</span>
+                        <div class="w-6 h-6 flex items-center justify-center text-primary-500">
+                            <i class="ri-arrow-${currentLang === 'ar' ? 'left' : 'right'}-line"></i>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            card.addEventListener('click', () => openModal(project));
+            return card;
+        }
+
+        // Modal Functions
+        function initializeModal() {
+            const modal = document.getElementById('project-modal');
+            const closeBtn = document.getElementById('close-modal');
+
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) closeModal();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeModal();
+            });
+        }
+
+        function openModal(project) {
+            const modal = document.getElementById('project-modal');
+            
+            document.getElementById('modal-title').textContent = project.title;
+            document.getElementById('modal-image').src = project.image;
+            document.getElementById('modal-description').textContent = project.description;
+            document.getElementById('modal-date').textContent = project.date;
+
+            // Technologies
+            const techContainer = document.getElementById('modal-technologies');
+            techContainer.innerHTML = '';
+            project.technologies.forEach(tech => {
+                const span = document.createElement('span');
+                span.className = 'tech-tag px-3 py-2 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 text-sm rounded-full';
+                span.textContent = tech;
+                techContainer.appendChild(span);
+            });
+
+            // Challenges
+            const challengesContainer = document.getElementById('modal-challenges');
+            challengesContainer.innerHTML = '';
+            project.challenges.forEach(challenge => {
+                const li = document.createElement('li');
+                li.className = 'flex items-start';
+                li.innerHTML = `
+                    <div class="w-2 h-2 bg-primary-500 rounded-full mt-2 ml-3 flex-shrink-0"></div>
+                    <span>${challenge}</span>
+                `;
+                challengesContainer.appendChild(li);
+            });
+
+            // Visit site button
+            const visitBtn = document.getElementById('visit-site-btn');
+            if (project.liveUrl && project.liveUrl !== '#') {
+                visitBtn.onclick = () => window.open(project.liveUrl, '_blank');
+                visitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                visitBtn.onclick = () => alert('الرابط غير متوفر حالياً');
+                visitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Scroll Effects
+        function initializeScrollEffects() {
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+
+                // Scroll indicator
+                const scrollIndicator = document.querySelector('.scroll-indicator');
+                const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                scrollIndicator.style.width = scrollPercent + '%';
+            });
+
+            // Parallax effect
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('.parallax');
+                
+                parallaxElements.forEach(element => {
+                    const speed = element.dataset.speed || 0.5;
+                    element.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            });
+        }
+
+        // Animate on Scroll
+        function animateOnScroll() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Add nav link hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
