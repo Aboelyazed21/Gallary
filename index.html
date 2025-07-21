@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -590,6 +589,21 @@
         // Project Data
         const projectData = {
             1: {
+                title: 'آلة حاسبة ذكية',
+                image: 'https://m.media-amazon.com/images/I/61ZVu4vCZxL.jpg',
+                description: 'Build a sleek and modern all-in-one calculator web app. It should support complex mathematical operations (including scientific, trigonometric, and algebraic functions), real-time currency exchange with up-to-date rates, and a wide range of unit conversions (length, weight, volume, temperature, speed, etc.). The design must be responsive and visually appealing — with a clean, intuitive interface, dark/light mode toggle, soft shadows, rounded edges, and subtle animations. Include a tabbed or collapsible layout to switch between calculator types. Use live APIs for exchange rates (e.g., ExchangeRate-API or OpenExchangeRates), and ensure fast performance across all devices.',
+                technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+                challenges: [
+                    'تطوير واجهة مستخدم بديهية وسهلة الاستخدام',
+                    'ضمان دقة العمليات الحسابية المعقدة',
+                    'إضافة ميزات متقدمة مثل التاريخ والذاكرة',
+                    'تحسين الأداء للحسابات السريعة'
+                ],
+                date: 'يناير 2025',
+                category: 'تطبيقات ويب',
+                liveUrl: '#'
+            },
+            2: {
                 title: 'متجر الأزياء العصرية',
                 image: 'https://images.pexels.com/photos/325876/pexels-photo-325876.jpeg?auto=compress&cs=tinysrgb&w=600',
                 description: 'منصة تجارة إلكترونية متكاملة تم تطويرها خصيصاً لبيع الأزياء النسائية والرجالية. تتميز المنصة بتصميم عصري وواجهة مستخدم سهلة الاستخدام، مع نظام دفع آمن متعدد الخيارات وإدارة متقدمة للمخزون.',
@@ -603,7 +617,7 @@
                 category: 'مواقع تجارية',
                 liveUrl: '#'
             },
-            2: {
+            3: {
                 title: 'منصة التعلم الذكي',
                 image: 'https://images.pexels.com/photos/159775/library-la-trobe-study-students-159775.jpeg?auto=compress&cs=tinysrgb&w=600',
                 description: 'منصة تعليمية تفاعلية متطورة تقدم دورات متخصصة في البرمجة والتصميم والتسويق الرقمي. تتضمن المنصة نظام تتبع التقدم، اختبارات تفاعلية، منتديات نقاش، ونظام شهادات معتمدة.',
@@ -617,7 +631,7 @@
                 category: 'منصات تعليمية',
                 liveUrl: '#'
             },
-            3: {
+            4: {
                 title: 'نظام إدارة العيادات',
                 image: 'https://images.pexels.com/photos/356040/pexels-photo-356040.jpeg?auto=compress&cs=tinysrgb&w=600',
                 description: 'نظام شامل ومتطور لإدارة العيادات الطبية يشمل حجز المواعيد الإلكتروني، إدارة ملفات المرضى الرقمية، نظام الفواتير والمدفوعات، وتقارير طبية مفصلة.',
@@ -631,7 +645,7 @@
                 category: 'تطبيقات ويب',
                 liveUrl: 'https://singular-sawine-0bc006.netlify.app'
             },
-            4: {
+            5: {
                 title: 'تطبيق توصيل الطعام',
                 image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600',
                 description: 'تطبيق متكامل لطلب وتوصيل الطعام يربط بين المطاعم والعملاء وسائقي التوصيل. يتضمن التطبيق نظام تتبع الطلبات في الوقت الفعلي، دفع إلكتروني آمن.',
@@ -645,7 +659,7 @@
                 category: 'تطبيقات ويب',
                 liveUrl: 'https://aboelyazed21.github.io/Food/'
             },
-            5: {
+            6: {
                 title: 'Housing-Student',
                 image: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600',
                 description: 'منصة مخصصة لسكن الطلاب توفر واجهة سهلة للبحث عن شقق وسكن جامعي مع معلومات مفصلة وخرائط تفاعلية وروابط مباشرة.',
@@ -658,20 +672,6 @@
                 date: 'يوليو 2025',
                 category: 'مواقع شخصية',
                 liveUrl: 'https://aboelyazed21.github.io/Housing-Student/'
-            },
-            6: {
-                title: 'موقع الشركة التقنية',
-                image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600',
-                description: 'موقع مؤسسي احترافي ومتطور لشركة تقنية رائدة مع عرض شامل للخدمات والمشاريع ونظام إدارة محتوى متقدم.',
-                technologies: ['WordPress', 'PHP', 'MySQL', 'Elementor', 'WooCommerce'],
-                challenges: [
-                    'تطوير نظام إدارة محتوى مخصص ومرن',
-                    'إنشاء معرض أعمال تفاعلي وجذاب',
-                    'تحسين الموقع لمحركات البحث (SEO)'
-                ],
-                date: 'أكتوبر 2023',
-                category: 'مواقع تجارية',
-                liveUrl: '#'
             }
         };
 
@@ -772,18 +772,34 @@
             const darkModeToggle = document.getElementById('dark-mode-toggle');
             const savedTheme = localStorage.getItem('theme');
             
+            // Check for saved theme or system preference
             if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                isDarkMode = true;
-                document.documentElement.classList.add('dark');
+                enableDarkMode();
+            } else {
+                disableDarkMode();
             }
 
             darkModeToggle.addEventListener('click', toggleDarkMode);
         }
 
+        function enableDarkMode() {
+            isDarkMode = true;
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        }
+
+        function disableDarkMode() {
+            isDarkMode = false;
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+
         function toggleDarkMode() {
-            isDarkMode = !isDarkMode;
-            document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            if (isDarkMode) {
+                disableDarkMode();
+            } else {
+                enableDarkMode();
+            }
         }
 
         // Language Functions
