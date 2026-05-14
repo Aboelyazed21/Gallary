@@ -17,28 +17,14 @@
                 extend: {
                     colors: {
                         primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            200: '#bfdbfe',
-                            300: '#93c5fd',
-                            400: '#60a5fa',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a',
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8',
+                            800: '#1e40af', 900: '#1e3a8a',
                         },
                         secondary: {
-                            50: '#faf5ff',
-                            100: '#f3e8ff',
-                            200: '#e9d5ff',
-                            300: '#d8b4fe',
-                            400: '#c084fc',
-                            500: '#a855f7',
-                            600: '#9333ea',
-                            700: '#7c3aed',
-                            800: '#6b21a8',
-                            900: '#581c87',
+                            50: '#faf5ff', 100: '#f3e8ff', 200: '#e9d5ff', 300: '#d8b4fe',
+                            400: '#c084fc', 500: '#a855f7', 600: '#9333ea', 700: '#7c3aed',
+                            800: '#6b21a8', 900: '#581c87',
                         }
                     },
                     fontFamily: {
@@ -59,48 +45,16 @@
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' }
-                        },
-                        slideUp: {
-                            '0%': { transform: 'translateY(50px)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' }
-                        },
-                        slideDown: {
-                            '0%': { transform: 'translateY(-50px)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' }
-                        },
-                        slideRight: {
-                            '0%': { transform: 'translateX(-50px)', opacity: '0' },
-                            '100%': { transform: 'translateX(0)', opacity: '1' }
-                        },
-                        slideLeft: {
-                            '0%': { transform: 'translateX(50px)', opacity: '0' },
-                            '100%': { transform: 'translateX(0)', opacity: '1' }
-                        },
-                        scaleIn: {
-                            '0%': { transform: 'scale(0.8)', opacity: '0' },
-                            '100%': { transform: 'scale(1)', opacity: '1' }
-                        },
-                        bounceIn: {
-                            '0%': { transform: 'scale(0.3)', opacity: '0' },
-                            '50%': { transform: 'scale(1.05)' },
-                            '70%': { transform: 'scale(0.9)' },
-                            '100%': { transform: 'scale(1)', opacity: '1' }
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-10px)' }
-                        },
-                        glow: {
-                            '0%': { boxShadow: '0 0 5px rgba(59, 130, 246, 0.5)' },
-                            '100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)' }
-                        },
-                        gradient: {
-                            '0%, 100%': { backgroundPosition: '0% 50%' },
-                            '50%': { backgroundPosition: '100% 50%' }
-                        }
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideUp: { '0%': { transform: 'translateY(50px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+                        slideDown: { '0%': { transform: 'translateY(-50px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+                        slideRight: { '0%': { transform: 'translateX(-50px)', opacity: '0' }, '100%': { transform: 'translateX(0)', opacity: '1' } },
+                        slideLeft: { '0%': { transform: 'translateX(50px)', opacity: '0' }, '100%': { transform: 'translateX(0)', opacity: '1' } },
+                        scaleIn: { '0%': { transform: 'scale(0.8)', opacity: '0' }, '100%': { transform: 'scale(1)', opacity: '1' } },
+                        bounceIn: { '0%': { transform: 'scale(0.3)', opacity: '0' }, '50%': { transform: 'scale(1.05)' }, '70%': { transform: 'scale(0.9)' }, '100%': { transform: 'scale(1)', opacity: '1' } },
+                        float: { '0%, 100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-10px)' } },
+                        glow: { '0%': { boxShadow: '0 0 5px rgba(59, 130, 246, 0.5)' }, '100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)' } },
+                        gradient: { '0%, 100%': { backgroundPosition: '0% 50%' }, '50%': { backgroundPosition: '100% 50%' } }
                     }
                 }
             }
@@ -108,170 +62,35 @@
     </script>
     
     <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(-45deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-        }
-        
-        .glass-effect {
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .dark .glass-effect {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .project-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-15px) rotateX(5deg);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-        
-        .dark .project-card:hover {
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-        }
-        
-        .filter-btn {
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .filter-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-        
-        .filter-btn:hover::before {
-            left: 100%;
-        }
-        
-        .filter-btn.active {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            color: white;
-            transform: scale(1.05);
-        }
-        
-        .modal {
-            backdrop-filter: blur(15px);
-            animation: fadeIn 0.3s ease-out;
-        }
-        
-        .modal-content {
-            animation: scaleIn 0.3s ease-out;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        
-        .tech-tag {
-            transition: all 0.3s ease;
-        }
-        
-        .tech-tag:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .navbar {
-            transition: all 0.3s ease;
-        }
-        
-        .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .dark .navbar.scrolled {
-            background: rgba(17, 24, 39, 0.95);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .loading-spinner {
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        .parallax {
-            transform: translateZ(0);
-            will-change: transform;
-        }
-        
-        .text-gradient {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .btn-glow {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-glow::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.6s;
-        }
-        
-        .btn-glow:hover::before {
-            left: 100%;
-        }
-        
-        .scroll-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-            z-index: 9999;
-            transition: width 0.1s ease;
-        }
-        
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-        
-        .animate-on-scroll.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        body { font-family: 'Cairo', sans-serif; }
+        .gradient-bg { background: linear-gradient(-45deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b); background-size: 400% 400%; animation: gradient 15s ease infinite; }
+        .glass-effect { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .dark .glass-effect { background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .project-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
+        .project-card:hover { transform: translateY(-15px) rotateX(5deg); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15); }
+        .dark .project-card:hover { box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); }
+        .filter-btn { transition: all 0.3s ease; position: relative; overflow: hidden; text-align: start; }
+        .filter-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.5s; }
+        .filter-btn:hover::before { left: 100%; }
+        .filter-btn.active { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; transform: scale(1.05); }
+        .modal { backdrop-filter: blur(15px); animation: fadeIn 0.3s ease-out; }
+        .modal-content { animation: scaleIn 0.3s ease-out; max-height: 90vh; overflow-y: auto; }
+        .tech-tag { transition: all 0.3s ease; }
+        .tech-tag:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
+        .navbar { transition: all 0.3s ease; }
+        .navbar.scrolled { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
+        .dark .navbar.scrolled { background: rgba(17, 24, 39, 0.95); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); }
+        .text-gradient { background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .btn-glow { position: relative; overflow: hidden; }
+        .btn-glow::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.6s; }
+        .btn-glow:hover::before { left: 100%; }
+        .scroll-indicator { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); z-index: 9999; transition: width 0.1s ease; }
+        .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+        .animate-on-scroll.animated { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-    <!-- Scroll Indicator -->
     <div class="scroll-indicator"></div>
     
     <!-- Navigation -->
@@ -279,31 +98,19 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center animate-slide-right">
-                    <div class="text-2xl font-pacifico text-gradient">
-                        ENG ZEZO
-                    </div>
+                    <div class="text-2xl font-pacifico text-gradient">ENG ZEZO</div>
                 </div>
                 
-                <div class="hidden md:flex items-center space-x-8 space-x-reverse animate-slide-down">
-                    <a href="#" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative">
-                        <span data-lang-key="home">الرئيسية</span>
-                    </a>
-                    <a href="#" class="nav-link text-primary-500 dark:text-primary-400 font-medium relative">
-                        <span data-lang-key="portfolio">معرض الأعمال</span>
-                    </a>
-                    <a href="#" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative">
-                        <span data-lang-key="services">الخدمات</span>
-                    </a>
-                    <a href="#" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative">
-                        <span data-lang-key="about">من نحن</span>
-                    </a>
-                    <a href="#" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative">
-                        <span data-lang-key="contact">تواصل معنا</span>
-                    </a>
+                <div class="hidden md:flex items-center space-x-8 space-x-reverse animate-slide-down" id="nav-links">
+                    <a href="#" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative"><span data-lang-key="home">الرئيسية</span></a>
+                    <a href="#" class="nav-link text-primary-500 dark:text-primary-400 font-medium relative"><span data-lang-key="portfolio">معرض الأعمال</span></a>
+                    <a href="#" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative"><span data-lang-key="services">الخدمات</span></a>
+                    <a href="#" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative"><span data-lang-key="about">من نحن</span></a>
+                    <a href="#" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative"><span data-lang-key="contact">تواصل معنا</span></a>
                     
-                    <div class="flex items-center space-x-4 space-x-reverse">
-                        <button id="language-switch" class="flex items-center text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 mr-8">
-                            <i class="ri-translate-2-line ml-2 text-lg"></i>
+                    <div class="flex items-center space-x-4 space-x-reverse mx-4">
+                        <button id="language-switch" class="flex items-center text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300">
+                            <i class="ri-translate-2-line mx-2 text-lg"></i>
                             <span data-lang-key="current-lang">English</span>
                         </button>
                         
@@ -314,9 +121,7 @@
                     </div>
                 </div>
                 
-                <button class="md:hidden w-8 h-8 flex items-center justify-center text-gray-700 dark:text-gray-300">
-                    <i class="ri-menu-line text-xl"></i>
-                </button>
+                <button class="md:hidden w-8 h-8 flex items-center justify-center text-gray-700 dark:text-gray-300"><i class="ri-menu-line text-xl"></i></button>
             </div>
         </div>
     </nav>
@@ -326,14 +131,9 @@
         <div class="absolute inset-0 gradient-bg opacity-10"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div class="animate-bounce-in">
-                <h1 class="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6 animate-slide-up">
-                    <span class="text-gradient" data-lang-key="portfolio-title">معرض الأعمال</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed animate-slide-up" style="animation-delay: 0.2s">
-                    <span data-lang-key="portfolio-subtitle">استكشف مجموعة من المشاريع المميزة التي قمنا بتطويرها وتنفيذها بأعلى معايير الجودة والإبداع</span>
-                </p>
+                <h1 class="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6 animate-slide-up"><span class="text-gradient" data-lang-key="portfolio-title">معرض الأعمال</span></h1>
+                <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed animate-slide-up" style="animation-delay: 0.2s"><span data-lang-key="portfolio-subtitle">استكشف مجموعة من المشاريع المميزة التي قمنا بتطويرها وتنفيذها بأعلى معايير الجودة والإبداع</span></p>
             </div>
-            
             <!-- Floating Elements -->
             <div class="absolute top-20 left-10 w-20 h-20 bg-primary-500/20 rounded-full animate-float"></div>
             <div class="absolute top-40 right-20 w-16 h-16 bg-secondary-500/20 rounded-full animate-float" style="animation-delay: 1s"></div>
@@ -347,86 +147,51 @@
             <!-- Sidebar Filter -->
             <aside class="lg:w-1/4 animate-slide-right">
                 <div class="glass-effect rounded-2xl p-6 sticky top-24 border border-gray-200 dark:border-gray-700">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6 animate-fade-in">
-                        <span data-lang-key="filter-projects">تصفية المشاريع</span>
-                    </h3>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6 animate-fade-in"><span data-lang-key="filter-projects">تصفية المشاريع</span></h3>
                     
                     <!-- Search -->
                     <div class="mb-6 animate-slide-up" style="animation-delay: 0.1s">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            <span data-lang-key="search">البحث</span>
-                        </label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"><span data-lang-key="search">البحث</span></label>
                         <div class="relative">
-                            <input 
-                                type="text" 
-                                id="search-input"
-                                placeholder="ابحث عن مشروع..." 
-                                data-lang-placeholder="search-placeholder"
-                                class="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm transition-all duration-300"
-                            >
-                            <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
-                                <i class="ri-search-line text-gray-400"></i>
-                            </div>
+                            <input type="text" id="search-input" placeholder="ابحث عن مشروع..." data-lang-placeholder="search-placeholder" class="w-full px-10 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm transition-all duration-300">
+                            <div class="absolute right-3 rtl:right-3 ltr:left-3 top-1/2 transform -translate-y-1/2 rtl:translate-x-0 ltr:translate-x-0"><i class="ri-search-line text-gray-400"></i></div>
                         </div>
                     </div>
 
                     <!-- Categories -->
                     <div class="mb-6 animate-slide-up" style="animation-delay: 0.2s">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                            <span data-lang-key="project-type">نوع المشروع</span>
-                        </label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3"><span data-lang-key="project-type">نوع المشروع</span></label>
                         <div class="space-y-2" id="category-filters">
-                            <button class="filter-btn active w-full text-right px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="all">
-                                <span data-lang-key="all">الكل</span>
-                            </button>
-                            <button class="filter-btn w-full text-right px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="مواقع تجارية">
-                                مواقع تجارية
-                            </button>
-                            <button class="filter-btn w-full text-right px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="تطبيقات ويب">
-                                تطبيقات ويب
-                            </button>
-                            <button class="filter-btn w-full text-right px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="مواقع شخصية">
-                                مواقع شخصية
-                            </button>
-                            <button class="filter-btn w-full text-right px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="منصات تعليمية">
-                                منصات تعليمية
-                            </button>
+                            <button class="filter-btn active w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="all"><span data-lang-key="all">الكل</span></button>
+                            <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="commercial"><span data-lang-key="commercial-sites">مواقع تجارية</span></button>
+                            <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="webapp"><span data-lang-key="web-apps">تطبيقات ويب</span></button>
+                            <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="personal"><span data-lang-key="personal-sites">مواقع شخصية</span></button>
+                            <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="education"><span data-lang-key="edu-platforms">منصات تعليمية</span></button>
+                            <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="entertainment"><span data-lang-key="entertainment-sites">مواقع ترفيهية</span></button>
+                            <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="sports"><span data-lang-key="sports-sites">مواقع رياضية</span></button>
+                            <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="data-analysis"><span data-lang-key="data-analysis-sites">تحليل بيانات</span></button>
+                            <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="ai"><span data-lang-key="ai-apps">تطبيقات ذكاء اصطناعي</span></button>
                         </div>
                     </div>
 
                     <!-- Technologies -->
                     <div class="animate-slide-up" style="animation-delay: 0.3s">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                            <span data-lang-key="technologies">التقنيات المستخدمة</span>
-                        </label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3"><span data-lang-key="technologies">التقنيات المستخدمة</span></label>
                         <div class="space-y-3" id="tech-filters">
                             <label class="flex items-center cursor-pointer group">
                                 <input type="checkbox" class="sr-only tech-checkbox" data-tech="React">
-                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded ml-3 flex items-center justify-center transition-all duration-300 group-hover:border-primary-500">
-                                    <i class="ri-check-line text-xs text-white hidden"></i>
-                                </div>
+                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded mx-3 flex items-center justify-center transition-all duration-300 group-hover:border-primary-500"><i class="ri-check-line text-xs text-white hidden"></i></div>
                                 <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-500 transition-colors duration-300">React</span>
                             </label>
                             <label class="flex items-center cursor-pointer group">
-                                <input type="checkbox" class="sr-only tech-checkbox" data-tech="Vue.js">
-                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded ml-3 flex items-center justify-center transition-all duration-300 group-hover:border-primary-500">
-                                    <i class="ri-check-line text-xs text-white hidden"></i>
-                                </div>
-                                <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-500 transition-colors duration-300">Vue.js</span>
+                                <input type="checkbox" class="sr-only tech-checkbox" data-tech="Python">
+                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded mx-3 flex items-center justify-center transition-all duration-300 group-hover:border-primary-500"><i class="ri-check-line text-xs text-white hidden"></i></div>
+                                <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-500 transition-colors duration-300">Python / AI</span>
                             </label>
                             <label class="flex items-center cursor-pointer group">
                                 <input type="checkbox" class="sr-only tech-checkbox" data-tech="Laravel">
-                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded ml-3 flex items-center justify-center transition-all duration-300 group-hover:border-primary-500">
-                                    <i class="ri-check-line text-xs text-white hidden"></i>
-                                </div>
+                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded mx-3 flex items-center justify-center transition-all duration-300 group-hover:border-primary-500"><i class="ri-check-line text-xs text-white hidden"></i></div>
                                 <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-500 transition-colors duration-300">Laravel</span>
-                            </label>
-                            <label class="flex items-center cursor-pointer group">
-                                <input type="checkbox" class="sr-only tech-checkbox" data-tech="WordPress">
-                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded ml-3 flex items-center justify-center transition-all duration-300 group-hover:border-primary-500">
-                                    <i class="ri-check-line text-xs text-white hidden"></i>
-                                </div>
-                                <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-500 transition-colors duration-300">WordPress</span>
                             </label>
                         </div>
                     </div>
@@ -454,60 +219,39 @@
             <!-- Modal Header -->
             <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
                 <h2 id="modal-title" class="text-2xl font-bold text-gray-900 dark:text-white"></h2>
-                <button id="close-modal" class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <i class="ri-close-line text-xl"></i>
-                </button>
+                <button id="close-modal" class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"><i class="ri-close-line text-xl"></i></button>
             </div>
 
             <!-- Modal Content -->
             <div class="p-6">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Image and Actions -->
                     <div class="animate-slide-right">
                         <img id="modal-image" src="" alt="" class="w-full rounded-xl shadow-lg">
                         <div class="flex gap-4 mt-6">
                             <button id="visit-site-btn" class="btn-glow flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 font-medium flex items-center justify-center">
-                                <i class="ri-external-link-line ml-2"></i>
-                                <span data-lang-key="visit-site">زيارة الموقع</span>
+                                <i class="ri-external-link-line mx-2"></i><span data-lang-key="visit-site">زيارة الموقع</span>
                             </button>
                             <button id="share-btn" class="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 font-medium flex items-center justify-center">
-                                <i class="ri-share-line ml-2"></i>
-                                <span data-lang-key="share">مشاركة</span>
+                                <i class="ri-share-line mx-2"></i><span data-lang-key="share">مشاركة</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Details -->
                     <div class="animate-slide-left">
-                        <!-- Description -->
                         <div class="mb-6">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                                <span data-lang-key="project-desc">وصف المشروع</span>
-                            </h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3"><span data-lang-key="project-desc">وصف المشروع</span></h3>
                             <p id="modal-description" class="text-gray-600 dark:text-gray-300 leading-relaxed"></p>
                         </div>
-
-                        <!-- Technologies -->
                         <div class="mb-6">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                                <span data-lang-key="technologies">التقنيات المستخدمة</span>
-                            </h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3"><span data-lang-key="technologies">التقنيات المستخدمة</span></h3>
                             <div id="modal-technologies" class="flex flex-wrap gap-2"></div>
                         </div>
-
-                        <!-- Challenges -->
                         <div class="mb-6">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                                <span data-lang-key="challenges">التحديات والحلول</span>
-                            </h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3"><span data-lang-key="challenges">التحديات والحلول</span></h3>
                             <ul id="modal-challenges" class="space-y-2 text-gray-600 dark:text-gray-300"></ul>
                         </div>
-
-                        <!-- Date -->
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                                <span data-lang-key="implementation-date">تاريخ التنفيذ</span>
-                            </h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3"><span data-lang-key="implementation-date">تاريخ التنفيذ</span></h3>
                             <p id="modal-date" class="text-gray-600 dark:text-gray-300"></p>
                         </div>
                     </div>
@@ -521,21 +265,12 @@
         <div class="absolute inset-0 gradient-bg opacity-5"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Brand -->
                 <div class="animate-slide-up">
-                    <div class="text-2xl font-pacifico text-gradient mb-4">
-                        Aboelyazed Hatem
-                    </div>
-                    <p class="text-gray-400 leading-relaxed">
-                        <span data-lang-key="company-description">نحن نقدم حلول تقنية مبتكرة ومتطورة لتلبية احتياجات عملائنا وتحقيق أهدافهم الرقمية</span>
-                    </p>
+                    <div class="text-2xl font-pacifico text-gradient mb-4">Aboelyazed Hatem</div>
+                    <p class="text-gray-400 leading-relaxed"><span data-lang-key="company-description">نحن نقدم حلول تقنية مبتكرة ومتطورة لتلبية احتياجات عملائنا وتحقيق أهدافهم الرقمية</span></p>
                 </div>
-
-                <!-- Services -->
                 <div class="animate-slide-up" style="animation-delay: 0.1s">
-                    <h3 class="text-lg font-semibold mb-4">
-                        <span data-lang-key="services-title">الخدمات</span>
-                    </h3>
+                    <h3 class="text-lg font-semibold mb-4"><span data-lang-key="services-title">الخدمات</span></h3>
                     <ul class="space-y-2 text-gray-400">
                         <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="web-development">تطوير المواقع</a></li>
                         <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="mobile-apps">تطبيقات الجوال</a></li>
@@ -543,12 +278,8 @@
                         <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="digital-marketing">التسويق الرقمي</a></li>
                     </ul>
                 </div>
-
-                <!-- Company -->
                 <div class="animate-slide-up" style="animation-delay: 0.2s">
-                    <h3 class="text-lg font-semibold mb-4">
-                        <span data-lang-key="company-title">الشركة</span>
-                    </h3>
+                    <h3 class="text-lg font-semibold mb-4"><span data-lang-key="company-title">الشركة</span></h3>
                     <ul class="space-y-2 text-gray-400">
                         <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="about-us">من نحن</a></li>
                         <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="team">فريق العمل</a></li>
@@ -556,29 +287,16 @@
                         <li><a href="#" class="hover:text-white transition-colors duration-300" data-lang-key="contact-us">اتصل بنا</a></li>
                     </ul>
                 </div>
-
-                <!-- Social -->
                 <div class="animate-slide-up" style="animation-delay: 0.3s">
-                    <h3 class="text-lg font-semibold mb-4">
-                        <span data-lang-key="follow-us">تابعنا</span>
-                    </h3>
+                    <h3 class="text-lg font-semibold mb-4"><span data-lang-key="follow-us">تابعنا</span></h3>
                     <div class="flex gap-4">
-                        <a href="#" class="w-12 h-12 bg-gray-800 dark:bg-gray-900 rounded-xl flex items-center justify-center hover:bg-primary-500 transition-all duration-300 transform hover:scale-110">
-                            <i class="ri-facebook-fill text-lg"></i>
-                        </a>
-                        <a href="#" class="w-12 h-12 bg-gray-800 dark:bg-gray-900 rounded-xl flex items-center justify-center hover:bg-primary-500 transition-all duration-300 transform hover:scale-110">
-                            <i class="ri-twitter-fill text-lg"></i>
-                        </a>
-                        <a href="#" class="w-12 h-12 bg-gray-800 dark:bg-gray-900 rounded-xl flex items-center justify-center hover:bg-primary-500 transition-all duration-300 transform hover:scale-110">
-                            <i class="ri-linkedin-fill text-lg"></i>
-                        </a>
-                        <a href="#" class="w-12 h-12 bg-gray-800 dark:bg-gray-900 rounded-xl flex items-center justify-center hover:bg-primary-500 transition-all duration-300 transform hover:scale-110">
-                            <i class="ri-instagram-fill text-lg"></i>
-                        </a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 dark:bg-gray-900 rounded-xl flex items-center justify-center hover:bg-primary-500 transition-all duration-300 transform hover:scale-110"><i class="ri-facebook-fill text-lg"></i></a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 dark:bg-gray-900 rounded-xl flex items-center justify-center hover:bg-primary-500 transition-all duration-300 transform hover:scale-110"><i class="ri-twitter-fill text-lg"></i></a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 dark:bg-gray-900 rounded-xl flex items-center justify-center hover:bg-primary-500 transition-all duration-300 transform hover:scale-110"><i class="ri-linkedin-fill text-lg"></i></a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 dark:bg-gray-900 rounded-xl flex items-center justify-center hover:bg-primary-500 transition-all duration-300 transform hover:scale-110"><i class="ri-instagram-fill text-lg"></i></a>
                     </div>
                 </div>
             </div>
-
             <div class="border-t border-gray-800 dark:border-gray-700 mt-12 pt-8 text-center text-gray-400 animate-fade-in">
                 <p>&copy; 2024 Aboelyazed Hatem. <span data-lang-key="copyright">جميع الحقوق محفوظة</span></p>
             </div>
@@ -586,109 +304,171 @@
     </footer>
 
     <script>
-        // Project Data
+        // Project Data (10 Projects Bilingual)
         const projectData = {
             1: {
-                title: 'آلة حاسبة ذكية',
+                title: { ar: 'آلة حاسبة ذكية', en: 'Smart Calculator' },
                 image: 'https://m.media-amazon.com/images/I/61ZVu4vCZxL.jpg',
-                description: 'Build a sleek and modern all-in-one calculator web app. It should support complex mathematical operations (including scientific, trigonometric, and algebraic functions), real-time currency exchange with up-to-date rates, and a wide range of unit conversions (length, weight, volume, temperature, speed, etc.). The design must be responsive and visually appealing — with a clean, intuitive interface, dark/light mode toggle, soft shadows, rounded edges, and subtle animations. Include a tabbed or collapsible layout to switch between calculator types. Use live APIs for exchange rates (e.g., ExchangeRate-API or OpenExchangeRates), and ensure fast performance across all devices.',
+                description: { 
+                    ar: 'تطبيق ويب متكامل يضم آلة حاسبة عصرية تدعم العمليات الرياضية المعقدة (بما في ذلك الدوال العلمية)، وتحويل العملات في الوقت الفعلي بأسعار محدثة، ومجموعة واسعة من تحويلات الوحدات. التصميم متجاوب وجذاب بصرياً، مع إمكانية التبديل بين الوضعين الداكن والفاتح.',
+                    en: 'Build a sleek and modern all-in-one calculator web app. It supports complex mathematical operations, real-time currency exchange with up-to-date rates, and unit conversions. Responsive design with clean interface and dark/light mode toggle.' 
+                },
                 technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
-                challenges: [
-                    'تطوير واجهة مستخدم بديهية وسهلة الاستخدام',
-                    'ضمان دقة العمليات الحسابية المعقدة',
-                    'إضافة ميزات متقدمة مثل التاريخ والذاكرة',
-                    'تحسين الأداء للحسابات السريعة'
-                ],
+                challenges: {
+                    ar: ['تطوير واجهة مستخدم بديهية وسهلة الاستخدام', 'ضمان دقة العمليات الحسابية المعقدة', 'إضافة ميزات متقدمة مثل التاريخ والذاكرة', 'تحسين الأداء للحسابات السريعة'],
+                    en: ['Developing an intuitive user interface', 'Ensuring calculation accuracy', 'Adding advanced features like history/memory', 'Optimizing performance for fast calculations']
+                },
+                date: { ar: 'مايو 2024', en: 'May 2024' },
+                category: 'webapp',
                 liveUrl: 'https://aboelyazed21.github.io/calc/'
             },
             2: {
-                title: 'متجر الأزياء العصرية',
+                title: { ar: 'متجر الأزياء العصرية', en: 'Modern Fashion Store' },
                 image: 'https://images.pexels.com/photos/325876/pexels-photo-325876.jpeg?auto=compress&cs=tinysrgb&w=600',
-                description: 'منصة تجارة إلكترونية متكاملة تم تطويرها خصيصاً لبيع الأزياء النسائية والرجالية. تتميز المنصة بتصميم عصري وواجهة مستخدم سهلة الاستخدام، مع نظام دفع آمن متعدد الخيارات وإدارة متقدمة للمخزون.',
+                description: { 
+                    ar: 'منصة تجارة إلكترونية متكاملة تم تطويرها خصيصاً لبيع الأزياء النسائية والرجالية. تتميز المنصة بتصميم عصري وواجهة مستخدم سهلة الاستخدام، مع نظام دفع آمن متعدد الخيارات وإدارة متقدمة للمخزون.',
+                    en: 'An integrated e-commerce platform specifically developed for selling men\'s and women\'s fashion. Features a modern design, user-friendly interface, secure multi-option payment system, and advanced inventory management.' 
+                },
                 technologies: ['React', 'Node.js', 'MongoDB', 'Stripe API', 'AWS'],
-                challenges: [
-                    'تطوير نظام دفع آمن ومتوافق مع معايير PCI DSS',
-                    'تحسين أداء الموقع للتعامل مع آلاف المنتجات',
-                    'تطوير نظام إدارة مخزون ذكي مع تنبيهات تلقائية'
-                ],
-                date: 'مارس 2024',
-                category: 'مواقع تجارية',
+                challenges: {
+                    ar: ['تطوير نظام دفع آمن ومتوافق مع معايير PCI DSS', 'تحسين أداء الموقع للتعامل مع آلاف المنتجات', 'تطوير نظام إدارة مخزون ذكي مع تنبيهات تلقائية'],
+                    en: ['Developing a secure payment system', 'Optimizing site performance for thousands of products', 'Developing a smart inventory system with auto-alerts']
+                },
+                date: { ar: 'مارس 2024', en: 'March 2024' },
+                category: 'commercial',
                 liveUrl: '#'
             },
             3: {
-                title: 'منصة التعلم الذكي',
+                title: { ar: 'منصة التعلم الذكي', en: 'Smart Learning Platform' },
                 image: 'https://images.pexels.com/photos/159775/library-la-trobe-study-students-159775.jpeg?auto=compress&cs=tinysrgb&w=600',
-                description: 'منصة تعليمية تفاعلية متطورة تقدم دورات متخصصة في البرمجة والتصميم والتسويق الرقمي. تتضمن المنصة نظام تتبع التقدم، اختبارات تفاعلية، منتديات نقاش، ونظام شهادات معتمدة.',
+                description: { 
+                    ar: 'منصة تعليمية تفاعلية متطورة تقدم دورات متخصصة في البرمجة والتصميم والتسويق الرقمي. تتضمن المنصة نظام تتبع التقدم، اختبارات تفاعلية، منتديات نقاش، ونظام شهادات معتمدة.',
+                    en: 'An interactive e-learning platform offering specialized courses in programming, design, and digital marketing. Includes progress tracking, interactive quizzes, discussion forums, and a certification system.' 
+                },
                 technologies: ['Vue.js', 'Laravel', 'MySQL', 'WebRTC', 'Redis'],
-                challenges: [
-                    'تطوير نظام بث مباشر عالي الجودة للمحاضرات',
-                    'إنشاء نظام تقييم ذكي يتكيف مع مستوى الطالب',
-                    'تصميم لوحة تحكم شاملة للمدرسين والطلاب'
-                ],
-                date: 'فبراير 2024',
-                category: 'منصات تعليمية',
+                challenges: {
+                    ar: ['تطوير نظام بث مباشر عالي الجودة للمحاضرات', 'إنشاء نظام تقييم ذكي يتكيف مع مستوى الطالب', 'تصميم لوحة تحكم شاملة للمدرسين والطلاب'],
+                    en: ['Developing a high-quality live streaming system', 'Creating an adaptive assessment system', 'Designing comprehensive dashboards for teachers and students']
+                },
+                date: { ar: 'فبراير 2024', en: 'February 2024' },
+                category: 'education',
                 liveUrl: '#'
             },
             4: {
-                title: 'نظام إدارة العيادات',
+                title: { ar: 'نظام إدارة العيادات', en: 'Clinic Management System' },
                 image: 'https://images.pexels.com/photos/356040/pexels-photo-356040.jpeg?auto=compress&cs=tinysrgb&w=600',
-                description: 'نظام شامل ومتطور لإدارة العيادات الطبية يشمل حجز المواعيد الإلكتروني، إدارة ملفات المرضى الرقمية، نظام الفواتير والمدفوعات، وتقارير طبية مفصلة.',
+                description: { 
+                    ar: 'نظام شامل ومتطور لإدارة العيادات الطبية يشمل حجز المواعيد الإلكتروني، إدارة ملفات المرضى الرقمية، نظام الفواتير والمدفوعات، وتقارير طبية مفصلة.',
+                    en: 'A comprehensive system for managing medical clinics, including electronic appointment booking, digital patient records, billing/payment systems, and detailed medical reports.' 
+                },
                 technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
-                challenges: [
-                    'ضمان أمان وخصوصية البيانات الطبية الحساسة',
-                    'تطوير نظام مواعيد ذكي يتجنب التعارض',
-                    'إنشاء تقارير طبية مفصلة وقابلة للتخصيص'
-                ],
-                date: 'يناير 2024',
-                category: 'تطبيقات ويب',
+                challenges: {
+                    ar: ['ضمان أمان وخصوصية البيانات الطبية الحساسة', 'تطوير نظام مواعيد ذكي يتجنب التعارض', 'إنشاء تقارير طبية مفصلة وقابلة للتخصيص'],
+                    en: ['Ensuring the security and privacy of sensitive medical data', 'Developing a smart non-conflicting appointment system', 'Creating detailed and customizable medical reports']
+                },
+                date: { ar: 'يناير 2024', en: 'January 2024' },
+                category: 'webapp',
                 liveUrl: 'https://singular-sawine-0bc006.netlify.app'
             },
             5: {
-                title: 'تطبيق توصيل الطعام',
+                title: { ar: 'تطبيق توصيل الطعام', en: 'Food Delivery App' },
                 image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600',
-                description: 'تطبيق متكامل لطلب وتوصيل الطعام يربط بين المطاعم والعملاء وسائقي التوصيل. يتضمن التطبيق نظام تتبع الطلبات في الوقت الفعلي، دفع إلكتروني آمن.',
+                description: { 
+                    ar: 'تطبيق متكامل لطلب وتوصيل الطعام يربط بين المطاعم والعملاء وسائقي التوصيل. يتضمن التطبيق نظام تتبع الطلبات في الوقت الفعلي، دفع إلكتروني آمن.',
+                    en: 'An integrated food ordering and delivery app connecting restaurants, customers, and delivery drivers. Includes real-time order tracking and secure online payments.' 
+                },
                 technologies: ['React Native', 'Express.js', 'MongoDB', 'Socket.io', 'Google Maps API'],
-                challenges: [
-                    'تطوير نظام تتبع مباشر للطلبات باستخدام GPS',
-                    'إنشاء خوارزمية ذكية لتوزيع الطلبات على السائقين',
-                    'تطوير واجهات منفصلة للعملاء والمطاعم والسائقين'
-                ],
-                date: 'ديسمبر 2023',
-                category: 'تطبيقات ويب',
+                challenges: {
+                    ar: ['تطوير نظام تتبع مباشر للطلبات باستخدام GPS', 'إنشاء خوارزمية ذكية لتوزيع الطلبات على السائقين', 'تطوير واجهات منفصلة للعملاء والمطاعم والسائقين'],
+                    en: ['Developing live order tracking using GPS', 'Creating a smart algorithm for distributing orders to drivers', 'Developing separate interfaces for customers, restaurants, and drivers']
+                },
+                date: { ar: 'ديسمبر 2023', en: 'December 2023' },
+                category: 'webapp',
                 liveUrl: 'https://aboelyazed21.github.io/Food/'
             },
             6: {
-                title: 'Housing-Student',
+                title: { ar: 'سكن الطلاب - Housing-Student', en: 'Housing-Student' },
                 image: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600',
-                description: 'منصة مخصصة لسكن الطلاب توفر واجهة سهلة للبحث عن شقق وسكن جامعي مع معلومات مفصلة وخرائط تفاعلية وروابط مباشرة.',
+                description: { 
+                    ar: 'منصة مخصصة لسكن الطلاب توفر واجهة سهلة للبحث عن شقق وسكن جامعي مع معلومات مفصلة وخرائط تفاعلية وروابط مباشرة.',
+                    en: 'A dedicated platform for student housing providing an easy-to-use interface to search for apartments and dorms with detailed info, interactive maps, and direct links.' 
+                },
                 technologies: ['HTML', 'CSS', 'JavaScript', 'GitHub Pages'],
-                challenges: [
-                    'تصميم واجهة مخصصة للطلاب سهلة التصفح',
-                    'ربط الموقع بـ GitHub Pages للنشر السريع',
-                    'توفير عرض مرئي واضح لمواقع السكن'
-                ],
-                date: 'يوليو 2025',
-                category: 'مواقع شخصية',
+                challenges: {
+                    ar: ['تصميم واجهة مخصصة للطلاب سهلة التصفح', 'ربط الموقع بـ GitHub Pages للنشر السريع', 'توفير عرض مرئي واضح لمواقع السكن'],
+                    en: ['Designing an easy-to-navigate UI tailored for students', 'Connecting the site to GitHub Pages for fast deployment', 'Providing clear visual displays of housing locations']
+                },
+                date: { ar: 'يوليو 2025', en: 'July 2025' },
+                category: 'personal',
                 liveUrl: 'https://aboelyazed21.github.io/Housing-Student/'
             },
-             7: {
-    title: 'Cinema-App',
-    image: 'https://pbs.twimg.com/profile_images/1663973372194340865/DLJfYqQe_400x400.jpg',
-    description: 'موقع مخصص لعشاق الأفلام يوفر واجهة سهلة لعرض أحدث الأفلام، مشاهدة التريلر، واستعراض التقييمات والمعلومات الأساسية لكل فيلم.',
-    technologies: ['React', 'TailwindCSS', 'Vite', 'GitHub Pages'],
-    challenges: [
-        'تصميم واجهة جذابة تشبه منصات البث الشهيرة',
-        'استخدام API لعرض بيانات الأفلام بشكل ديناميكي',
-        'ضبط النشر عبر GitHub Pages ليكون متاح بسهولة'
-    ],
-    date: 'أغسطس 2025',
-    category: 'مواقع ترفيهية',
-    liveUrl: 'https://aboelyazed21.github.io/Films/'
-}
-
+            7: {
+                title: { ar: 'تطبيق السينما', en: 'Cinema-App' },
+                image: 'https://pbs.twimg.com/profile_images/1663973372194340865/DLJfYqQe_400x400.jpg',
+                description: { 
+                    ar: 'موقع مخصص لعشاق الأفلام يوفر واجهة سهلة لعرض أحدث الأفلام، مشاهدة التريلر، واستعراض التقييمات والمعلومات الأساسية لكل فيلم.',
+                    en: 'A movie lover\'s platform offering an easy interface to view the latest movies, watch trailers, and browse ratings and basic info for each film.' 
+                },
+                technologies: ['React', 'TailwindCSS', 'Vite', 'GitHub Pages'],
+                challenges: {
+                    ar: ['تصميم واجهة جذابة تشبه منصات البث الشهيرة', 'استخدام API لعرض بيانات الأفلام بشكل ديناميكي', 'ضبط النشر عبر GitHub Pages ليكون متاح بسهولة'],
+                    en: ['Designing an attractive UI similar to popular streaming platforms', 'Using an API to display movie data dynamically', 'Configuring deployment via GitHub Pages for easy access']
+                },
+                date: { ar: 'أغسطس 2025', en: 'August 2025' },
+                category: 'entertainment',
+                liveUrl: 'https://aboelyazed21.github.io/Films/'
+            },
+            8: {
+                title: { ar: 'موقع جيم ونادي رياضي', en: 'Gym & Fitness Center Website' },
+                image: 'https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=600',
+                description: { 
+                    ar: 'موقع متكامل لنادي رياضي (جيم) يتيح للعملاء استعراض الخدمات، شراء الاشتراكات الشهرية، حجز جلسات مع مدربين شخصيين، والاطلاع على جداول الحصص الرياضية بفضل واجهة تفاعلية حديثة.',
+                    en: 'An integrated gym and fitness center website that allows clients to browse services, purchase monthly memberships, book personal trainers, and view class schedules via a modern interactive UI.' 
+                },
+                technologies: ['React', 'Tailwind CSS', 'Node.js', 'MongoDB'],
+                challenges: {
+                    ar: ['إدارة الجداول الزمنية والتعارض في حصص التدريب', 'توفير نظام دفع إلكتروني سريع وآمن', 'تصميم واجهة محفزة بصرياً للرياضيين'],
+                    en: ['Managing class schedules and resolving booking conflicts', 'Providing a fast and secure online payment system', 'Designing a visually motivating UI for athletes']
+                },
+                date: { ar: 'نوفمبر 2024', en: 'November 2024' },
+                category: 'sports',
+                liveUrl: '#'
+            },
+            9: {
+                title: { ar: 'لوحة تحليل البيانات', en: 'Data Analysis Dashboard' },
+                image: 'https://images.pexels.com/photos/3182405/pexels-photo-3182405.jpeg?auto=compress&cs=tinysrgb&w=600',
+                description: { 
+                    ar: 'لوحة تحكم تفاعلية قوية مصممة لتحليل كميات ضخمة من البيانات البيولوجية أو التجارية. تقوم بتحويل البيانات المعقدة إلى رسوم بيانية ومخططات سهلة الفهم لدعم اتخاذ القرارات الذكية.',
+                    en: 'A powerful interactive dashboard designed for analyzing massive datasets. It transforms complex biological or business data into easy-to-understand charts and graphs to support smart decision-making.' 
+                },
+                technologies: ['Python', 'Pandas', 'React', 'Recharts', 'FastAPI'],
+                challenges: {
+                    ar: ['التعامل مع مجموعات بيانات ضخمة دون التأثير على الأداء', 'تصميم رسوم بيانية تفاعلية دقيقة وواضحة', 'توفير خيارات تصفية متقدمة للمستخدم'],
+                    en: ['Handling massive datasets without performance hits', 'Designing accurate and clear interactive charts', 'Providing advanced filtering options for users']
+                },
+                date: { ar: 'سبتمبر 2024', en: 'September 2024' },
+                category: 'data-analysis',
+                liveUrl: '#'
+            },
+            10: {
+                title: { ar: 'مساعد BioGPT الذكي', en: 'BioGPT Assistant AI' },
+                image: 'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=600',
+                description: { 
+                    ar: 'منصة ذكاء اصطناعي تفاعلية (شات بوت) متخصصة في المعلوماتية الحيوية (Bioinformatics). تستخدم لمساعدة الباحثين والطلاب في تحليل تسلسلات الحمض النووي (DNA/RNA) والإجابة الدقيقة على الأسئلة الطبية والبيولوجية.',
+                    en: 'An interactive AI chatbot platform specialized in Bioinformatics. Used to assist researchers and students in analyzing DNA/RNA sequences and answering medical/biological questions accurately.' 
+                },
+                technologies: ['OpenAI API', 'Python', 'React', 'R', 'BioPython'],
+                challenges: {
+                    ar: ['ربط واجهة الدردشة بأدوات التحليل البيولوجي المعقدة', 'تدريب النموذج وتهيئته ليكون دقيقاً في المجال الطبي', 'ضمان الاستجابة السريعة للمستخدم'],
+                    en: ['Connecting the chat interface with complex biological analysis tools', 'Fine-tuning the model for accuracy in the medical field', 'Ensuring rapid response times for users']
+                },
+                date: { ar: 'أكتوبر 2025', en: 'October 2025' },
+                category: 'ai',
+                liveUrl: '#'
+            }
         };
 
-        // Translations
+        // Translations Dictionary
         const translations = {
             ar: {
                 'home': 'الرئيسية',
@@ -704,6 +484,14 @@
                 'search-placeholder': 'ابحث عن مشروع...',
                 'project-type': 'نوع المشروع',
                 'all': 'الكل',
+                'commercial-sites': 'مواقع تجارية',
+                'web-apps': 'تطبيقات ويب',
+                'personal-sites': 'مواقع شخصية',
+                'edu-platforms': 'منصات تعليمية',
+                'entertainment-sites': 'مواقع ترفيهية',
+                'sports-sites': 'مواقع رياضية',
+                'data-analysis-sites': 'مواقع تحليل بيانات',
+                'ai-apps': 'تطبيقات ذكاء اصطناعي',
                 'technologies': 'التقنيات المستخدمة',
                 'load-more': 'تحميل المزيد من المشاريع',
                 'visit-site': 'زيارة الموقع',
@@ -739,6 +527,14 @@
                 'search-placeholder': 'Search for a project...',
                 'project-type': 'Project Type',
                 'all': 'All',
+                'commercial-sites': 'E-commerce Sites',
+                'web-apps': 'Web Applications',
+                'personal-sites': 'Personal Sites',
+                'edu-platforms': 'Educational Platforms',
+                'entertainment-sites': 'Entertainment Sites',
+                'sports-sites': 'Sports & Gym Sites',
+                'data-analysis-sites': 'Data Analysis',
+                'ai-apps': 'AI Applications',
                 'technologies': 'Technologies Used',
                 'load-more': 'Load More Projects',
                 'visit-site': 'Visit Site',
@@ -780,40 +576,20 @@
             animateOnScroll();
         });
 
-        // Dark Mode Functions
         function initializeDarkMode() {
             const darkModeToggle = document.getElementById('dark-mode-toggle');
             const savedTheme = localStorage.getItem('theme');
-            
-            // Check for saved theme or system preference
             if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 enableDarkMode();
             } else {
                 disableDarkMode();
             }
-
             darkModeToggle.addEventListener('click', toggleDarkMode);
         }
 
-        function enableDarkMode() {
-            isDarkMode = true;
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        }
-
-        function disableDarkMode() {
-            isDarkMode = false;
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        }
-
-        function toggleDarkMode() {
-            if (isDarkMode) {
-                disableDarkMode();
-            } else {
-                enableDarkMode();
-            }
-        }
+        function enableDarkMode() { isDarkMode = true; document.documentElement.classList.add('dark'); localStorage.setItem('theme', 'dark'); }
+        function disableDarkMode() { isDarkMode = false; document.documentElement.classList.remove('dark'); localStorage.setItem('theme', 'light'); }
+        function toggleDarkMode() { if (isDarkMode) disableDarkMode(); else enableDarkMode(); }
 
         // Language Functions
         function initializeLanguage() {
@@ -828,6 +604,7 @@
             
             updateTranslations();
             updateSpacing();
+            renderProjects(); // إعادة رسم المشاريع لتغيير لغة المحتوى بداخلها
         }
 
         function updateTranslations() {
@@ -847,22 +624,18 @@
         }
 
         function updateSpacing() {
+            const navLinksContainer = document.getElementById('nav-links');
             if (currentLang === 'en') {
-                document.querySelectorAll('.space-x-reverse').forEach(el => {
-                    el.classList.remove('space-x-reverse');
-                    el.classList.add('space-x-8');
-                });
+                navLinksContainer.classList.remove('space-x-reverse');
+                navLinksContainer.classList.add('space-x-8');
             } else {
-                document.querySelectorAll('.space-x-8').forEach(el => {
-                    el.classList.remove('space-x-8');
-                    el.classList.add('space-x-reverse');
-                });
+                navLinksContainer.classList.remove('space-x-8');
+                navLinksContainer.classList.add('space-x-reverse');
             }
         }
 
         // Filter Functions
         function initializeFilters() {
-            // Category filters
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -872,7 +645,6 @@
                 });
             });
 
-            // Technology filters
             document.querySelectorAll('.tech-checkbox').forEach(checkbox => {
                 const customBox = checkbox.nextElementSibling;
                 const checkIcon = customBox.querySelector('i');
@@ -893,12 +665,9 @@
                     filterProjects();
                 });
 
-                customBox.addEventListener('click', function() {
-                    checkbox.click();
-                });
+                customBox.addEventListener('click', function() { checkbox.click(); });
             });
 
-            // Search filter
             document.getElementById('search-input').addEventListener('input', function() {
                 filterProjects();
             });
@@ -908,12 +677,11 @@
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             
             filteredProjects = Object.values(projectData).filter(project => {
-                const matchesSearch = project.title.toLowerCase().includes(searchTerm) ||
-                                    project.description.toLowerCase().includes(searchTerm);
-                
+                const currentTitle = project.title[currentLang].toLowerCase();
+                const currentDesc = project.description[currentLang].toLowerCase();
+                const matchesSearch = currentTitle.includes(searchTerm) || currentDesc.includes(searchTerm);
                 const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory;
-                
-                const matchesTechnology = selectedTechnologies.length === 0 ||
+                const matchesTechnology = selectedTechnologies.length === 0 || 
                                         selectedTechnologies.some(tech => project.technologies.includes(tech));
                 
                 return matchesSearch && matchesCategory && matchesTechnology;
@@ -932,7 +700,6 @@
                 grid.appendChild(projectCard);
             });
 
-            // Re-animate cards
             setTimeout(() => {
                 document.querySelectorAll('.project-card').forEach((card, index) => {
                     card.style.animationDelay = `${index * 0.1}s`;
@@ -946,24 +713,27 @@
             card.className = 'project-card bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden cursor-pointer border border-gray-200 dark:border-gray-700';
             card.dataset.project = id;
 
+            const title = project.title[currentLang];
+            const description = project.description[currentLang];
+            const date = project.date[currentLang];
+
             card.innerHTML = `
                 <div class="aspect-video bg-gray-100 dark:bg-gray-700 overflow-hidden">
-                    <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
+                    <img src="${project.image}" alt="${title}" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">${project.title}</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">${project.description.substring(0, 120)}...</p>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">${title}</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">${description.substring(0, 120)}...</p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         ${project.technologies.slice(0, 3).map(tech => 
                             `<span class="tech-tag px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 text-xs rounded-full">${tech}</span>`
                         ).join('')}
                         ${project.technologies.length > 3 ? 
-                            `<span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs rounded-full">+${project.technologies.length - 3}</span>` 
-                            : ''
+                            `<span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs rounded-full">+${project.technologies.length - 3}</span>` : ''
                         }
                     </div>
                     <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-500 dark:text-gray-400">${project.date}</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">${date}</span>
                         <div class="w-6 h-6 flex items-center justify-center text-primary-500">
                             <i class="ri-arrow-${currentLang === 'ar' ? 'left' : 'right'}-line"></i>
                         </div>
@@ -993,12 +763,11 @@
         function openModal(project) {
             const modal = document.getElementById('project-modal');
             
-            document.getElementById('modal-title').textContent = project.title;
+            document.getElementById('modal-title').textContent = project.title[currentLang];
             document.getElementById('modal-image').src = project.image;
-            document.getElementById('modal-description').textContent = project.description;
-            document.getElementById('modal-date').textContent = project.date;
+            document.getElementById('modal-description').textContent = project.description[currentLang];
+            document.getElementById('modal-date').textContent = project.date[currentLang];
 
-            // Technologies
             const techContainer = document.getElementById('modal-technologies');
             techContainer.innerHTML = '';
             project.technologies.forEach(tech => {
@@ -1008,26 +777,24 @@
                 techContainer.appendChild(span);
             });
 
-            // Challenges
             const challengesContainer = document.getElementById('modal-challenges');
             challengesContainer.innerHTML = '';
-            project.challenges.forEach(challenge => {
+            project.challenges[currentLang].forEach(challenge => {
                 const li = document.createElement('li');
                 li.className = 'flex items-start';
                 li.innerHTML = `
-                    <div class="w-2 h-2 bg-primary-500 rounded-full mt-2 ml-3 flex-shrink-0"></div>
+                    <div class="w-2 h-2 bg-primary-500 rounded-full mt-2 mx-3 flex-shrink-0"></div>
                     <span>${challenge}</span>
                 `;
                 challengesContainer.appendChild(li);
             });
 
-            // Visit site button
             const visitBtn = document.getElementById('visit-site-btn');
             if (project.liveUrl && project.liveUrl !== '#') {
                 visitBtn.onclick = () => window.open(project.liveUrl, '_blank');
                 visitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             } else {
-                visitBtn.onclick = () => alert('الرابط غير متوفر حالياً');
+                visitBtn.onclick = () => alert(currentLang === 'ar' ? 'الرابط غير متوفر حالياً' : 'Link is currently unavailable');
                 visitBtn.classList.add('opacity-50', 'cursor-not-allowed');
             }
 
@@ -1045,7 +812,6 @@
 
         // Scroll Effects
         function initializeScrollEffects() {
-            // Navbar scroll effect
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
                 if (window.scrollY > 50) {
@@ -1054,21 +820,9 @@
                     navbar.classList.remove('scrolled');
                 }
 
-                // Scroll indicator
                 const scrollIndicator = document.querySelector('.scroll-indicator');
                 const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
                 scrollIndicator.style.width = scrollPercent + '%';
-            });
-
-            // Parallax effect
-            window.addEventListener('scroll', function() {
-                const scrolled = window.pageYOffset;
-                const parallaxElements = document.querySelectorAll('.parallax');
-                
-                parallaxElements.forEach(element => {
-                    const speed = element.dataset.speed || 0.5;
-                    element.style.transform = `translateY(${scrolled * speed}px)`;
-                });
             });
         }
 
@@ -1089,25 +843,6 @@
                 observer.observe(el);
             });
         }
-
-        // Add nav link hover effects
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-2px)';
-                });
-                
-                link.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-        });
     </script>
 </body>
 </html>
-  
-
-
-
-
-
