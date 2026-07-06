@@ -1,8 +1,3 @@
-Here is the complete code, Zoz. I have kept everything exactly as it was and added the new football application card to the `projectData` object (as project number 13).
-
-The technologies are set to HTML, CSS, and JavaScript, and the English description specifically highlights that the app fetches data from an API to display football matches.
-
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -295,7 +290,7 @@ The technologies are set to HTML, CSS, and JavaScript, and the English descripti
     </footer>
 
     <script>
-        // Project Data (13 Projects Bilingual)
+        // Project Data (14 Projects Bilingual)
         const projectData = {
             1: {
                 title: { ar: 'آلة حاسبة ذكية', en: 'Smart Calculator' },
@@ -520,6 +515,30 @@ The technologies are set to HTML, CSS, and JavaScript, and the English descripti
                 date: { ar: 'يونيو 2026', en: 'June 2026' },
                 category: 'sports',
                 liveUrl: 'https://github.com/Aboelyazed21/Koaraaa333'
+            },
+            14: {
+                title: { ar: 'درع الأمن السيبراني', en: 'Cyber Security Shield' },
+                image: 'https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=600',
+                description: { 
+                    ar: 'أداة ويب احترافية لفحص الروابط المشبوهة وتحليل نصوص الإيميلات للوقاية من الهجمات السيبرانية. يعتمد النظام على واجهة خلفية قوية لتحليل شهادات الأمان (SSL)، حالة النطاق، واستخراج الكلمات المفتاحية الخبيثة لتحديد مستوى التهديد.',
+                    en: 'A professional web tool for scanning suspicious URLs and analyzing phishing emails to prevent cyber attacks. The system relies on a robust backend to analyze SSL certificates, domain status, and extract malicious keywords to determine threat levels.' 
+                },
+                technologies: ['HTML', 'CSS', 'JavaScript', 'Python / API'],
+                challenges: {
+                    ar: [
+                        'بناء واجهة مستخدم متجاوبة تدعم اللغتين والوضع الليلي (Dark Mode)',
+                        'الاتصال بسيرفر بايثون خارجي (API) لتحليل البيانات وإرجاع النتائج',
+                        'إدارة حالة التحميل (Spinner) لضمان تجربة مستخدم سلسة أثناء الفحص'
+                    ],
+                    en: [
+                        'Building a responsive UI supporting bilingual content and Dark Mode',
+                        'Connecting to an external Python server (API) for data analysis',
+                        'Managing loading states (Spinner) to ensure a smooth UX during scans'
+                    ]
+                },
+                date: { ar: 'يوليو 2026', en: 'July 2026' },
+                category: 'webapp',
+                liveUrl: 'https://aboelyazed21.github.io/CybersecuirteDedection'
             }
         };
 
@@ -901,5 +920,3 @@ The technologies are set to HTML, CSS, and JavaScript, and the English descripti
     </script>
 </body>
 </html>
-
-```
