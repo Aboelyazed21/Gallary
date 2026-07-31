@@ -158,6 +158,7 @@
                             <button class="filter-btn active w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="all"><span data-lang-key="all">الكل</span></button>
                             <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="commercial"><span data-lang-key="commercial-sites">مواقع تجارية</span></button>
                             <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="webapp"><span data-lang-key="web-apps">تطبيقات ويب</span></button>
+                            <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="mobile"><span data-lang-key="mobile-apps">تطبيقات جوال</span></button>
                             <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="personal"><span data-lang-key="personal-sites">مواقع شخصية</span></button>
                             <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="education"><span data-lang-key="edu-platforms">منصات تعليمية</span></button>
                             <button class="filter-btn w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 text-sm" data-category="entertainment"><span data-lang-key="entertainment-sites">مواقع ترفيهية</span></button>
@@ -170,6 +171,11 @@
                     <div class="animate-slide-up" style="animation-delay: 0.3s">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3"><span data-lang-key="technologies">التقنيات المستخدمة</span></label>
                         <div class="space-y-3" id="tech-filters">
+                            <label class="flex items-center cursor-pointer group">
+                                <input type="checkbox" class="sr-only tech-checkbox" data-tech="Flutter">
+                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded mx-3 flex items-center justify-center transition-all duration-300 group-hover:border-primary-500"><i class="ri-check-line text-xs text-white hidden"></i></div>
+                                <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-500 transition-colors duration-300">Flutter</span>
+                            </label>
                             <label class="flex items-center cursor-pointer group">
                                 <input type="checkbox" class="sr-only tech-checkbox" data-tech="React">
                                 <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded mx-3 flex items-center justify-center transition-all duration-300 group-hover:border-primary-500"><i class="ri-check-line text-xs text-white hidden"></i></div>
@@ -216,7 +222,7 @@
                         <img id="modal-image" src="" alt="" class="w-full rounded-xl shadow-lg">
                         <div class="flex gap-4 mt-6">
                             <button id="visit-site-btn" class="btn-glow flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 font-medium flex items-center justify-center">
-                                <i class="ri-external-link-line mx-2"></i><span data-lang-key="visit-site">زيارة الموقع</span>
+                                <i class="ri-external-link-line mx-2"></i><span data-lang-key="visit-site">زيارة الموقع / المستودع</span>
                             </button>
                             <button id="share-btn" class="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 font-medium flex items-center justify-center">
                                 <i class="ri-share-line mx-2"></i><span data-lang-key="share">مشاركة</span>
@@ -296,8 +302,8 @@
                 title: { ar: 'آلة حاسبة ذكية', en: 'Smart Calculator' },
                 image: 'https://m.media-amazon.com/images/I/61ZVu4vCZxL.jpg',
                 description: { 
-                    ar: 'تطبيق ويب متكامل يضم آلة حاسبة عصرية تدعم العمليات الرياضية المعقدة (بما في ذلك الدوال العلمية)، وتحويل العملات في الوقت الفعلي بأسعار محدثة، ومجموعة واسعة من تحويلات الوحدات. التصميم متجاوب وجذاب بصرياً، مع إمكانية التبديل بين الوضعين الداكن والفاتح.',
-                    en: 'Build a sleek and modern all-in-one calculator web app. It supports complex mathematical operations, real-time currency exchange with up-to-date rates, and unit conversions. Responsive design with clean interface and dark/light mode toggle.' 
+                    ar: 'تطبيق ويب متكامل يضم آلة حاسبة عصرية تدعم العمليات الرياضية المعقدة (بما في ذلك الدوال العلمية)، وتحويل العملات في الوقت الفعلي بأسعار محدثة، ومجموعة واسعة من تحويلات الوحدات.',
+                    en: 'Build a sleek and modern all-in-one calculator web app. It supports complex mathematical operations, real-time currency exchange with up-to-date rates, and unit conversions.' 
                 },
                 technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
                 challenges: {
@@ -473,20 +479,12 @@
                 image: 'https://images.pexels.com/photos/261949/pexels-photo-261949.jpeg?auto=compress&cs=tinysrgb&w=600',
                 description: { 
                     ar: 'منصة تدوين احترافية تم تطويرها لنشر المقالات التقنية والإبداعية مع واجهة حديثة وتجربة قراءة مريحة. توفر المدونة نظام إدارة محتوى متكامل، دعم التصنيفات والوسوم، ولوحة تحكم سهلة لإدارة المقالات والمستخدمين.',
-                    en: 'A professional blogging platform developed for publishing technology and creative articles with a modern interface and smooth reading experience. The platform includes a complete content management system, category and tag support, and an easy-to-use admin dashboard for managing posts and users.'
+                    en: 'A professional blogging platform developed for publishing technology and creative articles with a modern interface and smooth reading experience.'
                 },
                 technologies: ['React', 'Node.js', 'MongoDB', 'Express.js', 'Firebase'],
                 challenges: {
-                    ar: [
-                        'تطوير نظام إدارة محتوى ديناميكي وسهل الاستخدام',
-                        'تحسين سرعة تحميل المقالات وتجربة القراءة',
-                        'إنشاء نظام تعليقات وتفاعل آمن للمستخدمين'
-                    ],
-                    en: [
-                        'Developing a dynamic and user-friendly CMS',
-                        'Optimizing article loading speed and reading experience',
-                        'Creating a secure user interaction and comment system'
-                    ]
+                    ar: ['تطوير نظام إدارة محتوى ديناميكي وسهل الاستخدام', 'تحسين سرعة تحميل المقالات وتجربة القراءة', 'إنشاء نظام تعليقات وتفاعل آمن للمستخدمين'],
+                    en: ['Developing a dynamic and user-friendly CMS', 'Optimizing article loading speed', 'Creating a secure user interaction system']
                 },
                 date: { ar: 'مايو 2024', en: 'May 2024' },
                 category: 'blog',
@@ -501,16 +499,8 @@
                 },
                 technologies: ['HTML', 'CSS', 'JavaScript'],
                 challenges: {
-                    ar: [
-                        'الاتصال بواجهة برمجة تطبيقات (API) خارجية لسحب البيانات الرياضية',
-                        'عرض بيانات المباريات بطريقة منظمة وسريعة ومتجاوبة',
-                        'التعامل مع البيانات المباشرة وتحديث الواجهة تلقائياً'
-                    ],
-                    en: [
-                        'Connecting to an external REST API to fetch sports data',
-                        'Displaying match data in an organized, fast, and responsive manner',
-                        'Handling live data and updating the UI automatically'
-                    ]
+                    ar: ['الاتصال بواجهة برمجة تطبيقات (API) خارجية لسحب البيانات الرياضية', 'عرض بيانات المباريات بطريقة منظمة وسريعة ومتجاوبة', 'التعامل مع البيانات المباشرة وتحديث الواجهة تلقائياً'],
+                    en: ['Connecting to an external REST API', 'Displaying match data in an organized manner', 'Handling live data updates']
                 },
                 date: { ar: 'يونيو 2026', en: 'June 2026' },
                 category: 'sports',
@@ -521,44 +511,28 @@
                 image: 'https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=600',
                 description: { 
                     ar: 'أداة ويب احترافية لفحص الروابط المشبوهة وتحليل نصوص الإيميلات للوقاية من الهجمات السيبرانية. يعتمد النظام على واجهة خلفية قوية لتحليل شهادات الأمان (SSL)، حالة النطاق، واستخراج الكلمات المفتاحية الخبيثة لتحديد مستوى التهديد.',
-                    en: 'A professional web tool for scanning suspicious URLs and analyzing phishing emails to prevent cyber attacks. The system relies on a robust backend to analyze SSL certificates, domain status, and extract malicious keywords to determine threat levels.' 
+                    en: 'A professional web tool for scanning suspicious URLs and analyzing phishing emails to prevent cyber attacks. The system relies on a robust backend to analyze SSL certificates, domain status, and extract malicious keywords.' 
                 },
                 technologies: ['HTML', 'CSS', 'JavaScript', 'Python / API'],
                 challenges: {
-                    ar: [
-                        'بناء واجهة مستخدم متجاوبة تدعم اللغتين والوضع الليلي (Dark Mode)',
-                        'الاتصال بسيرفر بايثون خارجي (API) لتحليل البيانات وإرجاع النتائج',
-                        'إدارة حالة التحميل (Spinner) لضمان تجربة مستخدم سلسة أثناء الفحص'
-                    ],
-                    en: [
-                        'Building a responsive UI supporting bilingual content and Dark Mode',
-                        'Connecting to an external Python server (API) for data analysis',
-                        'Managing loading states (Spinner) to ensure a smooth UX during scans'
-                    ]
+                    ar: ['بناء واجهة مستخدم متجاوبة تدعم اللغتين والوضع الليلي (Dark Mode)', 'الاتصال بسيرفر بايثون خارجي (API) لتحليل البيانات وإرجاع النتائج', 'إدارة حالة التحميل (Spinner) لضمان تجربة مستخدم سلسة أثناء الفحص'],
+                    en: ['Building a responsive UI supporting bilingual content and Dark Mode', 'Connecting to an external Python server (API)', 'Managing loading states (Spinner) for smooth UX']
                 },
                 date: { ar: 'يوليو 2026', en: 'July 2026' },
                 category: 'webapp',
-                liveUrl: 'https://aboelyazed21.github.io/CybersecuirteDedection'
+                liveUrl: 'https://github.com/Aboelyazed21/cyber-shield'
             },
             15: {
                 title: { ar: 'برنامج المحاسبة المتكامل', en: 'Accounting Management System' },
                 image: 'https://ccitraining.edu/wp-content/uploads/2024/01/accounting-in-a-business-1024x683.webp',
                 description: { 
                     ar: 'نظام محاسبي متكامل مصمم لإدارة العمليات المالية، الفواتير، وحسابات الإيرادات والمصروفات بدقة وسهولة. يعتمد على قاعدة بيانات محلية لتنظيم كافة القيود المالية اليومية دون تعقيد.',
-                    en: 'An integrated accounting system designed to manage financial operations, invoices, revenues, and expenses with precision and ease. It relies on a local database to organize daily financial journal entries seamlessly.' 
+                    en: 'An integrated accounting system designed to manage financial operations, invoices, revenues, and expenses with precision and ease.' 
                 },
                 technologies: ['Python', 'SQLite', 'Tkinter'],
                 challenges: {
-                    ar: [
-                        'تصميم قاعدة بيانات خفيفة وسريعة باستخدام SQLite',
-                        'بناء واجهة مستخدم بسيطة ومريحة لإدخال المعاملات المالية',
-                        'تحديث الجداول والبيانات الحسابية فورياً بعد كل عملية حفظ'
-                    ],
-                    en: [
-                        'Designing a lightweight and fast database using SQLite',
-                        'Building a simple and comfortable UI for entering financial transactions',
-                        'Updating tables and financial data instantly after every save operation'
-                    ]
+                    ar: ['تصميم قاعدة بيانات خفيفة وسريعة باستخدام SQLite', 'بناء واجهة مستخدم بسيطة ومريحة لإدخال المعاملات المالية', 'تحديث الجداول والبيانات الحسابية فورياً بعد كل عملية حفظ'],
+                    en: ['Designing a lightweight and fast database using SQLite', 'Building a simple and comfortable UI', 'Updating tables and financial data instantly']
                 },
                 date: { ar: 'يوليو 2026', en: 'July 2026' },
                 category: 'webapp',
@@ -569,20 +543,12 @@
                 image: 'https://www.vetogate.com/Upload/libfiles/438/6/534.jpg',
                 description: { 
                     ar: 'نظام رادار ذكي يعتمد على تقنيات رؤية الكمبيوتر (Computer Vision) والذكاء الاصطناعي للكشف عن السيارات وتتبعها في الوقت الفعلي عبر مقاطع الفيديو أو البث المباشر بدقة عالية.',
-                    en: 'An intelligent radar system relying on Computer Vision and Artificial Intelligence techniques to detect and track cars in real-time through videos or live streams with high accuracy.' 
+                    en: 'An intelligent radar system relying on Computer Vision and Artificial Intelligence techniques to detect and track cars in real-time.' 
                 },
                 technologies: ['Python', 'OpenCV', 'TensorFlow', 'YOLO'],
                 challenges: {
-                    ar: [
-                        'معالجة إطارات الفيديو بسرعة عالية لتحقيق الاستجابة الفورية',
-                        'دقة رصد وتتبع السيارات في الظروف المختلفة للاضاءة',
-                        'ربط خوارزميات الذكاء الاصطناعي بكاميرات المراقبة أو ملفات الفيديو'
-                    ],
-                    en: [
-                        'Processing video frames at high speed for instant response',
-                        'Accurately detecting and tracking cars under varying lighting conditions',
-                        'Integrating AI algorithms with surveillance cameras or video files'
-                    ]
+                    ar: ['معالجة إطارات الفيديو بسرعة عالية لتحقيق الاستجابة الفورية', 'دقة رصد وتتبع السيارات في الظروف المختلفة للاضاءة', 'ربط خوارزميات الذكاء الاصطناعي بكاميرات المراقبة أو ملفات الفيديو'],
+                    en: ['Processing video frames at high speed', 'Accurately detecting and tracking cars under varying lighting', 'Integrating AI algorithms']
                 },
                 date: { ar: 'يوليو 2026', en: 'July 2026' },
                 category: 'ai',
@@ -593,24 +559,32 @@
                 image: 'https://i.pinimg.com/736x/68/04/ae/6804ae0a8e9f1e97bff315f7f58ab044.jpg',
                 description: { 
                     ar: 'موقع تجاري متطور ومصمم بعناية فائقة لعرض أحدث تصاميم الستائر الفاخرة والديكورات المنزلية. يتميز بواجهة مستخدم جذابة وسلسة تعرض المنتجات بأسلوب راقٍ مع تفاصيل تواصل مباشرة.',
-                    en: 'An advanced and meticulously designed commercial website showcasing the latest luxury curtain designs and home decors. Features an attractive and smooth user interface displaying products with elegance and direct contact details.' 
+                    en: 'An advanced and meticulously designed commercial website showcasing the latest luxury curtain designs and home decors.' 
                 },
                 technologies: ['React', 'Tailwind CSS', 'JavaScript', 'Vercel'],
                 challenges: {
-                    ar: [
-                        'تصميم واجهة مستخدم فاخرة تتناسب مع طبيعة الديكور والأناقة',
-                        'تحسين سرعة عرض الصور عالية الدقة للمنتجات',
-                        'نشر وتثبيت الموقع على منصة Vercel لضمان استجابة سريعة'
-                    ],
-                    en: [
-                        'Designing a luxurious UI matching the elegance of decor products',
-                        'Optimizing high-resolution product image loading speeds',
-                        'Deploying and hosting the site on Vercel for lightning-fast response'
-                    ]
+                    ar: ['تصميم واجهة مستخدم فاخرة تتناسب مع طبيعة الديكور والأناقة', 'تحسين سرعة عرض الصور عالية الدقة للمنتجات', 'نشر وتثبيت الموقع على منصة Vercel لضمان استجابة سريعة'],
+                    en: ['Designing a luxurious UI matching the elegance of decor', 'Optimizing high-resolution image loading', 'Deploying on Vercel']
                 },
                 date: { ar: 'يوليو 2026', en: 'July 2026' },
                 category: 'commercial',
                 liveUrl: 'https://luxury-curtains-eta.vercel.app/'
+            },
+            18: {
+                title: { ar: 'تطبيق رفيق المسلم (قرآن كريم)', en: 'Rafiq Al Muslim App' },
+                image: 'https://images.pexels.com/features/images/quran-islamic-reading.jpg',
+                description: { 
+                    ar: 'تطبيق موبايل إسلامي متكامل (رفيق المسلم) معمول بإطار العمل Flutter. يوفر تجربة مريحة لقراءة القرآن الكريم، الأذكار، الأحاديث، وتحديد اتجاه القبلة وأوقات الصلاة بتصميم عصري وأنيق.',
+                    en: 'An integrated Islamic mobile app (Rafiq Al Muslim) built with Flutter. Provides a seamless experience for reading the Holy Quran, Athkar, Duas, and checking prayer times with a modern UI.' 
+                },
+                technologies: ['Flutter', 'Dart', 'Mobile App', 'Provider'],
+                challenges: {
+                    ar: ['بناء واجهة مستخدم سلسة ومتجاوبة عبر منصات الهواتف المحمولة', 'إدارة حالة التطبيق بكفاءة لعرض النصوص القرآنية والأذكار بسرعة', 'تنظيم هيكل المشروع لرفع الكفاءة وسهولة التطوير المستقبلي'],
+                    en: ['Building a smooth responsive mobile UI', 'Managing app state efficiently for quick text rendering', 'Organizing project architecture']
+                },
+                date: { ar: 'يوليو 2026', en: 'July 2026' },
+                category: 'mobile',
+                liveUrl: 'https://github.com/Aboelyazed21/Rafiq-Al-Muslim.git'
             }
         };
 
@@ -632,6 +606,7 @@
                 'all': 'الكل',
                 'commercial-sites': 'مواقع تجارية',
                 'web-apps': 'تطبيقات ويب',
+                'mobile-apps': 'تطبيقات جوال',
                 'personal-sites': 'مواقع شخصية',
                 'edu-platforms': 'منصات تعليمية',
                 'entertainment-sites': 'مواقع ترفيهية',
@@ -640,7 +615,7 @@
                 'ai-apps': 'تطبيقات ذكاء اصطناعي',
                 'technologies': 'التقنيات المستخدمة',
                 'load-more': 'تحميل المزيد من المشاريع',
-                'visit-site': 'زيارة الموقع',
+                'visit-site': 'زيارة الموقع / المستودع',
                 'share': 'مشاركة',
                 'project-desc': 'وصف المشروع',
                 'challenges': 'التحديات والحلول',
@@ -675,6 +650,7 @@
                 'all': 'All',
                 'commercial-sites': 'E-commerce Sites',
                 'web-apps': 'Web Applications',
+                'mobile-apps': 'Mobile Apps',
                 'personal-sites': 'Personal Sites',
                 'edu-platforms': 'Educational Platforms',
                 'entertainment-sites': 'Entertainment Sites',
@@ -683,7 +659,7 @@
                 'ai-apps': 'AI Applications',
                 'technologies': 'Technologies Used',
                 'load-more': 'Load More Projects',
-                'visit-site': 'Visit Site',
+                'visit-site': 'Visit Site / Repo',
                 'share': 'Share',
                 'project-desc': 'Project Description',
                 'challenges': 'Challenges & Solutions',
