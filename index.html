@@ -95,32 +95,41 @@
     
     <nav class="navbar fixed top-0 w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center animate-slide-right">
-                    <div class="text-2xl font-pacifico text-gradient">ENG ZEZO</div>
+            <div class="relative flex justify-between items-center h-16">
+                <div class="flex items-center shrink-0 animate-slide-right">
+                    <a href="https://aboelyazed21.github.io/Gallary/" class="text-2xl font-pacifico text-gradient">ENG ZEZO</a>
                 </div>
-                
-                <div class="hidden md:flex items-center space-x-8 space-x-reverse animate-slide-down" id="nav-links">
+
+                <div class="hidden lg:flex items-center space-x-8 space-x-reverse absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-fade-in whitespace-nowrap" id="nav-links">
                     <a href="https://aboelyazed21.github.io/My_Prof/" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative"><span data-lang-key="home">الرئيسية</span></a>
                     <a href="https://aboelyazed21.github.io/Gallary/" class="nav-link text-primary-500 dark:text-primary-400 font-medium relative"><span data-lang-key="portfolio">معرض الأعمال</span></a>
                     <a href="https://aboelyazed21.github.io/My_Prof/#skills" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative"><span data-lang-key="services">الخدمات</span></a>
                     <a href="https://aboelyazed21.github.io/My_Prof/#home" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative"><span data-lang-key="about">من نحن</span></a>
                     <a href="https://aboelyazed21.github.io/My_Prof/#contact" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 relative"><span data-lang-key="contact">تواصل معنا</span></a>
-                    
-                    <div class="flex items-center space-x-4 space-x-reverse mx-4">
-                        <button id="language-switch" class="flex items-center text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300">
-                            <i class="ri-translate-2-line mx-2 text-lg"></i>
-                            <span data-lang-key="current-lang">English</span>
-                        </button>
-                        
-                        <button id="dark-mode-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300">
-                            <i class="ri-sun-line dark:hidden text-lg"></i>
-                            <i class="ri-moon-line hidden dark:block text-lg"></i>
-                        </button>
-                    </div>
                 </div>
-                
-                <button class="md:hidden w-8 h-8 flex items-center justify-center text-gray-700 dark:text-gray-300"><i class="ri-menu-line text-xl"></i></button>
+
+                <div class="hidden lg:flex items-center gap-4 shrink-0">
+                    <button id="language-switch" class="flex items-center text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300">
+                        <i class="ri-translate-2-line mx-2 text-lg"></i>
+                        <span data-lang-key="current-lang">English</span>
+                    </button>
+
+                    <button id="dark-mode-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300">
+                        <i class="ri-sun-line dark:hidden text-lg"></i>
+                        <i class="ri-moon-line hidden dark:block text-lg"></i>
+                    </button>
+                </div>
+
+                <button id="mobile-menu-btn" class="lg:hidden w-8 h-8 flex items-center justify-center text-gray-700 dark:text-gray-300"><i class="ri-menu-line text-xl"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="lg:hidden hidden border-t border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md">
+            <div class="px-4 sm:px-6 py-4 flex flex-col gap-1 max-w-7xl mx-auto">
+                <a href="https://aboelyazed21.github.io/My_Prof/" class="px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"><span data-lang-key="home">الرئيسية</span></a>
+                <a href="https://aboelyazed21.github.io/Gallary/" class="px-4 py-3 rounded-xl text-primary-500 dark:text-primary-400 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"><span data-lang-key="portfolio">معرض الأعمال</span></a>
+                <a href="https://aboelyazed21.github.io/My_Prof/#skills" class="px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"><span data-lang-key="services">الخدمات</span></a>
+                <a href="https://aboelyazed21.github.io/My_Prof/#home" class="px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"><span data-lang-key="about">من نحن</span></a>
+                <a href="https://aboelyazed21.github.io/My_Prof/#contact" class="px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"><span data-lang-key="contact">تواصل معنا</span></a>
             </div>
         </div>
     </nav>
@@ -912,6 +921,7 @@
             initializeLanguage();
             initializeFilters();
             initializeModal();
+            initializeMobileMenu();
             initializeScrollEffects();
             renderProjects();
             animateOnScroll();
@@ -1174,6 +1184,32 @@
             modal.classList.add('hidden');
             modal.classList.remove('flex');
             document.body.style.overflow = 'auto';
+        }
+
+        // Mobile Menu Functions
+        function initializeMobileMenu() {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (!menuBtn || !mobileMenu) return;
+
+            const icon = menuBtn.querySelector('i');
+            const setIcon = (open) => {
+                if (!icon) return;
+                icon.classList.toggle('ri-menu-line', !open);
+                icon.classList.toggle('ri-close-line', open);
+            };
+
+            menuBtn.addEventListener('click', function() {
+                const isHidden = mobileMenu.classList.toggle('hidden');
+                setIcon(!isHidden);
+            });
+
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                    setIcon(false);
+                });
+            });
         }
 
         // Scroll Effects
