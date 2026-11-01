@@ -64,6 +64,9 @@ function load(): Env {
     if (env.ENGINE_HMAC_SECRET && env.ENGINE_HMAC_SECRET.length < 32) {
       throw new Error('ENGINE_HMAC_SECRET must be at least 32 characters');
     }
+    if (process.env.SEED_DEMO === 'true' && env.DEMO_PASSWORD === 'ChangeMe!2026') {
+      throw new Error('DEMO_PASSWORD must not use the development default when SEED_DEMO=true in production');
+    }
   }
   return env;
 }

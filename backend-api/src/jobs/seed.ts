@@ -445,8 +445,14 @@ async function seedOfferings(client: PoolClient) {
 }
 
 async function seedDemo(client: PoolClient) {
-  if (process.env.NODE_ENV === 'production' && process.env.SEED_DEMO !== 'true') {
-    logger.info('demo data skipped in production (set SEED_DEMO=true to include it)');
+  // An explicit SEED_DEMO always wins; otherwise demo accounts follow the
+  // environment (local development yes, production no). This prevents a
+  // production stack from creating demo logins just because Compose defaulted
+  // a variable.
+  const flag = process.env.SEED_DEMO;
+  const enabled = flag === undefined ? process.env.NODE_ENV !== 'production' : flag === 'true';
+  if (!enabled) {
+    logger.info('demo data skipped (set SEED_DEMO=true to include it)');
     return;
   }
   const passwordHash = await hashPassword(env.DEMO_PASSWORD);

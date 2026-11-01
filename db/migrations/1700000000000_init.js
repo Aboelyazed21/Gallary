@@ -4,6 +4,11 @@
  * UUID PKs, CHECK constraints, UTC timestamps, FK indexes and append-only audit log.
  */
 exports.up = (pgm) => {
+  const isProduction =
+    process.env.NODE_ENV === 'production' || process.env.APP_ENV === 'production';
+  if (isProduction && !process.env.DB_APP_PASSWORD) {
+    throw new Error('DB_APP_PASSWORD is required when migrating in production');
+  }
   const appPassword = (process.env.DB_APP_PASSWORD || 'dev_app_password_change_me').replace(/'/g, "''");
   pgm.sql(`
 CREATE EXTENSION IF NOT EXISTS pgcrypto;

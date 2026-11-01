@@ -33,7 +33,7 @@ services:
       context: .
       dockerfile: backend-api/Dockerfile
     environment:
-      NODE_ENV: development
+      NODE_ENV: ${NODE_ENV:-development}
       MIGRATION_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-smart_advisor}
       DB_APP_PASSWORD: ${DB_APP_PASSWORD:-dev_app_password_change_me}
       JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:-dev-access-secret-change-me-0123456789abcdef}
@@ -103,7 +103,7 @@ services:
       REGULATION_DATA_DIR: /app/regulation-data
       RUN_MIGRATIONS: "false"
       RUN_SEED: ${RUN_SEED:-true}
-      SEED_DEMO: ${SEED_DEMO:-true}
+      # Demo accounts follow NODE_ENV unless SEED_DEMO is set explicitly.
     depends_on:
       db:
         condition: service_healthy

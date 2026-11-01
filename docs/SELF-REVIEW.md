@@ -133,6 +133,11 @@ login/advisees/plans, admin login/anomalies/rules/analytics.
    imports, `prefer-const`, stale eslint directives and formatted all files.
 7. **Some notifications were created for the advisor instead of the student**
    (found while reviewing escalation paths) — corrected recipient selection.
+8. **Compose defaulted `SEED_DEMO=true`**, which would have created demo logins
+   in a production stack that only changed `NODE_ENV`. Demo data now follows the
+   environment unless `SEED_DEMO` is set explicitly, production refuses the
+   development demo password when `SEED_DEMO=true`, and the migration refuses to
+   run in production without `DB_APP_PASSWORD`.
 
 ## 5. Review notes and residual risks
 
