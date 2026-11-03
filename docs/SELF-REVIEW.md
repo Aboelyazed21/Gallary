@@ -1,6 +1,6 @@
 # Self-review report
 
-_Date: 2026-11-01 · Scope: backend API, rule engine, database, seeds, tests, docs_
+_Date: 2026-11-03 · Scope: backend API, rule engine, database, frontend, seeds, tests, docs_
 
 ## 1. Verdict
 
@@ -18,9 +18,11 @@ pgvector 0.8.6 on port 55432.
 | Type-check | `npx tsc --noEmit` (backend) | Pass, no output |
 | Lint | `npm run lint` | Pass, 0 errors / 0 warnings |
 | Format | `npm run format` | Pass, all files formatted |
-| Backend tests | `npm run test:coverage` | **150 passed**, 10 suites |
-| Backend coverage | included above | statements **95.58%**, branches **80.72%**, functions **92.14%**, lines **97.09%** — gate 80% |
+| Backend tests | `npm run test:coverage` | **153 passed**, 11 suites |
+| Backend coverage | included above | statements **95.85%**, branches **80.72%**, functions **92.8%**, lines **97.24%** — gate 80% |
 | Engine tests | `python -m pytest` | **78 passed**, coverage **89.86%** — gate 80% |
+| Frontend checks | `npm run typecheck && npm run lint && npm test && npm run build` | Pass; **32 tests in 4 files**; production build succeeds |
+| Frontend/API contract | `node scripts/verify-frontend.mjs` | **52/52 checks passed** |
 | Regulation data | `node scripts/validate-data.mjs` | Pass, 4 documented warnings |
 | Seed idempotency | `npm run seed` twice | Pass, counts unchanged (104 courses / 25 rules / 27 anomalies) |
 | End-to-end smoke | `node scripts/smoke.mjs` | **18/18 checks passed** |
@@ -161,8 +163,10 @@ login/advisees/plans, admin login/anomalies/rules/analytics.
   `docs/DECISIONS.md` and force review rather than silent guesses.
 - **In-memory rate limiting** is per process. A multi-instance deployment needs
   a shared store; this is recorded in the security residual risks.
-- **Frontend is out of scope.** The API contract, CSRF bootstrap and token
-  handling are documented for the React team.
+- **Frontend is delivered in `frontend/`.** It is Arabic-first RTL, talks only to
+  the Node API on the same origin, keeps tokens in memory, and mirrors the API
+  error/pagination contracts. `scripts/verify-frontend.mjs` checks 52 live
+  endpoints (52/52 passing).
 - **PDF export uses pdfkit's default font**, which does not render Arabic
   glyphs. The PDF currently prints the English course names; a proper Arabic
   font must be embedded before an Arabic-only PDF is required.
@@ -182,6 +186,7 @@ login/advisees/plans, admin login/anomalies/rules/analytics.
 - [x] Engine golden tests, integration tests for every endpoint group, security
       tests, ≥ 80% coverage, CI.
 - [x] OpenAPI, Postman, README, SECURITY, data-anomalies, decisions.
+- [x] ERD (`docs/ERD.md`, `docs/erd.mmd`) and frontend (React/TS) matching the API.
 - [x] Seeds idempotent; data validation green; anomaly resolution audit-logged
       and re-evaluates decisions.
 - [ ] `docker compose up --build` executed on this machine — blocked by missing

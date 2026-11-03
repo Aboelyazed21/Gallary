@@ -93,7 +93,7 @@ services:
       ALLOWED_EMAIL_DOMAIN: ${ALLOWED_EMAIL_DOMAIN:-aidm.bua.edu.eg}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
       COOKIE_SECURE: ${COOKIE_SECURE:-false}
-      TRUST_PROXY: loopback
+      TRUST_PROXY: ${TRUST_PROXY:-loopback}
       SMTP_HOST: mailhog
       SMTP_PORT: "1025"
       SMTP_FROM: ${SMTP_FROM:-no-reply@aidm.bua.edu.eg}
@@ -113,6 +113,17 @@ services:
         condition: service_healthy
     ports:
       - "${API_PORT:-4000}:4000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    depends_on:
+      backend-api:
+        condition: service_healthy
+    ports:
+      - "${FRONTEND_PORT:-5173}:80"
     restart: unless-stopped
 
 volumes:

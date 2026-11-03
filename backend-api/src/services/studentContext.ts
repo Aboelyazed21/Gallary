@@ -103,6 +103,42 @@ export interface AttemptPayload {
   course_level: number;
 }
 
+/**
+ * Reconciles declared passed credits that are missing from detailed transcript
+ * rows (accepted transfer/exemption credits) as synthetic non-GPA attempts.
+ * The engine caps a single attempt at 12 credits, so the gap is split into
+ * chunks with unique valid course codes.
+ */
+export function reconciliationAttempts(
+  creditsGap: number,
+  level: number,
+  usedCodes: Iterable<string> = [],
+): AttemptPayload[] {
+  const used = new Set(usedCodes);
+  const attempts: AttemptPayload[] = [];
+  let remaining = Math.min(Math.max(0, Math.floor(creditsGap)), 300);
+  for (let index = 1; remaining > 0; index += 1) {
+    const code = `TRF${String(index).padStart(4, '0')}`;
+    if (used.has(code)) continue;
+    used.add(code);
+    const credits = Math.min(12, remaining);
+    attempts.push({
+      code,
+      credits,
+      percentage: null,
+      grade_letter: 'P',
+      status: 'passed',
+      attempt_no: 1,
+      counts_in_gpa: false,
+      is_repeat: false,
+      term: null,
+      course_level: level,
+    });
+    remaining -= credits;
+  }
+  return attempts;
+}
+
 export async function loadEnrollments(studentId: string): Promise<EnrollmentRow[]> {
   return many<EnrollmentRow>(
     `SELECT e.id, e.course_id, c.code, c.credits, c.level_hint, e.term, e.academic_year,
@@ -188,18 +224,13 @@ export async function buildStudentRecord(student: StudentRow, term: Term): Promi
   if (gap > 0) {
     // Represents accepted transfer/exempted credits so the engine's credit
     // thresholds match the official transcript summary.
-    completed.push({
-      code: 'TRF0000',
-      credits: Math.min(gap, 300),
-      percentage: null,
-      grade_letter: 'P',
-      status: 'passed',
-      attempt_no: 1,
-      counts_in_gpa: false,
-      is_repeat: false,
-      term: null,
-      course_level: student.level,
-    });
+    completed.push(
+      ...reconciliationAttempts(
+        gap,
+        student.level,
+        completed.map((attempt) => attempt.code),
+      ),
+    );
   }
 
   const previousIncomplete = completed

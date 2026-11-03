@@ -129,6 +129,30 @@ jobs:
           path: backend-api/coverage
           if-no-files-found: ignore
 
+  frontend:
+    name: Frontend (typecheck, lint, tests, build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Type-check
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
+      - name: Unit tests
+        run: npm test
+      - name: Production build
+        run: npm run build
+
   docker:
     name: Docker images build
     runs-on: ubuntu-latest
@@ -150,3 +174,10 @@ jobs:
           file: rule-engine/Dockerfile
           push: false
           tags: smart-advisor/rule-engine:ci
+      - name: Build frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: frontend/Dockerfile
+          push: false
+          tags: smart-advisor/frontend:ci
