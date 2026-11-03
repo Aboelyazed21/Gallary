@@ -122,7 +122,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
       <aside
         className={cn(
-          'fixed inset-y-0 end-0 z-40 flex w-72 flex-col bg-gradient-to-b from-brand-950 via-brand-900 to-ink-950 transition-transform duration-200 lg:translate-x-0',
+          'fixed inset-y-0 start-0 z-40 flex w-72 flex-col bg-gradient-to-b from-brand-950 via-brand-900 to-ink-950 transition-transform duration-200 lg:translate-x-0',
           mobileOpen ? 'translate-x-0' : 'translate-x-full',
         )}
       >
@@ -204,7 +204,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      <div className="lg:me-72">
+      <div className="lg:ms-72">
         <header className="sticky top-0 z-20 border-b border-ink-100 bg-white/90 backdrop-blur">
           <div className="flex h-16 items-center gap-3 px-4 sm:px-6">
             <IconButton label="فتح القائمة" className="lg:hidden" onClick={() => setMobileOpen(true)}>
