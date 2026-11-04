@@ -36,6 +36,7 @@ import { cn, initials } from '../../lib/format';
 import type { NotificationRow, Paginated } from '../../lib/types';
 import { Badge } from '../ui/Badge';
 import { IconButton } from '../ui/Button';
+import buaLogoWhite from '../../assets/bua-logo-white.png';
 
 const ICONS: Record<string, LucideIcon> = {
   LayoutDashboard,
@@ -63,14 +64,15 @@ const ICONS: Record<string, LucideIcon> = {
 
 function Logo() {
   return (
-    <div className="flex items-center gap-3">
-      <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gold-400 font-display text-lg font-black text-ink-950 shadow-sm">
-        بدر
-      </div>
-      <div className="min-w-0">
-        <p className="truncate font-display text-sm font-extrabold text-white">المرشد الأكاديمي الذكي</p>
-        <p className="truncate text-[11px] text-brand-100/80">جامعة بدر بأسيوط · AIDM</p>
-      </div>
+    <div className="min-w-0">
+      <img
+        src={buaLogoWhite}
+        alt="جامعة بدر بأسيوط"
+        className="h-8 w-auto max-w-[170px] drop-shadow-sm"
+      />
+      <p className="mt-1.5 truncate text-[11px] font-semibold text-brand-100/80">
+        المرشد الأكاديمي الذكي · AIDM
+      </p>
     </div>
   );
 }
