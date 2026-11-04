@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react';
-import { ChevronDown, ExternalLink } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '../../lib/format';
 import { DECISION_LABELS } from '../../lib/constants';
 import type { Decision, DecisionStatus } from '../../lib/types';
@@ -111,8 +111,8 @@ export function DecisionLegend() {
       {(Object.keys(DECISION_LABELS) as DecisionStatus[]).map((status) => (
         <DecisionBadge key={status} status={status} />
       ))}
-      <span className="inline-flex items-center gap-1 text-ink-500">
-        <ExternalLink className="h-3 w-3" /> كل قرار مرتبط بمادة وصفحة في اللائحة
+      <span className="inline-flex items-center text-ink-500">
+        كل قرار مرتبط بمادة وصفحة في اللائحة
       </span>
     </div>
   );

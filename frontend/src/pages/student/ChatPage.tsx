@@ -3,12 +3,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   BookMarked,
   Bot,
-  ExternalLink,
   MessageSquarePlus,
   MessagesSquare,
   Send,
   ShieldAlert,
-  Sparkles,
   User,
 } from 'lucide-react';
 import { api, errorMessage } from '../../lib/api';
@@ -27,6 +25,10 @@ const SUGGESTIONS = [
   'ما شروط مرتبة الشرف؟',
   'ماذا يحدث عند الإنذار الأكاديمي الثالث المتتالي؟',
   'ما متطلبات التدريب الميداني ومشروع التخرج؟',
+  'متى آخر موعد للحذف والإضافة والانسحاب؟',
+  'كيف أحسب المعدل الفصلي والتراكمي؟',
+  'ما شروط التسجيل في الفصل الصيفي؟',
+  'ما متطلبات التخرج وعدد الساعات المطلوبة؟',
 ];
 
 export function ChatPage() {
@@ -189,7 +191,7 @@ export function ChatPage() {
             {!activeId || (session.data?.data.messages.length ?? 0) === 0 ? (
               <div className="flex h-full flex-col items-center justify-center text-center">
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
-                  <Sparkles className="h-7 w-7" />
+                  <Bot className="h-7 w-7" />
                 </div>
                 <h3 className="mt-3 font-display text-lg font-bold text-ink-900">كيف أساعدك في اللائحة؟</h3>
                 <p className="mt-1 max-w-md text-sm leading-6 text-ink-500">
@@ -324,8 +326,8 @@ function MessageBubble({ message }: { message: ChatMessage }) {
                       <span className="font-mono text-ink-500">ص {citation.page}</span>
                     </div>
                     {citation.title && <p className="mt-0.5 text-ink-500">{citation.title}</p>}
-                    <p className="mt-0.5 flex items-center gap-1 text-[10px] text-ink-400">
-                      <ExternalLink className="h-3 w-3" /> {citation.source ?? 'BUA-AIDM.pdf'}
+                    <p className="mt-0.5 text-[10px] text-ink-400">
+                      {citation.source ?? 'BUA-AIDM.pdf'}
                     </p>
                   </div>
                 ))}

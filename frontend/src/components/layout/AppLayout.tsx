@@ -36,7 +36,7 @@ import { cn, initials } from '../../lib/format';
 import type { NotificationRow, Paginated } from '../../lib/types';
 import { Badge } from '../ui/Badge';
 import { IconButton } from '../ui/Button';
-import buaLogoWhite from '../../assets/bua-logo-white.png';
+import { BuaLogo } from '../brand/BuaLogo';
 
 const ICONS: Record<string, LucideIcon> = {
   LayoutDashboard,
@@ -65,10 +65,11 @@ const ICONS: Record<string, LucideIcon> = {
 function Logo() {
   return (
     <div className="min-w-0">
-      <img
-        src={buaLogoWhite}
-        alt="جامعة بدر بأسيوط"
-        className="h-8 w-auto max-w-[170px] drop-shadow-sm"
+      <BuaLogo
+        variant="white"
+        globeClassName="h-8 w-8"
+        wordmarkClassName="h-[19px] w-auto"
+        className="max-w-[190px]"
       />
       <p className="mt-1.5 truncate text-[11px] font-semibold text-brand-100/80">
         المرشد الأكاديمي الذكي · AIDM
@@ -214,9 +215,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             </IconButton>
 
             <div className="hidden items-center gap-2 sm:flex">
-              <Badge tone="brand" className="gap-1">
-                <ShieldCheck className="h-3 w-3" /> قرارات مرتبطة باللائحة
-              </Badge>
+              <Badge tone="brand">قرارات مرتبطة باللائحة</Badge>
               <span className="text-xs text-ink-500">كل قرار يحمل مادة وصفحة ورقم قاعدة</span>
             </div>
 

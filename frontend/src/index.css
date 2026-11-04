@@ -59,6 +59,27 @@
     text-wrap: balance;
   }
 
+  @keyframes globe-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-globe-spin {
+    animation: globe-spin 16s linear infinite;
+    transform-origin: 50% 50%;
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-globe-spin {
+      animation: none;
+    }
+  }
+
   .paper-grid {
     background-image:
       linear-gradient(to right, rgba(22, 71, 65, 0.05) 1px, transparent 1px),

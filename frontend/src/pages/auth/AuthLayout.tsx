@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpenCheck, GraduationCap, ShieldCheck } from 'lucide-react';
-import buaLogo from '../../assets/bua-logo.png';
+import { BuaLogo } from '../../components/brand/BuaLogo';
 import buaCampus from '../../assets/bua-campus.jpg';
 
 const FEATURES = [
@@ -56,7 +56,7 @@ export function AuthLayout({
 
         <div className="relative p-10 xl:p-12">
           <div className="inline-flex items-center rounded-2xl bg-white/95 px-4 py-3 shadow-float ring-1 ring-white/60 backdrop-blur-sm">
-            <img src={buaLogo} alt="شعار جامعة بدر بأسيوط" className="h-12 w-auto" />
+            <BuaLogo globeClassName="h-12 w-12" wordmarkClassName="h-[44px] w-auto" />
           </div>
           <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-100/80">
             كلية تكنولوجيا المعلومات وعلوم البيانات
@@ -106,7 +106,7 @@ export function AuthLayout({
 
         <div className="relative w-full max-w-md">
           <div className="mb-7 flex flex-col items-start gap-2 lg:hidden">
-            <img src={buaLogo} alt="شعار جامعة بدر بأسيوط" className="h-11 w-auto" />
+            <BuaLogo globeClassName="h-11 w-11" wordmarkClassName="h-[40px] w-auto" />
             <p className="text-[11px] font-semibold text-ink-500">المرشد الأكاديمي الذكي · جامعة بدر بأسيوط</p>
           </div>
 

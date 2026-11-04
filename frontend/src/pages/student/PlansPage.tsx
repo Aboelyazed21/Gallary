@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { CalendarDays, ListChecks, Plus, Sparkles } from 'lucide-react';
+import { CalendarDays, ListChecks, Plus } from 'lucide-react';
 import { api, errorMessage } from '../../lib/api';
 import type { GeneratedPlan, StudyPlanListRow } from '../../lib/types';
 import { PLAN_STATUS_LABELS } from '../../lib/constants';
@@ -82,7 +82,7 @@ export function PlansPage() {
         }
       />
 
-      <Alert tone="info" className="mb-4" title="ما معنى مسودة؟" icon={<Sparkles className="h-5 w-5" />}>
+      <Alert tone="info" className="mb-4" title="ما معنى مسودة؟">
         الخطة استشارية فقط. لا يوجد في النظام أي نقطة تسجيل مقررات. يعتمد المرشد الخطة أو يعدّلها، ثم تكتمل إجراءات
         التسجيل الرسمية خارج المنصة.
       </Alert>
@@ -143,7 +143,7 @@ export function PlansPage() {
             <Button variant="ghost" onClick={() => setOpen(false)}>
               إلغاء
             </Button>
-            <Button onClick={() => generate.mutate()} loading={generate.isPending} icon={<Sparkles className="h-4 w-4" />}>
+            <Button onClick={() => generate.mutate()} loading={generate.isPending}>
               توليد المسودة
             </Button>
           </>

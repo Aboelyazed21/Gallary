@@ -8,7 +8,7 @@ import {
   CalendarDays,
   GraduationCap,
   ShieldAlert,
-  Sparkles,
+  Target,
   TriangleAlert,
   UserRound,
 } from 'lucide-react';
@@ -69,7 +69,7 @@ export function StudentDashboardPage() {
           label="المتبقي للتخرج"
           value={formatInt(graduation.remainingCredits)}
           hint="وفق الحد الأدنى للساعات"
-          icon={<Sparkles className="h-5 w-5" />}
+          icon={<Target className="h-5 w-5" />}
           tone="gold"
         />
         <StatCard

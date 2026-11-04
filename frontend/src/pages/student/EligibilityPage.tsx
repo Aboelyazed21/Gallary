@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Filter, Search, ShieldCheck } from 'lucide-react';
+import { Filter, Search } from 'lucide-react';
 import { api, errorMessage, qs } from '../../lib/api';
 import type { BulkEligibility, DecisionStatus } from '../../lib/types';
 import { DECISION_LABELS } from '../../lib/constants';
@@ -92,7 +92,6 @@ export function EligibilityPage() {
                 className="w-full"
                 onClick={() => void query.refetch()}
                 loading={query.isFetching}
-                icon={<ShieldCheck className="h-4 w-4" />}
               >
                 إعادة التقييم
               </Button>
