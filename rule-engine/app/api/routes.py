@@ -218,5 +218,6 @@ def early_warning_endpoint(payload: EarlyWarningRequest) -> dict[str, Any]:
 @router.post("/engine/rag/ask", response_model=RagAnswer, dependencies=[Depends(require_service_token)])
 def rag_endpoint(payload: RagAskRequest) -> dict[str, Any]:
     data = get_data()
-    result = answer_question(data, payload.question, payload.language)
+    history = [{"role": turn.role, "content": turn.content} for turn in payload.history]
+    result = answer_question(data, payload.question, payload.language, history=history)
     return RagAnswer(**result).model_dump()

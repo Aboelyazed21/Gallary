@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { Eye, EyeOff, KeyRound, Mail } from 'lucide-react';
 import { useAuth } from '../../auth/AuthProvider';
 import { errorMessage } from '../../lib/api';
@@ -10,14 +11,9 @@ import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { AuthLayout } from './AuthLayout';
 
-const DEMO_ACCOUNTS = [
-  { label: 'طالب', email: 'student1@aidm.bua.edu.eg' },
-  { label: 'مرشد', email: 'advisor1@aidm.bua.edu.eg' },
-  { label: 'مسؤول', email: 'admin@bua.edu.eg' },
-];
-
 export function LoginPage() {
   const { login } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const [email, setEmail] = useState('');
@@ -39,13 +35,13 @@ export function LoginPage() {
 
   return (
     <AuthLayout
-      title="تسجيل الدخول"
-      subtitle="استخدم البريد الجامعي وكلمة المرور للوصول إلى لوحة الإرشاد الأكاديمي."
+      title={t('تسجيل الدخول')}
+      subtitle={t('استخدم البريد الجامعي وكلمة المرور للوصول إلى لوحة الإرشاد الأكاديمي.')}
       footer={
         <span>
-          لا تملك حسابًا؟ تُنشأ الحسابات من قِبل إدارة الكلية.{' '}
+          {t('لا تملك حسابًا؟ تُنشأ الحسابات من قِبل إدارة الكلية.')}{' '}
           <Link to="/forgot-password" className="font-bold text-brand-700 hover:text-brand-900">
-            نسيت كلمة المرور؟
+            {t('نسيت كلمة المرور؟')}
           </Link>
         </span>
       }
@@ -54,7 +50,7 @@ export function LoginPage() {
         {mutation.isError && <Alert tone="danger">{errorMessage(mutation.error)}</Alert>}
 
         <Input
-          label="البريد الإلكتروني"
+          label={t('البريد الإلكتروني')}
           type="email"
           inputMode="email"
           autoComplete="username"
@@ -68,7 +64,7 @@ export function LoginPage() {
 
         <div className="relative">
           <Input
-            label="كلمة المرور"
+            label={t('كلمة المرور')}
             type={showPassword ? 'text' : 'password'}
             autoComplete="current-password"
             dir="ltr"
@@ -82,34 +78,15 @@ export function LoginPage() {
             type="button"
             onClick={() => setShowPassword((value) => !value)}
             className="absolute end-3 top-[34px] rounded p-1 text-ink-400 hover:text-ink-700"
-            aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
+            aria-label={showPassword ? t('إخفاء كلمة المرور') : t('إظهار كلمة المرور')}
           >
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
         </div>
 
         <Button type="submit" className="w-full" size="lg" loading={mutation.isPending}>
-          دخول إلى المنصة
+          {t('دخول إلى المنصة')}
         </Button>
-
-        <div className="rounded-xl border border-ink-100 bg-ink-50/70 p-3">
-          <p className="text-[11px] font-bold text-ink-600">حسابات العرض التجريبي — كلمة المرور: ChangeMe!2026</p>
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {DEMO_ACCOUNTS.map((account) => (
-              <button
-                key={account.email}
-                type="button"
-                onClick={() => {
-                  setEmail(account.email);
-                  setPassword('ChangeMe!2026');
-                }}
-                className="rounded-lg border border-ink-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-ink-700 transition hover:border-brand-400 hover:text-brand-800"
-              >
-                {account.label}
-              </button>
-            ))}
-          </div>
-        </div>
       </form>
     </AuthLayout>
   );

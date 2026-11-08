@@ -228,17 +228,30 @@ describe('student chat', () => {
     await auth(context.agent.post('/api/chat/sessions').send({ title: '' }), context.session).expect(400);
   });
 
-  it('limits chat to students', async () => {
+  it('is available to every role, with sessions scoped to the owner', async () => {
     const advisorAgent = newAgent(app);
     const advisor = await login(advisorAgent, 'advisor1@aidm.bua.edu.eg');
-    await auth(advisorAgent.get('/api/chat/sessions'), advisor).expect(403);
+    const advisorList = await auth(advisorAgent.get('/api/chat/sessions'), advisor).expect(200);
+    expect(Array.isArray(advisorList.body.data)).toBe(true);
+
+    const advisorSession = await auth(
+      advisorAgent.post('/api/chat/sessions').send({ title: 'Advisor question' }),
+      advisor,
+    ).expect(201);
+    expect(advisorSession.body.data.user_id).toBeTruthy();
+    expect(advisorSession.body.data.student_id).toBeNull();
 
     const adminAgent = newAgent(app);
     const admin = await login(adminAgent, 'admin@bua.edu.eg');
-    await auth(adminAgent.post('/api/chat/sessions').send({}), admin).expect(403);
+    await auth(adminAgent.post('/api/chat/sessions').send({}), admin).expect(201);
 
     const student = await studentSession(STUDENT3_EMAIL);
     await auth(student.agent.get('/api/chat/sessions'), student.session).expect(200);
+
+    // An advisor cannot read a student's session and vice versa.
+    const owner = await studentSession(STUDENT1_EMAIL);
+    const ownerSession = await newChat(owner);
+    await auth(advisorAgent.get(`/api/chat/sessions/${ownerSession}`), advisor).expect(404);
   });
 
   it('does not fabricate an answer when the engine is unavailable', async () => {

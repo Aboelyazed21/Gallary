@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { KeyRound, Pencil, Plus, Search, Trash2, UserPlus } from 'lucide-react';
 import { api, errorMessage, qs } from '../../lib/api';
 import type { AdvisorAdminRow, Department, Paginated, Program, User } from '../../lib/types';
@@ -61,6 +62,7 @@ const emptyCreate = (): CreateForm => ({
 });
 
 export function AdminUsersPage() {
+  const { t } = useTranslation();
   const toast = useToast();
   const queryClient = useQueryClient();
   const [role, setRole] = useState('');
@@ -132,12 +134,15 @@ export function AdminUsersPage() {
         },
       }),
     onSuccess: async () => {
-      toast.success('تم إنشاء المستخدم', 'أُرسلت كلمة مرور مؤقتة إلى بريده إن لم تحدد كلمة مرور.');
+      toast.success(
+        t('تم إنشاء المستخدم'),
+        t('أُرسلت كلمة مرور مؤقتة إلى بريده إن لم تحدد كلمة مرور.'),
+      );
       setCreateOpen(false);
       setForm(emptyCreate());
       await invalidate();
     },
-    onError: (error) => toast.error('تعذر إنشاء المستخدم', errorMessage(error)),
+    onError: (error) => toast.error(t('تعذر إنشاء المستخدم'), errorMessage(error)),
   });
 
   const update = useMutation({
@@ -151,26 +156,26 @@ export function AdminUsersPage() {
         },
       }),
     onSuccess: async () => {
-      toast.success('تم تحديث المستخدم');
+      toast.success(t('تم تحديث المستخدم'));
       setEditing(null);
       await invalidate();
     },
-    onError: (error) => toast.error('تعذر تحديث المستخدم', errorMessage(error)),
+    onError: (error) => toast.error(t('تعذر تحديث المستخدم'), errorMessage(error)),
   });
 
   const resetPassword = useMutation({
     mutationFn: (id: string) => api(`/admin/users/${id}/reset-password`, { method: 'POST' }),
-    onSuccess: () => toast.success('تمت إعادة تعيين كلمة المرور', 'أُرسلت كلمة مرور مؤقتة للبريد.'),
-    onError: (error) => toast.error('تعذر إعادة التعيين', errorMessage(error)),
+    onSuccess: () => toast.success(t('تمت إعادة تعيين كلمة المرور'), t('أُرسلت كلمة مرور مؤقتة للبريد.')),
+    onError: (error) => toast.error(t('تعذر إعادة التعيين'), errorMessage(error)),
   });
 
   const remove = useMutation({
     mutationFn: (id: string) => api(`/admin/users/${id}`, { method: 'DELETE' }),
     onSuccess: async () => {
-      toast.success('تم تعطيل الحساب');
+      toast.success(t('تم تعطيل الحساب'));
       await invalidate();
     },
-    onError: (error) => toast.error('تعذر حذف المستخدم', errorMessage(error)),
+    onError: (error) => toast.error(t('تعذر حذف المستخدم'), errorMessage(error)),
   });
 
   const rows = users.data?.data ?? [];
@@ -186,12 +191,14 @@ export function AdminUsersPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="إدارة المستخدمين"
-        title="حسابات المنصة"
-        description="إنشاء حسابات الطلاب والمرشدين والمسؤولين. لا تُحذف الحسابات نهائيًا — تُعطّل وتُسجّل العملية في سجل التدقيق."
+        eyebrow={t('إدارة المستخدمين')}
+        title={t('حسابات المنصة')}
+        description={t(
+          'إنشاء حسابات الطلاب والمرشدين والمسؤولين. لا تُحذف الحسابات نهائيًا — تُعطّل وتُسجّل العملية في سجل التدقيق.',
+        )}
         actions={
           <Button onClick={() => setCreateOpen(true)} icon={<UserPlus className="h-4 w-4" />}>
-            مستخدم جديد
+            {t('مستخدم جديد')}
           </Button>
         }
       />
@@ -207,43 +214,43 @@ export function AdminUsersPage() {
             }}
           >
             <Input
-              label="بحث"
+              label={t('بحث')}
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="الاسم أو البريد"
+              placeholder={t('الاسم أو البريد')}
               leading={<Search className="h-4 w-4" />}
             />
             <Select
-              label="الدور"
+              label={t('الدور')}
               value={role}
               onChange={(event) => {
                 setRole(event.target.value);
                 setPage(1);
               }}
               options={[
-                { value: '', label: 'كل الأدوار' },
-                { value: 'student', label: ROLE_LABELS.student },
-                { value: 'advisor', label: ROLE_LABELS.advisor },
-                { value: 'admin', label: ROLE_LABELS.admin },
+                { value: '', label: t('كل الأدوار') },
+                { value: 'student', label: t(ROLE_LABELS.student) },
+                { value: 'advisor', label: t(ROLE_LABELS.advisor) },
+                { value: 'admin', label: t(ROLE_LABELS.admin) },
               ]}
             />
             <Select
-              label="الحالة"
+              label={t('الحالة')}
               value={status}
               onChange={(event) => {
                 setStatus(event.target.value);
                 setPage(1);
               }}
               options={[
-                { value: '', label: 'كل الحالات' },
-                { value: 'active', label: 'نشط' },
-                { value: 'inactive', label: 'غير نشط' },
-                { value: 'suspended', label: 'موقوف' },
+                { value: '', label: t('كل الحالات') },
+                { value: 'active', label: t('نشط') },
+                { value: 'inactive', label: t('غير نشط') },
+                { value: 'suspended', label: t('موقوف') },
               ]}
             />
             <div className="flex items-end">
               <Button type="submit" variant="outline" className="w-full">
-                تطبيق البحث
+                {t('تطبيق البحث')}
               </Button>
             </div>
           </form>
@@ -255,7 +262,10 @@ export function AdminUsersPage() {
       ) : users.isError ? (
         <ErrorState message={errorMessage(users.error)} onRetry={() => void users.refetch()} />
       ) : rows.length === 0 ? (
-        <EmptyState title="لا يوجد مستخدمون" description="جرّب تعديل عوامل التصفية أو أنشئ مستخدمًا جديدًا." />
+        <EmptyState
+          title={t('لا يوجد مستخدمون')}
+          description={t('جرّب تعديل عوامل التصفية أو أنشئ مستخدمًا جديدًا.')}
+        />
       ) : (
         <Card>
           <CardContent>
@@ -263,12 +273,12 @@ export function AdminUsersPage() {
               <Table>
                 <THead>
                   <Tr>
-                    <Th>المستخدم</Th>
-                    <Th>الدور</Th>
-                    <Th>الحالة</Th>
-                    <Th>كلمة المرور</Th>
-                    <Th>أُنشئ</Th>
-                    <Th>إجراءات</Th>
+                    <Th>{t('المستخدم')}</Th>
+                    <Th>{t('الدور')}</Th>
+                    <Th>{t('الحالة')}</Th>
+                    <Th>{t('كلمة المرور')}</Th>
+                    <Th>{t('أُنشئ')}</Th>
+                    <Th>{t('إجراءات')}</Th>
                   </Tr>
                 </THead>
                 <TBody>
@@ -285,27 +295,27 @@ export function AdminUsersPage() {
                         </Td>
                         <Td>
                           <Badge tone={user.role === 'admin' ? 'gold' : user.role === 'advisor' ? 'info' : 'brand'}>
-                            {ROLE_LABELS[user.role]}
+                            {t(ROLE_LABELS[user.role])}
                           </Badge>
                         </Td>
                         <Td>
-                          <Badge tone={statusMeta.tone}>{statusMeta.ar}</Badge>
+                          <Badge tone={statusMeta.tone}>{t(statusMeta.ar)}</Badge>
                           {user.isDemo && (
                             <Badge tone="neutral" className="ms-1">
-                              تجريبي
+                              {t('تجريبي')}
                             </Badge>
                           )}
                         </Td>
                         <Td>
                           <Badge tone={user.mustChangePassword ? 'warning' : 'neutral'}>
-                            {user.mustChangePassword ? 'تغيير مطلوب' : 'مستقرة'}
+                            {user.mustChangePassword ? t('تغيير مطلوب') : t('مستقرة')}
                           </Badge>
                         </Td>
                         <Td className="text-xs">{formatDate(user.createdAt)}</Td>
                         <Td>
                           <div className="flex items-center gap-0.5">
                             <IconButton
-                              label="تعديل"
+                              label={t('تعديل')}
                               onClick={() => {
                                 setEditing(user);
                                 setEditName(user.fullName);
@@ -316,12 +326,12 @@ export function AdminUsersPage() {
                               <Pencil className="h-4 w-4" />
                             </IconButton>
                             <IconButton
-                              label="إعادة تعيين كلمة المرور"
+                              label={t('إعادة تعيين كلمة المرور')}
                               onClick={() => resetPassword.mutate(user.id)}
                             >
                               <KeyRound className="h-4 w-4" />
                             </IconButton>
-                            <IconButton label="تعطيل الحساب" onClick={() => remove.mutate(user.id)}>
+                            <IconButton label={t('تعطيل الحساب')} onClick={() => remove.mutate(user.id)}>
                               <Trash2 className="h-4 w-4 text-danger" />
                             </IconButton>
                           </div>
@@ -340,13 +350,13 @@ export function AdminUsersPage() {
       <Modal
         open={createOpen}
         onClose={() => setCreateOpen(false)}
-        title="إنشاء مستخدم"
-        description="الطلاب يحتاجون بريدًا بنطاق الكلية ورقم طالب. المرشدون يحتاجون حدًا أقصى للطلاب."
+        title={t('إنشاء مستخدم')}
+        description={t('الطلاب يحتاجون بريدًا بنطاق الكلية ورقم طالب. المرشدون يحتاجون حدًا أقصى للطلاب.')}
         size="lg"
         footer={
           <>
             <Button variant="ghost" onClick={() => setCreateOpen(false)}>
-              إلغاء
+              {t('إلغاء')}
             </Button>
             <Button
               onClick={() => create.mutate()}
@@ -354,7 +364,7 @@ export function AdminUsersPage() {
               icon={<Plus className="h-4 w-4" />}
               disabled={!form.email.trim() || form.fullName.trim().length < 2}
             >
-              إنشاء الحساب
+              {t('إنشاء الحساب')}
             </Button>
           </>
         }
@@ -363,13 +373,13 @@ export function AdminUsersPage() {
           {create.isError && <Alert tone="danger">{errorMessage(create.error)}</Alert>}
           <div className="grid gap-3 sm:grid-cols-2">
             <Input
-              label="الاسم الكامل"
+              label={t('الاسم الكامل')}
               value={form.fullName}
               onChange={(event) => setForm({ ...form, fullName: event.target.value })}
               required
             />
             <Input
-              label="البريد الإلكتروني"
+              label={t('البريد الإلكتروني')}
               type="email"
               dir="ltr"
               value={form.email}
@@ -377,32 +387,32 @@ export function AdminUsersPage() {
               required
             />
             <Select
-              label="الدور"
+              label={t('الدور')}
               value={form.role}
               onChange={(event) => setForm({ ...form, role: event.target.value as Role })}
               options={[
-                { value: 'student', label: 'طالب' },
-                { value: 'advisor', label: 'مرشد أكاديمي' },
-                { value: 'admin', label: 'مسؤول نظام' },
+                { value: 'student', label: t('طالب') },
+                { value: 'advisor', label: t('مرشد أكاديمي') },
+                { value: 'admin', label: t('مسؤول نظام') },
               ]}
             />
             <Input
-              label="الهاتف (اختياري)"
+              label={t('الهاتف (اختياري)')}
               dir="ltr"
               value={form.phone}
               onChange={(event) => setForm({ ...form, phone: event.target.value })}
             />
             <Input
-              label="كلمة مرور مبدئية (اختياري)"
+              label={t('كلمة مرور مبدئية (اختياري)')}
               type="text"
               dir="ltr"
               value={form.password}
               onChange={(event) => setForm({ ...form, password: event.target.value })}
-              hint="إن تركتها فارغة يُرسل النظام كلمة مؤقتة بالبريد."
+              hint={t('إن تركتها فارغة يُرسل النظام كلمة مؤقتة بالبريد.')}
             />
             <div className="flex items-end">
               <Checkbox
-                label="حساب تجريبي"
+                label={t('حساب تجريبي')}
                 checked={form.isDemo}
                 onChange={(event) => setForm({ ...form, isDemo: event.target.checked })}
               />
@@ -411,10 +421,10 @@ export function AdminUsersPage() {
 
           {form.role === 'student' && (
             <div className="rounded-xl border border-ink-100 p-4">
-              <p className="mb-3 text-sm font-bold text-ink-900">بيانات الطالب</p>
+              <p className="mb-3 text-sm font-bold text-ink-900">{t('بيانات الطالب')}</p>
               <div className="grid gap-3 sm:grid-cols-2">
                 <Input
-                  label="رقم الطالب"
+                  label={t('رقم الطالب')}
                   dir="ltr"
                   value={form.studentCode}
                   onChange={(event) => setForm({ ...form, studentCode: event.target.value })}
@@ -422,25 +432,28 @@ export function AdminUsersPage() {
                   required
                 />
                 <Select
-                  label="البرنامج"
+                  label={t('البرنامج')}
                   value={form.program}
                   onChange={(event) => setForm({ ...form, program: event.target.value as Program })}
                   options={(Object.keys(PROGRAM_LABELS) as Program[]).map((program) => ({
                     value: program,
-                    label: PROGRAM_LABELS[program].ar,
+                    label: t(PROGRAM_LABELS[program].ar),
                   }))}
                 />
                 <Select
-                  label="المستوى"
+                  label={t('المستوى')}
                   value={form.level}
                   onChange={(event) => setForm({ ...form, level: event.target.value })}
-                  options={[1, 2, 3, 4].map((level) => ({ value: String(level), label: `المستوى ${level}` }))}
+                  options={[1, 2, 3, 4].map((level) => ({
+                    value: String(level),
+                    label: t('المستوى {{level}}', { level }),
+                  }))}
                 />
                 <Select
-                  label="المرشد (اختياري)"
+                  label={t('المرشد (اختياري)')}
                   value={form.advisorId}
                   onChange={(event) => setForm({ ...form, advisorId: event.target.value })}
-                  placeholder="بدون مرشد"
+                  placeholder={t('بدون مرشد')}
                   options={advisorOptions}
                 />
                 <Input
@@ -453,17 +466,17 @@ export function AdminUsersPage() {
                   onChange={(event) => setForm({ ...form, cgpa: event.target.value })}
                 />
                 <Input
-                  label="الساعات المجتازة"
+                  label={t('الساعات المجتازة')}
                   type="number"
                   min={0}
                   value={form.passedCredits}
                   onChange={(event) => setForm({ ...form, passedCredits: event.target.value })}
                 />
                 <Select
-                  label="القسم (اختياري)"
+                  label={t('القسم (اختياري)')}
                   value={form.departmentId}
                   onChange={(event) => setForm({ ...form, departmentId: event.target.value })}
-                  placeholder="بدون قسم"
+                  placeholder={t('بدون قسم')}
                   options={departmentOptions}
                 />
               </div>
@@ -472,16 +485,16 @@ export function AdminUsersPage() {
 
           {form.role === 'advisor' && (
             <div className="rounded-xl border border-ink-100 p-4">
-              <p className="mb-3 text-sm font-bold text-ink-900">بيانات المرشد</p>
+              <p className="mb-3 text-sm font-bold text-ink-900">{t('بيانات المرشد')}</p>
               <div className="grid gap-3 sm:grid-cols-2">
                 <Input
-                  label="المكتب"
+                  label={t('المكتب')}
                   value={form.officeLocation}
                   onChange={(event) => setForm({ ...form, officeLocation: event.target.value })}
-                  placeholder="مبنى الكلية — 204"
+                  placeholder={t('مبنى الكلية — 204')}
                 />
                 <Input
-                  label="الحد الأقصى للطلاب"
+                  label={t('الحد الأقصى للطلاب')}
                   type="number"
                   min={1}
                   max={500}
@@ -489,10 +502,10 @@ export function AdminUsersPage() {
                   onChange={(event) => setForm({ ...form, maxStudents: event.target.value })}
                 />
                 <Select
-                  label="القسم (اختياري)"
+                  label={t('القسم (اختياري)')}
                   value={form.departmentId}
                   onChange={(event) => setForm({ ...form, departmentId: event.target.value })}
-                  placeholder="بدون قسم"
+                  placeholder={t('بدون قسم')}
                   options={departmentOptions}
                 />
               </div>
@@ -504,15 +517,15 @@ export function AdminUsersPage() {
       <Modal
         open={Boolean(editing)}
         onClose={() => setEditing(null)}
-        title="تعديل مستخدم"
+        title={t('تعديل مستخدم')}
         description={editing?.email}
         footer={
           <>
             <Button variant="ghost" onClick={() => setEditing(null)}>
-              إلغاء
+              {t('إلغاء')}
             </Button>
             <Button onClick={() => update.mutate()} loading={update.isPending}>
-              حفظ التعديلات
+              {t('حفظ التعديلات')}
             </Button>
           </>
         }
@@ -520,25 +533,25 @@ export function AdminUsersPage() {
         <div className="space-y-3">
           {update.isError && <Alert tone="danger">{errorMessage(update.error)}</Alert>}
           <Input
-            label="الاسم الكامل"
+            label={t('الاسم الكامل')}
             value={editName}
             onChange={(event) => setEditName(event.target.value)}
             required
           />
           <Input
-            label="الهاتف"
+            label={t('الهاتف')}
             dir="ltr"
             value={editPhone}
             onChange={(event) => setEditPhone(event.target.value)}
           />
           <Select
-            label="الحالة"
+            label={t('الحالة')}
             value={editStatus}
             onChange={(event) => setEditStatus(event.target.value)}
             options={[
-              { value: 'active', label: 'نشط' },
-              { value: 'inactive', label: 'غير نشط' },
-              { value: 'suspended', label: 'موقوف' },
+              { value: 'active', label: t('نشط') },
+              { value: 'inactive', label: t('غير نشط') },
+              { value: 'suspended', label: t('موقوف') },
             ]}
           />
         </div>

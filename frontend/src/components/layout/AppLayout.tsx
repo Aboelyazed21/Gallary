@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Bell,
   BookOpen,
@@ -10,16 +11,20 @@ import {
   GraduationCap,
   Gauge,
   Inbox,
+  Languages,
   LayoutDashboard,
   ListChecks,
   LogOut,
   Menu,
   MessagesSquare,
+  Monitor,
+  Moon,
   Scale,
   ScrollText,
   Settings,
   ShieldCheck,
   Shuffle,
+  Sun,
   TriangleAlert,
   Upload,
   UserCog,
@@ -30,6 +35,8 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '../../auth/AuthProvider';
+import { useTheme } from '../../theme/ThemeProvider';
+import { useLanguage } from '../../i18n/LanguageProvider';
 import { api, qs } from '../../lib/api';
 import { NAV_GROUPS, ROLE_LABELS } from '../../lib/constants';
 import { cn, initials } from '../../lib/format';
@@ -37,6 +44,7 @@ import type { NotificationRow, Paginated } from '../../lib/types';
 import { Badge } from '../ui/Badge';
 import { IconButton } from '../ui/Button';
 import { BuaLogo } from '../brand/BuaLogo';
+import { FloatingAssistant } from '../assistant/FloatingAssistant';
 
 const ICONS: Record<string, LucideIcon> = {
   LayoutDashboard,
@@ -63,6 +71,7 @@ const ICONS: Record<string, LucideIcon> = {
 };
 
 function Logo() {
+  const { t } = useTranslation();
   return (
     <div className="min-w-0">
       <BuaLogo
@@ -71,8 +80,8 @@ function Logo() {
         wordmarkClassName="h-[19px] w-auto"
         className="max-w-[190px]"
       />
-      <p className="mt-1.5 truncate text-[11px] font-semibold text-brand-100/80">
-        المرشد الأكاديمي الذكي · AIDM
+      <p className="mt-1.5 truncate text-[11px] font-semibold text-[#d5f5eb]/80">
+        {t('المرشد الأكاديمي الذكي · AIDM')}
       </p>
     </div>
   );
@@ -80,6 +89,9 @@ function Logo() {
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, me, logout } = useAuth();
+  const { theme, cycleTheme } = useTheme();
+  const { lang, toggleLang } = useLanguage();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -99,12 +111,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   const unread = notifications?.pagination.total ?? 0;
 
-  const roleLabel = user ? ROLE_LABELS[user.role] : '';
+  const roleLabel = user ? t(ROLE_LABELS[user.role]) : '';
   const subtitle = useMemo(() => {
     if (user?.role === 'student' && me?.student) return `${me.student.student_code} · ${me.student.program}`;
-    if (user?.role === 'advisor' && me?.advisor) return `مرشد · ${me.advisor.max_students} طالب كحد أقصى`;
+    if (user?.role === 'advisor' && me?.advisor)
+      return t('مرشد · {{count}} طالب كحد أقصى', { count: me.advisor.max_students });
     return user?.email ?? '';
-  }, [user, me]);
+  }, [user, me, t]);
 
   const onLogout = async () => {
     await logout();
@@ -114,10 +127,10 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   const closeMobile = () => setMobileOpen(false);
 
   return (
-    <div className="min-h-screen bg-ink-50">
+    <div className="min-h-screen bg-canvas">
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-30 bg-ink-950/50 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm lg:hidden"
           onClick={closeMobile}
           aria-hidden
         />
@@ -125,32 +138,33 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
       <aside
         className={cn(
-          'fixed inset-y-0 start-0 z-40 flex w-72 flex-col bg-gradient-to-b from-brand-950 via-brand-900 to-ink-950 transition-transform duration-200 lg:translate-x-0',
+          'fixed inset-y-0 start-0 z-40 flex w-72 flex-col bg-gradient-to-b from-[#072a27] via-[#164741] to-[#0a1512] transition-transform duration-200 lg:translate-x-0',
           mobileOpen ? 'translate-x-0' : 'translate-x-full',
         )}
       >
         <div className="flex items-center justify-between gap-2 px-4 py-5">
           <Logo />
-          <IconButton label="إغلاق القائمة" className="text-brand-100 hover:bg-white/10 lg:hidden" onClick={closeMobile}>
+          <IconButton
+            label={t('إغلاق القائمة')}
+            className="text-[#d5f5eb] hover:bg-white/10 lg:hidden"
+            onClick={closeMobile}
+          >
             <X className="h-5 w-5" />
           </IconButton>
         </div>
 
         <div className="mx-4 rounded-xl border border-white/10 bg-white/5 p-3">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-brand-200/70">الحساب الحالي</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-[#aeead9]/70">{t('الحساب الحالي')}</p>
           <p className="mt-1 truncate text-sm font-bold text-white">{user?.fullName}</p>
-          <p className="truncate text-[11px] text-brand-100/70">{subtitle}</p>
+          <p className="truncate text-[11px] text-[#d5f5eb]/70">{subtitle}</p>
           <div className="mt-2 flex flex-wrap gap-1">
             <span className="rounded-full bg-gold-400/15 px-2 py-0.5 text-[10px] font-bold text-gold-200">
               {roleLabel}
             </span>
-            {user?.isDemo && (
-              <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-bold text-white/80">تجريبي</span>
-            )}
           </div>
         </div>
 
-        <nav className="mt-4 flex-1 space-y-0.5 overflow-y-auto px-2 pb-4" aria-label="القائمة الرئيسية">
+        <nav className="mt-4 flex-1 space-y-0.5 overflow-y-auto px-2 pb-4" aria-label={t('القائمة الرئيسية')}>
           {navItems.map((item) => {
             const Icon = ICONS[item.icon] ?? LayoutDashboard;
             return (
@@ -164,16 +178,16 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                     'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition',
                     isActive
                       ? 'bg-white/12 text-white shadow-inner ring-1 ring-white/10'
-                      : 'text-brand-100/75 hover:bg-white/5 hover:text-white',
+                      : 'text-[#d5f5eb]/75 hover:bg-white/5 hover:text-white',
                   )
                 }
               >
                 {({ isActive }) => (
                   <>
-                    <Icon className={cn('h-[18px] w-[18px] shrink-0', isActive ? 'text-gold-300' : 'text-brand-200/70')} />
-                    <span className="flex-1">{item.label}</span>
+                    <Icon className={cn('h-[18px] w-[18px] shrink-0', isActive ? 'text-gold-300' : 'text-[#aeead9]/70')} />
+                    <span className="flex-1">{t(item.label)}</span>
                     {item.to === '/student/notifications' && unread > 0 && (
-                      <span className="rounded-full bg-gold-400 px-1.5 py-0.5 text-[10px] font-black text-ink-950">
+                      <span className="rounded-full bg-gold-400 px-1.5 py-0.5 text-[10px] font-black text-[#111b25]">
                         {unread}
                       </span>
                     )}
@@ -188,35 +202,35 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           <NavLink
             to="/settings"
             onClick={closeMobile}
-            className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-brand-100/75 transition hover:bg-white/5 hover:text-white"
+            className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-[#d5f5eb]/75 transition hover:bg-white/5 hover:text-white"
           >
-            <Settings className="h-[18px] w-[18px] text-brand-200/70" />
-            إعدادات الحساب
+            <Settings className="h-[18px] w-[18px] text-[#aeead9]/70" />
+            {t('إعدادات الحساب')}
           </NavLink>
           <button
             type="button"
             onClick={onLogout}
-            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-brand-100/75 transition hover:bg-white/5 hover:text-white"
+            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-[#d5f5eb]/75 transition hover:bg-white/5 hover:text-white"
           >
-            <LogOut className="h-[18px] w-[18px] text-brand-200/70" />
-            تسجيل الخروج
+            <LogOut className="h-[18px] w-[18px] text-[#aeead9]/70" />
+            {t('تسجيل الخروج')}
           </button>
-          <p className="mt-2 px-3 text-[10px] leading-5 text-brand-200/50">
-            نظام استشاري فقط — لا يتم تسجيل أي مقررات تلقائيًا.
+          <p className="mt-2 px-3 text-[10px] leading-5 text-[#aeead9]/50">
+            {t('نظام استشاري فقط — لا يتم تسجيل أي مقررات تلقائيًا.')}
           </p>
         </div>
       </aside>
 
       <div className="lg:ms-72">
-        <header className="sticky top-0 z-20 border-b border-ink-100 bg-white/90 backdrop-blur">
+        <header className="sticky top-0 z-20 border-b border-ink-100 bg-surface/90 backdrop-blur">
           <div className="flex h-16 items-center gap-3 px-4 sm:px-6">
-            <IconButton label="فتح القائمة" className="lg:hidden" onClick={() => setMobileOpen(true)}>
+            <IconButton label={t('فتح القائمة')} className="lg:hidden" onClick={() => setMobileOpen(true)}>
               <Menu className="h-5 w-5" />
             </IconButton>
 
             <div className="hidden items-center gap-2 sm:flex">
-              <Badge tone="brand">قرارات مرتبطة باللائحة</Badge>
-              <span className="text-xs text-ink-500">كل قرار يحمل مادة وصفحة ورقم قاعدة</span>
+              <Badge tone="brand">{t('قرارات مرتبطة باللائحة')}</Badge>
+              <span className="text-xs text-ink-500">{t('كل قرار يحمل مادة وصفحة ورقم قاعدة')}</span>
             </div>
 
             <div className="flex flex-1 items-center justify-end gap-1.5">
@@ -224,26 +238,69 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 <NavLink
                   to="/student/notifications"
                   className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg text-ink-600 hover:bg-ink-100"
-                  aria-label={`الإشعارات${unread ? ` (${unread} غير مقروء)` : ''}`}
+                  aria-label={
+                    unread
+                      ? t('الإشعارات ({{count}} غير مقروء)', { count: unread })
+                      : t('الإشعارات')
+                  }
                 >
                   <Bell className="h-5 w-5" />
                   {unread > 0 && (
-                    <span className="absolute -end-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-danger px-1 text-[10px] font-bold text-white">
+                    <span className="absolute -end-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-danger-solid px-1 text-[10px] font-bold text-white">
                       {unread > 9 ? '9+' : unread}
                     </span>
                   )}
                 </NavLink>
               )}
 
+              <button
+                type="button"
+                onClick={toggleLang}
+                className="relative inline-flex h-9 items-center justify-center gap-1 rounded-lg px-2 text-xs font-bold text-ink-600 transition hover:bg-ink-100 hover:text-ink-900 focus-visible:ring-2 focus-visible:ring-brand-400"
+                aria-label={t('تبديل اللغة')}
+                title={lang === 'en' ? t('العربية') : t('English')}
+              >
+                <Languages className="h-4 w-4" aria-hidden />
+                {lang === 'en' ? t('ع') : t('EN')}
+              </button>
+
+              <button
+                type="button"
+                onClick={cycleTheme}
+                className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg text-ink-600 transition hover:bg-ink-100 hover:text-ink-900 focus-visible:ring-2 focus-visible:ring-brand-400"
+                aria-label={
+                  theme === 'light'
+                    ? t('المظهر: فاتح — اضغط للوضع الداكن')
+                    : theme === 'dark'
+                      ? t('المظهر: داكن — اضغط لتفضيل النظام')
+                      : t('المظهر: تفضيل النظام — اضغط للوضع الفاتح')
+                }
+                title={
+                  theme === 'light'
+                    ? t('الوضع الفاتح')
+                    : theme === 'dark'
+                      ? t('الوضع الداكن')
+                      : t('حسب إعداد النظام')
+                }
+              >
+                {theme === 'light' ? (
+                  <Sun className="h-5 w-5" aria-hidden />
+                ) : theme === 'dark' ? (
+                  <Moon className="h-5 w-5" aria-hidden />
+                ) : (
+                  <Monitor className="h-5 w-5" aria-hidden />
+                )}
+              </button>
+
               <div className="relative">
                 <button
                   type="button"
                   onClick={() => setMenuOpen((value) => !value)}
-                  className="flex items-center gap-2 rounded-xl border border-ink-200 bg-white px-2 py-1.5 text-start transition hover:border-brand-300"
+                  className="flex items-center gap-2 rounded-xl border border-ink-200 bg-surface px-2 py-1.5 text-start transition hover:border-brand-300"
                   aria-expanded={menuOpen}
                   aria-haspopup="menu"
                 >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-700 text-xs font-bold text-white">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-xs font-bold text-on-primary">
                     {initials(user?.fullName)}
                   </span>
                   <span className="hidden min-w-0 sm:block">
@@ -256,7 +313,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 {menuOpen && (
                   <>
                     <div className="fixed inset-0 z-10" onClick={() => setMenuOpen(false)} aria-hidden />
-                    <div className="absolute end-0 z-20 mt-2 w-56 overflow-hidden rounded-xl border border-ink-100 bg-white shadow-float">
+                    <div className="absolute end-0 z-20 mt-2 w-56 overflow-hidden rounded-xl border border-ink-100 bg-surface shadow-float">
                       <div className="border-b border-ink-50 px-4 py-3">
                         <p className="truncate text-sm font-bold text-ink-900">{user?.fullName}</p>
                         <p className="truncate text-xs text-ink-500">{user?.email}</p>
@@ -266,14 +323,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                         onClick={() => setMenuOpen(false)}
                         className="flex items-center gap-2 px-4 py-2.5 text-sm text-ink-700 hover:bg-ink-50"
                       >
-                        <Settings className="h-4 w-4" /> إعدادات الحساب
+                        <Settings className="h-4 w-4" /> {t('إعدادات الحساب')}
                       </NavLink>
                       <button
                         type="button"
                         onClick={onLogout}
                         className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-danger hover:bg-red-50"
                       >
-                        <LogOut className="h-4 w-4" /> تسجيل الخروج
+                        <LogOut className="h-4 w-4" /> {t('تسجيل الخروج')}
                       </button>
                     </div>
                   </>
@@ -284,9 +341,9 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
           {user?.mustChangePassword && (
             <div className="border-t border-amber-200 bg-amber-50 px-4 py-2 text-xs font-medium text-amber-900 sm:px-6">
-              يجب تغيير كلمة المرور المؤقتة قبل متابعة استخدام النظام.{' '}
+              {t('يجب تغيير كلمة المرور المؤقتة قبل متابعة استخدام النظام.')}{' '}
               <NavLink to="/settings" className="font-bold underline">
-                تغيير كلمة المرور الآن
+                {t('تغيير كلمة المرور الآن')}
               </NavLink>
             </div>
           )}
@@ -295,11 +352,16 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:py-8">{children}</main>
 
         <footer className="mx-auto w-full max-w-7xl px-4 pb-8 text-center text-[11px] leading-5 text-ink-400 sm:px-6">
-          كل الخطط والمخرجات استشارية (DRAFT) ولا تُعد تسجيلًا رسميًا. القرار النهائي للجنة الأكاديمية بالكلية.
+          {t('كل الخطط والمخرجات استشارية (DRAFT) ولا تُعد تسجيلًا رسميًا. القرار النهائي للجنة الأكاديمية بالكلية.')}
           <br />
-          Smart Academic Advisor · Badr University in Assiut · {new Date().getFullYear()}
+          {t('Smart Academic Advisor · Badr University in Assiut · {{year}}', {
+            year: new Date().getFullYear(),
+          })}
+          <br />© {new Date().getFullYear()} Aboelyazed Hatem Aboelyazed · {t('جميع الحقوق محفوظة')}
         </footer>
       </div>
+
+      <FloatingAssistant />
     </div>
   );
 }

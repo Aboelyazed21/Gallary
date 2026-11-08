@@ -4,9 +4,182 @@
 @tailwind components;
 @tailwind utilities;
 
+/* --------------------------------------------------------------------------
+   Design tokens (light theme is the default)
+   Referenced by tailwind.config.js as rgb(var(--x) / <alpha-value>).
+   -------------------------------------------------------------------------- */
 @layer base {
   :root {
     color-scheme: light;
+
+    /* Neutrals — canvas, surfaces, hairlines, text */
+    --canvas: 244 247 250; /* #f4f7fa page background */
+    --surface: 255 255 255; /* #ffffff cards, panels, inputs */
+    --ink-50: 244 247 250;
+    --ink-100: 230 237 244;
+    --ink-200: 201 216 230;
+    --ink-300: 161 185 208;
+    --ink-400: 114 148 180;
+    --ink-500: 82 118 153;
+    --ink-600: 63 94 126;
+    --ink-700: 52 76 102;
+    --ink-800: 44 63 84;
+    --ink-900: 29 44 59;
+    --ink-950: 17 27 37;
+
+    /* Brand teal */
+    --brand-50: 238 251 247;
+    --brand-100: 213 245 235;
+    --brand-200: 174 234 217;
+    --brand-300: 121 216 194;
+    --brand-400: 70 191 166;
+    --brand-500: 40 164 141;
+    --brand-600: 29 132 116;
+    --brand-700: 26 106 95;
+    --brand-800: 24 85 77;
+    --brand-900: 22 71 65;
+    --brand-950: 7 42 39;
+
+    /* Accent gold */
+    --gold-50: 253 249 237;
+    --gold-100: 249 239 201;
+    --gold-200: 243 221 146;
+    --gold-300: 236 198 90;
+    --gold-600: 176 109 22;
+    --gold-700: 141 79 21;
+    --gold-800: 117 63 24;
+
+    /* Semantic status */
+    --danger: 180 35 24; /* #b42318 */
+    --success: 6 118 71; /* #067647 */
+    --warning: 181 71 8; /* #b54708 */
+
+    /* Solid brand action (light: dark teal + white text) */
+    --primary: 26 106 95;
+    --on-primary: 255 255 255;
+
+    /* Code / payload panels (always dark so data stays legible) */
+    --code-bg: 17 27 37;
+    --code-fg: 230 237 244;
+
+    /* Stock semantic scales — tints + text tones flip in dark mode */
+    --red-50: 254 242 242;
+    --red-100: 254 226 226;
+    --red-200: 254 202 202;
+    --red-700: 185 28 28;
+    --red-800: 153 27 27;
+    --red-900: 127 29 29;
+    --red-950: 69 10 10;
+    --emerald-50: 236 253 245;
+    --emerald-100: 209 250 229;
+    --emerald-200: 167 243 208;
+    --emerald-700: 4 120 87;
+    --emerald-800: 6 95 70;
+    --emerald-900: 6 78 59;
+    --emerald-950: 2 44 34;
+    --amber-50: 255 251 235;
+    --amber-100: 254 243 199;
+    --amber-200: 253 230 138;
+    --amber-700: 180 83 9;
+    --amber-800: 146 64 14;
+    --amber-900: 120 53 15;
+    --amber-950: 69 26 3;
+    --sky-50: 240 249 255;
+    --sky-100: 224 242 254;
+    --sky-200: 186 230 253;
+    --sky-700: 3 105 161;
+    --sky-800: 7 89 133;
+    --sky-900: 12 74 110;
+    --sky-950: 8 47 73;
+
+    --shadow-tint: 16 24 40;
+  }
+
+  [data-theme='dark'] {
+    color-scheme: dark;
+
+    /* Neutrals — spec: bg #09090B, secondary #111113, cards #18181B,
+       borders #27272A, primary text #FAFAFA, secondary text #A1A1AA */
+    --canvas: 9 9 11; /* #09090b */
+    --surface: 24 24 27; /* #18181b */
+    --ink-50: 17 17 19; /* #111113 subtle inset / secondary surface */
+    --ink-100: 39 39 42; /* #27272a hairline borders, raised hover */
+    --ink-200: 63 63 70; /* #3f3f46 stronger borders */
+    --ink-300: 82 82 91;
+    --ink-400: 113 113 122; /* placeholders */
+    --ink-500: 161 161 170; /* #a1a1aa secondary text */
+    --ink-600: 196 196 199;
+    --ink-700: 212 212 216;
+    --ink-800: 228 228 231;
+    --ink-900: 250 250 250; /* #fafafa primary text */
+    --ink-950: 250 250 250; /* headings */
+
+    /* Brand teal — tints darken, text/borders brighten */
+    --brand-50: 7 42 39;
+    --brand-100: 15 61 55;
+    --brand-200: 20 85 77;
+    --brand-300: 63 189 163;
+    --brand-400: 70 191 166;
+    --brand-500: 40 164 141;
+    --brand-600: 63 208 182;
+    --brand-700: 94 224 201; /* labels/links on dark */
+    --brand-800: 124 235 212;
+    --brand-900: 143 240 221;
+    --brand-950: 213 245 235;
+
+    /* Accent gold — tints darken, text brightens */
+    --gold-50: 26 21 8;
+    --gold-100: 36 29 10;
+    --gold-200: 58 48 19;
+    --gold-300: 243 221 146;
+    --gold-600: 236 220 122;
+    --gold-700: 243 221 146;
+    --gold-800: 249 239 201;
+
+    /* Semantic status — brightened for dark backgrounds */
+    --danger: 255 92 77;
+    --success: 52 211 153;
+    --warning: 251 191 36;
+
+    /* Solid brand action — bright teal + dark text reads premium in dark */
+    --primary: 53 201 174;
+    --on-primary: 4 33 29;
+
+    /* Code panels stay dark in both themes */
+    --code-bg: 17 17 19;
+    --code-fg: 228 228 231;
+
+    /* Stock semantic scales inverted (tint ↔ text) for correct contrast */
+    --red-50: 69 10 10;
+    --red-100: 127 29 29;
+    --red-200: 153 27 27;
+    --red-700: 252 165 165;
+    --red-800: 254 202 202;
+    --red-900: 254 226 226;
+    --red-950: 254 242 242;
+    --emerald-50: 2 44 34;
+    --emerald-100: 6 78 59;
+    --emerald-200: 6 95 70;
+    --emerald-700: 110 231 183;
+    --emerald-800: 167 243 208;
+    --emerald-900: 209 250 229;
+    --emerald-950: 236 253 245;
+    --amber-50: 69 26 3;
+    --amber-100: 120 53 15;
+    --amber-200: 146 64 14;
+    --amber-700: 252 211 77;
+    --amber-800: 253 230 138;
+    --amber-900: 254 243 199;
+    --amber-950: 255 251 235;
+    --sky-50: 8 47 73;
+    --sky-100: 12 74 110;
+    --sky-200: 7 89 133;
+    --sky-700: 125 211 252;
+    --sky-800: 186 230 253;
+    --sky-900: 224 242 254;
+    --sky-950: 240 249 255;
+
+    --shadow-tint: 0 0 0;
   }
 
   html {
@@ -14,7 +187,18 @@
   }
 
   body {
-    @apply bg-ink-50 font-sans text-ink-900 antialiased;
+    @apply bg-canvas font-sans text-ink-900 antialiased;
+  }
+
+  /* Subtle, theme-aware colour transitions (skipped for reduced motion). */
+  html.theme-anim,
+  html.theme-anim *,
+  html.theme-anim *::before,
+  html.theme-anim *::after {
+    transition-property: background-color, border-color, color, fill, stroke,
+      box-shadow, outline-color;
+    transition-duration: 180ms;
+    transition-timing-function: ease-out;
   }
 
   ::selection {
@@ -23,7 +207,7 @@
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: #a1b9d0 transparent;
+    scrollbar-color: rgb(var(--ink-300)) transparent;
   }
 
   *::-webkit-scrollbar {
@@ -32,7 +216,8 @@
   }
 
   *::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-ink-300;
+    @apply rounded-full;
+    background: rgb(var(--ink-300));
   }
 
   *::-webkit-scrollbar-track {
@@ -52,42 +237,101 @@
   :focus-visible {
     @apply outline-none;
   }
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  @keyframes globe-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .animate-globe-spin {
-    animation: globe-spin 16s linear infinite;
-    transform-origin: 50% 50%;
-    will-change: transform;
-  }
 
   @media (prefers-reduced-motion: reduce) {
-    .animate-globe-spin {
-      animation: none;
+    html.theme-anim,
+    html.theme-anim *,
+    html.theme-anim *::before,
+    html.theme-anim *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
     }
   }
+}
 
-  .paper-grid {
-    background-image:
-      linear-gradient(to right, rgba(22, 71, 65, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(22, 71, 65, 0.05) 1px, transparent 1px);
-    background-size: 28px 28px;
+@layer components {
+  .sr-only-focusable:focus:not(:focus-visible) {
+    @apply sr-only;
   }
 
-  .tabular-nums {
-    font-variant-numeric: tabular-nums;
+  /* Skip link */
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-brand-700 focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Global floating assistant (waving robot + pulse rings)
+   -------------------------------------------------------------------------- */
+@keyframes aidm-wave {
+  0%,
+  100% {
+    transform: rotate(-7deg);
+  }
+  50% {
+    transform: rotate(9deg);
+  }
+}
+
+@keyframes aidm-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  70% {
+    opacity: 0.08;
+  }
+  100% {
+    transform: scale(1.75);
+    opacity: 0;
+  }
+}
+
+@keyframes aidm-pop {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes aidm-sheen {
+  from {
+    transform: translateX(160%);
+  }
+  to {
+    transform: translateX(-260%);
+  }
+}
+
+.aidm-wave {
+  transform-box: view-box;
+  transform-origin: 48px 42px;
+  animation: aidm-wave 2.4s ease-in-out infinite;
+}
+
+.aidm-ring {
+  animation: aidm-ring 2.6s ease-out infinite;
+}
+
+.aidm-pop {
+  animation: aidm-pop 0.18s ease-out;
+}
+
+.aidm-sheen {
+  animation: aidm-sheen 3.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aidm-wave,
+  .aidm-ring,
+  .aidm-pop,
+  .aidm-sheen {
+    animation: none !important;
   }
 }

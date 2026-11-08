@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { Filter, Search } from 'lucide-react';
 import { api, errorMessage, qs } from '../../lib/api';
 import type { BulkEligibility, DecisionStatus } from '../../lib/types';
@@ -16,6 +17,7 @@ import { TermSelect } from '../../components/ui/PaginationBar';
 import { currentTermValue } from '../../lib/format';
 
 export function EligibilityPage() {
+  const { t } = useTranslation();
   const [term, setTerm] = useState(currentTermValue());
   const [codes, setCodes] = useState('');
   const [plannedCredits, setPlannedCredits] = useState('');
@@ -59,33 +61,35 @@ export function EligibilityPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="أهلية التسجيل"
-        title="تحقق من أهلية المقررات"
-        description="كل قرار صادر عن محرك القواعد الحتمي: مؤهل، غير مؤهل، غير معروف، أو يحتاج مراجعة. لا يتم تسجيل أي مقرر."
+        eyebrow={t('أهلية التسجيل')}
+        title={t('تحقق من أهلية المقررات')}
+        description={t(
+          'كل قرار صادر عن محرك القواعد الحتمي: مؤهل، غير مؤهل، غير معروف، أو يحتاج مراجعة. لا يتم تسجيل أي مقرر.',
+        )}
       />
 
       <Card className="mb-4">
         <CardContent>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            <TermSelect value={term} onChange={setTerm} label="الفصل الدراسي" />
+            <TermSelect value={term} onChange={setTerm} label={t('الفصل الدراسي')} />
             <Input
-              label="أكواد المقررات (اختياري)"
+              label={t('أكواد المقررات (اختياري)')}
               dir="ltr"
               placeholder="CSC3101, AIE3201"
               value={codes}
               onChange={(event) => setCodes(event.target.value)}
-              hint="اتركه فارغًا لتقييم المقررات المرشحة والراسبة."
+              hint={t('اتركه فارغًا لتقييم المقررات المرشحة والراسبة.')}
               className="lg:col-span-2"
             />
             <Input
-              label="الساعات المخططة"
+              label={t('الساعات المخططة')}
               type="number"
               min={0}
               max={21}
               placeholder="12"
               value={plannedCredits}
               onChange={(event) => setPlannedCredits(event.target.value)}
-              hint="لحساب قرار العبء الأكاديمي."
+              hint={t('لحساب قرار العبء الأكاديمي.')}
             />
             <div className="flex items-end">
               <Button
@@ -93,7 +97,7 @@ export function EligibilityPage() {
                 onClick={() => void query.refetch()}
                 loading={query.isFetching}
               >
-                إعادة التقييم
+                {t('إعادة التقييم')}
               </Button>
             </div>
           </div>
@@ -104,7 +108,7 @@ export function EligibilityPage() {
       </Card>
 
       {query.isLoading ? (
-        <LoadingBlock label="جارٍ تطبيق قواعد اللائحة…" />
+        <LoadingBlock label={t('جارٍ تطبيق قواعد اللائحة…')} />
       ) : query.isError ? (
         <ErrorState message={errorMessage(query.error)} onRetry={() => void query.refetch()} />
       ) : (
@@ -113,7 +117,7 @@ export function EligibilityPage() {
             {(['ELIGIBLE', 'NOT_ELIGIBLE', 'REVIEW_REQUIRED', 'UNKNOWN'] as DecisionStatus[]).map((status) => (
               <StatCard
                 key={status}
-                label={DECISION_LABELS[status].ar}
+                label={t(DECISION_LABELS[status].ar)}
                 value={counts[status]}
                 icon={<span className="text-lg font-black">{counts[status]}</span>}
                 tone={
@@ -125,7 +129,7 @@ export function EligibilityPage() {
                         ? 'gold'
                         : 'neutral'
                 }
-                hint={`قرارات ${DECISION_LABELS[status].en}`}
+                hint={t('قرارات {{label}}', { label: DECISION_LABELS[status].en })}
               />
             ))}
           </div>
@@ -133,17 +137,19 @@ export function EligibilityPage() {
           {query.data && (
             <Card className="mb-4">
               <CardHeader>
-                <CardTitle>قرار العبء الأكاديمي</CardTitle>
+                <CardTitle>{t('قرار العبء الأكاديمي')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex flex-wrap items-center gap-2 text-sm text-ink-600">
-                  <Badge tone="brand">الفصل: {formatTerm(query.data.data.term)}</Badge>
-                  <Badge tone="neutral">الساعات المخططة: {formatInt(query.data.data.plannedCredits)}</Badge>
-                  <Badge tone="gold">استشاري فقط</Badge>
+                  <Badge tone="brand">{t('الفصل: {{term}}', { term: formatTerm(query.data.data.term) })}</Badge>
+                  <Badge tone="neutral">
+                    {t('الساعات المخططة: {{n}}', { n: formatInt(query.data.data.plannedCredits) })}
+                  </Badge>
+                  <Badge tone="gold">{t('استشاري فقط')}</Badge>
                 </div>
                 <DecisionCard decision={query.data.data.loadDecision} />
                 {query.data.data.escalations.length > 0 && (
-                  <Alert tone="warning" title="تم إنشاء حالات مراجعة">
+                  <Alert tone="warning" title={t('تم إنشاء حالات مراجعة')}>
                     {query.data.data.escalations.map((item) => item.ticketNo).join(' · ')}
                   </Alert>
                 )}
@@ -161,33 +167,33 @@ export function EligibilityPage() {
                       <input
                         value={search}
                         onChange={(event) => setSearch(event.target.value)}
-                        placeholder="بحث بكود أو قاعدة…"
+                        placeholder={t('بحث بكود أو قاعدة…')}
                         className="h-8 w-44 rounded-lg border border-ink-200 ps-8 pe-2 text-xs focus:border-brand-400 focus:outline-none"
                       />
                     </div>
                     <Select
-                      aria-label="تصفية الحالة"
+                      aria-label={t('تصفية الحالة')}
                       className="h-8 w-36 text-xs"
                       value={statusFilter}
                       onChange={(event) => setStatusFilter(event.target.value as typeof statusFilter)}
                       options={[
-                        { value: 'ALL', label: 'كل الحالات' },
+                        { value: 'ALL', label: t('كل الحالات') },
                         ...(['ELIGIBLE', 'NOT_ELIGIBLE', 'REVIEW_REQUIRED', 'UNKNOWN'] as DecisionStatus[]).map(
-                          (status) => ({ value: status, label: DECISION_LABELS[status].ar }),
+                          (status) => ({ value: status, label: t(DECISION_LABELS[status].ar) }),
                         ),
                       ]}
                     />
                   </div>
                 }
               >
-                تفصيل القرارات
+                {t('تفصيل القرارات')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               {filtered.length === 0 ? (
                 <EmptyState
-                  title="لا توجد قرارات مطابقة"
-                  description="جرّب تغيير الفصل أو إزالة عوامل التصفية."
+                  title={t('لا توجد قرارات مطابقة')}
+                  description={t('جرّب تغيير الفصل أو إزالة عوامل التصفية.')}
                   icon={<Filter className="h-6 w-6" />}
                 />
               ) : (
@@ -196,7 +202,7 @@ export function EligibilityPage() {
                     <DecisionCard
                       key={`${decision.course_code ?? 'load'}-${decision.rule_code}-${index}`}
                       decision={decision}
-                      title={decision.course_code || 'قرار عام'}
+                      title={decision.course_code || t('قرار عام')}
                     />
                   ))}
                 </div>

@@ -18,6 +18,12 @@ interface RagResult {
   flags?: string[];
 }
 
+/** The authenticated account behind a chat; students also carry a profile. */
+export interface ChatActor {
+  id: string;
+  student: StudentRow | null;
+}
+
 function cleanQuestion(question: string): string {
   const cleaned = sanitizeText(question, 1500);
   if (cleaned.length < 2) {
@@ -26,29 +32,33 @@ function cleanQuestion(question: string): string {
   return cleaned;
 }
 
-export async function createSession(student: StudentRow, title?: string) {
+export async function createSession(actor: ChatActor, title?: string) {
   const row = await one<Record<string, unknown>>(
-    `INSERT INTO chat_sessions (student_id, title) VALUES ($1,$2) RETURNING *`,
-    [student.id, title ? sanitizeText(title, 120) : 'Advising chat'],
+    `INSERT INTO chat_sessions (student_id, user_id, title) VALUES ($1,$2,$3) RETURNING *`,
+    [
+      actor.student?.id ?? null,
+      actor.id,
+      title ? sanitizeText(title, 120) : 'Advising chat',
+    ],
   );
   return row;
 }
 
-export async function listSessions(student: StudentRow) {
+export async function listSessions(actor: ChatActor) {
   return many(
     `SELECT s.id, s.title, s.created_at, s.updated_at,
             (SELECT count(*)::int FROM chat_messages m WHERE m.session_id = s.id) AS message_count
-       FROM chat_sessions s WHERE s.student_id = $1 ORDER BY s.updated_at DESC LIMIT 50`,
-    [student.id],
+       FROM chat_sessions s WHERE s.user_id = $1 ORDER BY s.updated_at DESC LIMIT 50`,
+    [actor.id],
   );
 }
 
-export async function getSession(student: StudentRow, sessionId: string) {
-  const session = await one<{ id: string; student_id: string; title: string }>(
-    'SELECT id, student_id, title FROM chat_sessions WHERE id = $1',
-    [sessionId],
+export async function getSession(actor: ChatActor, sessionId: string) {
+  const session = await one<{ id: string; student_id: string | null; title: string }>(
+    'SELECT id, student_id, title FROM chat_sessions WHERE id = $1 AND user_id = $2',
+    [sessionId, actor.id],
   );
-  if (!session || session.student_id !== student.id) {
+  if (!session) {
     throw AppError.notFound('Chat session not found');
   }
   const messages = await many(
@@ -60,7 +70,7 @@ export async function getSession(student: StudentRow, sessionId: string) {
 }
 
 export async function ask(
-  student: StudentRow,
+  actor: ChatActor,
   sessionId: string,
   question: string,
   language: 'ar' | 'en' | 'auto',
@@ -68,11 +78,20 @@ export async function ask(
   actorId: string | null,
 ) {
   const session = await one<{ id: string }>(
-    'SELECT id FROM chat_sessions WHERE id = $1 AND student_id = $2',
-    [sessionId, student.id],
+    'SELECT id FROM chat_sessions WHERE id = $1 AND user_id = $2',
+    [sessionId, actor.id],
   );
   if (!session) throw AppError.notFound('Chat session not found');
   const cleaned = cleanQuestion(question);
+  // Snapshot prior turns before inserting the current question so the engine's
+  // generator gets conversational context without duplicating this message.
+  const prior = await many<{ role: string; content: string }>(
+    `SELECT role, content FROM chat_messages
+      WHERE session_id = $1 AND role IN ('user','assistant')
+      ORDER BY created_at DESC LIMIT 8`,
+    [sessionId],
+  );
+  const history = prior.reverse().map((row) => ({ role: row.role, content: row.content }));
   const userMessage = await one<Record<string, unknown>>(
     `INSERT INTO chat_messages (session_id, role, content) VALUES ($1,'user',$2) RETURNING *`,
     [sessionId, cleaned],
@@ -82,8 +101,11 @@ export async function ask(
     result = await engineClient.ask<RagResult>({
       question: cleaned,
       language,
-      student_id: student.id,
+      // Advisor/admin questions carry no student profile: the engine answers
+      // from the regulation only, without personalisation.
+      student_id: actor.student?.id ?? null,
       term: termToEngine(term),
+      history,
     });
   } catch (error) {
     // Keep the conversation recoverable but never fabricate an answer.
@@ -105,9 +127,11 @@ export async function ask(
   await one('UPDATE chat_sessions SET updated_at = now() WHERE id = $1', [sessionId]);
 
   let escalation: EscalationRow | null = null;
-  if (result.escalate) {
+  // Escalations are student-bound by schema: only a student-owned low-confidence
+  // answer opens a ticket. Advisors/admins see the flag and handle it themselves.
+  if (result.escalate && actor.student) {
     escalation = await createEscalation({
-      studentId: student.id,
+      studentId: actor.student.id,
       createdBy: actorId,
       type: (result.anomaly_ids?.length ?? 0) > 0 ? 'ANOMALY' : 'ACADEMIC',
       priority: 'medium',

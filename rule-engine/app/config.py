@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from datetime import UTC
 from functools import lru_cache
 from pathlib import Path
 
@@ -24,6 +25,19 @@ class Settings(BaseSettings):
     embedding_dim: int = Field(default=384, alias="EMBEDDING_DIM")
     request_timeout_seconds: float = Field(default=20.0, alias="REQUEST_TIMEOUT_SECONDS")
     log_level: str = Field(default="INFO", alias="LOG_LEVEL")
+
+    # --- LLM generation (grounded answer synthesis over retrieved chunks) ---
+    # The key never leaves the engine process; without it the RAG pipeline
+    # degrades gracefully to the extractive answerer.
+    gemini_api_key: str = Field(default="", alias="GEMINI_API_KEY")
+    gemini_model: str = Field(default="gemini-3.5-flash", alias="GEMINI_MODEL")
+    gemini_timeout_seconds: float = Field(default=18.0, alias="GEMINI_TIMEOUT_SECONDS")
+    rag_generate: bool = Field(default=True, alias="RAG_GENERATE")
+
+    @property
+    def generation_enabled(self) -> bool:
+        """Generation is opt-out but requires credentials."""
+        return self.rag_generate and bool(self.gemini_api_key)
 
     def validate_production(self) -> None:
         if self.app_env.lower() in {"production", "prod"}:
@@ -61,9 +75,9 @@ def regulation_dir() -> Path:
 
 
 def utc_now_iso() -> str:
-    from datetime import datetime, timezone
+    from datetime import datetime
 
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    return datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 
 def env_bool(name: str, default: bool = False) -> bool:

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../lib/format';
 import buaGlobe from '../../assets/bua-globe.png';
 import buaWordmark from '../../assets/bua-wordmark.png';
@@ -29,13 +30,14 @@ export function BuaLogo({
   spinning?: boolean;
 }) {
   const art = ART[variant];
+  const { t } = useTranslation();
 
   return (
     <span
       dir="ltr"
       className={cn('inline-flex shrink-0 items-center gap-1.5', className)}
       role="img"
-      aria-label="شعار جامعة بدر بأسيوط"
+      aria-label={t('شعار جامعة بدر بأسيوط')}
     >
       <img
         src={art.globe}

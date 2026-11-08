@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { Calculator, Plus, Trash2 } from 'lucide-react';
 import { api, errorMessage } from '../../lib/api';
 import type { GpaResult } from '../../lib/types';
@@ -26,6 +27,7 @@ let rowSeed = 1;
 const newRow = (): SimRow => ({ id: rowSeed++, courseCode: '', percentage: '', gradeLetter: '' });
 
 export function GpaSimulatorPage() {
+  const { t } = useTranslation();
   const [term, setTerm] = useState(currentTermValue());
   const [rows, setRows] = useState<SimRow[]>([newRow()]);
   const [target, setTarget] = useState('');
@@ -58,9 +60,11 @@ export function GpaSimulatorPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="محاكاة المعدل"
-        title="ماذا لو حصلت على هذه الدرجات؟"
-        description="محاكاة استشارية لحساب المعدل الفصلي والتراكمي وفق أوزان الساعات وقواعد الإعادة. لا تُحدّث أي درجة رسمية."
+        eyebrow={t('محاكاة المعدل')}
+        title={t('ماذا لو حصلت على هذه الدرجات؟')}
+        description={t(
+          'محاكاة استشارية لحساب المعدل الفصلي والتراكمي وفق أوزان الساعات وقواعد الإعادة. لا تُحدّث أي درجة رسمية.',
+        )}
       />
 
       <div className="grid gap-4 lg:grid-cols-3">
@@ -75,18 +79,18 @@ export function GpaSimulatorPage() {
                   icon={<Plus className="h-4 w-4" />}
                   disabled={rows.length >= 30}
                 >
-                  إضافة مقرر
+                  {t('إضافة مقرر')}
                 </Button>
               }
             >
-              المقررات والدرجات المتوقعة
+              {t('المقررات والدرجات المتوقعة')}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-3 sm:grid-cols-2">
-              <TermSelect value={term} onChange={setTerm} label="الفصل" />
+              <TermSelect value={term} onChange={setTerm} label={t('الفصل')} />
               <Input
-                label="المعدل التراكمي المستهدف (اختياري)"
+                label={t('المعدل التراكمي المستهدف (اختياري)')}
                 type="number"
                 min={0}
                 max={4}
@@ -101,14 +105,14 @@ export function GpaSimulatorPage() {
               {rows.map((row, index) => (
                 <div key={row.id} className="grid gap-2 rounded-xl border border-ink-100 p-3 sm:grid-cols-[1fr_1fr_1fr_auto]">
                   <Input
-                    label={index === 0 ? 'كود المقرر' : undefined}
+                    label={index === 0 ? t('كود المقرر') : undefined}
                     dir="ltr"
                     placeholder="CSC3101"
                     value={row.courseCode}
                     onChange={(event) => update(row.id, { courseCode: event.target.value.toUpperCase() })}
                   />
                   <Input
-                    label={index === 0 ? 'النسبة (0–100)' : undefined}
+                    label={index === 0 ? t('النسبة (0–100)') : undefined}
                     type="number"
                     min={0}
                     max={100}
@@ -117,15 +121,15 @@ export function GpaSimulatorPage() {
                     onChange={(event) => update(row.id, { percentage: event.target.value })}
                   />
                   <Select
-                    label={index === 0 ? 'أو التقدير' : undefined}
-                    placeholder="بلا تقدير"
+                    label={index === 0 ? t('أو التقدير') : undefined}
+                    placeholder={t('بلا تقدير')}
                     value={row.gradeLetter}
                     onChange={(event) => update(row.id, { gradeLetter: event.target.value })}
                     options={GRADES.map((grade) => ({ value: grade, label: grade }))}
                   />
                   <div className="flex items-end">
                     <IconButton
-                      label="حذف المقرر"
+                      label={t('حذف المقرر')}
                       disabled={rows.length === 1}
                       onClick={() => setRows((current) => current.filter((item) => item.id !== row.id))}
                     >
@@ -143,7 +147,7 @@ export function GpaSimulatorPage() {
               loading={mutation.isPending}
               icon={<Calculator className="h-4 w-4" />}
             >
-              تشغيل المحاكاة
+              {t('تشغيل المحاكاة')}
             </Button>
           </CardContent>
         </Card>
@@ -153,18 +157,20 @@ export function GpaSimulatorPage() {
             <>
               <Card>
                 <CardHeader>
-                  <CardTitle>النتيجة المتوقعة</CardTitle>
+                  <CardTitle>{t('النتيجة المتوقعة')}</CardTitle>
                 </CardHeader>
                 <CardContent className="grid gap-3 sm:grid-cols-2">
                   <StatCard label="SGPA" value={formatNumber(result.sgpa, 2)} tone="brand" icon={<Calculator className="h-5 w-5" />} />
                   <StatCard label="CGPA" value={formatNumber(result.cgpa, 2)} tone="gold" icon={<Calculator className="h-5 w-5" />} />
-                  <StatCard label="الساعات" value={formatInt(result.total_credits)} tone="info" />
-                  <StatCard label="نقاط الجودة" value={formatNumber(result.quality_points, 1)} tone="neutral" />
+                  <StatCard label={t('الساعات')} value={formatInt(result.total_credits)} tone="info" />
+                  <StatCard label={t('نقاط الجودة')} value={formatNumber(result.quality_points, 1)} tone="neutral" />
                 </CardContent>
               </Card>
               <Card>
                 <CardContent>
-                  <p className="text-sm font-bold text-ink-900">التصنيف: {result.classification}</p>
+                  <p className="text-sm font-bold text-ink-900">
+                    {t('التصنيف: {{value}}', { value: result.classification })}
+                  </p>
                   <div className="mt-2 flex flex-wrap gap-1">
                     {result.flags.map((flag) => (
                       <Badge key={flag} tone="warning">
@@ -173,11 +179,11 @@ export function GpaSimulatorPage() {
                     ))}
                     {result.repeat_cap_applied.map((code) => (
                       <Badge key={code} tone="info" className="font-mono">
-                        إعادة: {code}
+                        {t('إعادة: {{code}}', { code })}
                       </Badge>
                     ))}
                     {result.flags.length === 0 && result.repeat_cap_applied.length === 0 && (
-                      <span className="text-xs text-ink-500">لا توجد ملاحظات.</span>
+                      <span className="text-xs text-ink-500">{t('لا توجد ملاحظات.')}</span>
                     )}
                   </div>
                 </CardContent>
@@ -185,8 +191,8 @@ export function GpaSimulatorPage() {
             </>
           ) : (
             <EmptyState
-              title="لم تُشغّل المحاكاة بعد"
-              description="أدخل كود المقرر ودرجة متوقعة ثم شغّل المحاكاة."
+              title={t('لم تُشغّل المحاكاة بعد')}
+              description={t('أدخل كود المقرر ودرجة متوقعة ثم شغّل المحاكاة.')}
               icon={<Calculator className="h-6 w-6" />}
             />
           )}
@@ -196,24 +202,24 @@ export function GpaSimulatorPage() {
       {result && result.courses.length > 0 && (
         <Card className="mt-4">
           <CardHeader>
-            <CardTitle>تفصيل المقررات المحاكاة</CardTitle>
+            <CardTitle>{t('تفصيل المقررات المحاكاة')}</CardTitle>
           </CardHeader>
           <CardContent>
             <TableWrap>
               <Table>
                 <THead>
                   <Tr>
-                    <Th>الكود</Th>
-                    <Th>الساعات</Th>
-                    <Th>النسبة</Th>
-                    <Th>التقدير</Th>
-                    <Th>النقاط</Th>
-                    <Th>تُحتسب</Th>
+                    <Th>{t('الكود')}</Th>
+                    <Th>{t('الساعات')}</Th>
+                    <Th>{t('النسبة')}</Th>
+                    <Th>{t('التقدير')}</Th>
+                    <Th>{t('النقاط')}</Th>
+                    <Th>{t('تُحتسب')}</Th>
                   </Tr>
                 </THead>
                 <TBody>
                   {result.courses.length === 0 ? (
-                    <TableEmpty colSpan={6} message="لا توجد مقررات." />
+                    <TableEmpty colSpan={6} message={t('لا توجد مقررات.')} />
                   ) : (
                     result.courses.map((course, index) => (
                       <Tr key={`${String(course.code ?? index)}-${index}`}>
@@ -222,7 +228,7 @@ export function GpaSimulatorPage() {
                         <Td>{course.percentage === null || course.percentage === undefined ? '—' : formatNumber(course.percentage as number, 1)}</Td>
                         <Td>{String(course.grade_letter ?? '—')}</Td>
                         <Td>{formatNumber(course.grade_points as number, 2)}</Td>
-                        <Td>{course.counts_in_gpa ? 'نعم' : 'لا'}</Td>
+                        <Td>{course.counts_in_gpa ? t('نعم') : t('لا')}</Td>
                       </Tr>
                     ))
                   )}

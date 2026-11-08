@@ -63,12 +63,15 @@ describe('security', () => {
       for (const path of ['/api/advisor/dashboard', '/api/admin/users', '/api/admin/audit-logs']) {
         await auth(student.agent.get(path), student.session).expect(403);
       }
-      for (const path of ['/api/student/profile', '/api/admin/users', '/api/chat/sessions']) {
+      for (const path of ['/api/student/profile', '/api/admin/users']) {
         await auth(advisor.agent.get(path), advisor.session).expect(403);
       }
-      for (const path of ['/api/student/profile', '/api/advisor/dashboard', '/api/chat/sessions']) {
+      for (const path of ['/api/student/profile', '/api/advisor/dashboard']) {
         await auth(admin.agent.get(path), admin.session).expect(403);
       }
+      // Chat is intentionally shared by all roles (the floating assistant).
+      await auth(advisor.agent.get('/api/chat/sessions'), advisor.session).expect(200);
+      await auth(admin.agent.get('/api/chat/sessions'), admin.session).expect(200);
     });
 
     it('requires a Bearer scheme and rejects unknown users', async () => {

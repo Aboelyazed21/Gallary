@@ -201,11 +201,19 @@ class WhatIfRequest(StrictModel):
     target_program: Literal["CS", "IT", "AI", "DS"]
 
 
+class ChatTurn(StrictModel):
+    """One prior conversation turn forwarded from the API for context."""
+
+    role: Literal["user", "assistant"]
+    content: str = Field(min_length=1, max_length=2000)
+
+
 class RagAskRequest(StrictModel):
     question: str = Field(min_length=2, max_length=1500)
     language: Literal["ar", "en", "auto"] = "auto"
     student_id: str | None = Field(default=None, max_length=64)
     term: Term | None = None
+    history: list[ChatTurn] = Field(default_factory=list, max_length=12)
 
     @field_validator("question")
     @classmethod

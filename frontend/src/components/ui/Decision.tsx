@@ -1,15 +1,17 @@
 import { useState, type ReactNode } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../lib/format';
 import { DECISION_LABELS } from '../../lib/constants';
 import type { Decision, DecisionStatus } from '../../lib/types';
 import { Badge } from './Badge';
 
 export function DecisionBadge({ status, className }: { status: DecisionStatus; className?: string }) {
+  const { t } = useTranslation();
   const meta = DECISION_LABELS[status] ?? DECISION_LABELS.UNKNOWN;
   return (
     <Badge tone={meta.tone} className={className}>
-      {meta.ar}
+      {t(meta.ar)}
     </Badge>
   );
 }
@@ -23,11 +25,12 @@ export function RuleCitation({
   article?: string;
   page?: string;
 }) {
+  const { t } = useTranslation();
   return (
     <span className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-ink-500">
       {ruleCode && <span className="font-mono font-semibold text-ink-600">{ruleCode}</span>}
-      {article && <span>مادة {article}</span>}
-      {page && <span>ص {page}</span>}
+      {article && <span>{t('مادة {{n}}', { n: article })}</span>}
+      {page && <span>{t('ص {{n}}', { n: page })}</span>}
     </span>
   );
 }
@@ -44,11 +47,12 @@ export function DecisionCard({
   children?: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
   const hasDetails = decision.details && Object.keys(decision.details).length > 0;
   return (
     <div
       className={cn(
-        'rounded-xl border bg-white p-4',
+        'rounded-xl border bg-surface p-4',
         decision.status === 'ELIGIBLE' && 'border-emerald-200',
         decision.status === 'NOT_ELIGIBLE' && 'border-red-200',
         decision.status === 'REVIEW_REQUIRED' && 'border-amber-200',
@@ -84,7 +88,7 @@ export function DecisionCard({
             aria-expanded={open}
           >
             <ChevronDown className={cn('h-4 w-4 transition', open && 'rotate-180')} />
-            {open ? 'إخفاء تفاصيل القرار' : 'عرض تفاصيل القرار'}
+            {open ? t('إخفاء تفاصيل القرار') : t('عرض تفاصيل القرار')}
           </button>
           {open && (
             <div className="mt-3 space-y-2">
@@ -92,7 +96,7 @@ export function DecisionCard({
               {hasDetails && (
                 <pre
                   dir="ltr"
-                  className="max-h-56 overflow-auto rounded-lg bg-ink-950 p-3 text-[11px] leading-5 text-ink-100"
+                  className="max-h-56 overflow-auto rounded-lg bg-code p-3 text-[11px] leading-5 text-code-fg"
                 >
                   {JSON.stringify(decision.details, null, 2)}
                 </pre>
@@ -106,13 +110,14 @@ export function DecisionCard({
 }
 
 export function DecisionLegend() {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-wrap gap-2 text-xs">
       {(Object.keys(DECISION_LABELS) as DecisionStatus[]).map((status) => (
         <DecisionBadge key={status} status={status} />
       ))}
       <span className="inline-flex items-center text-ink-500">
-        كل قرار مرتبط بمادة وصفحة في اللائحة
+        {t('كل قرار مرتبط بمادة وصفحة في اللائحة')}
       </span>
     </div>
   );

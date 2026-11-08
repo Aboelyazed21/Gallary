@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { ScrollText, Search } from 'lucide-react';
 import { api, errorMessage, qs } from '../../lib/api';
 import type { AuditLogRow, Paginated } from '../../lib/types';
@@ -29,6 +30,7 @@ const ENTITY_TYPES = [
 ];
 
 export function AdminAuditPage() {
+  const { t } = useTranslation();
   const [entityType, setEntityType] = useState('');
   const [action, setAction] = useState('');
   const [entityId, setEntityId] = useState('');
@@ -57,9 +59,11 @@ export function AdminAuditPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="سجل التدقيق"
-        title="سجل غير قابل للتعديل"
-        description="كل إجراء إداري أو أكاديمي يُسجّل هنا مع المنفّذ والوقت وعنوان IP ومعرّف الترابط. السجل مُلحق فقط (append-only) ولا يمكن تعديله أو حذفه."
+        eyebrow={t('سجل التدقيق')}
+        title={t('سجل غير قابل للتعديل')}
+        description={t(
+          'كل إجراء إداري أو أكاديمي يُسجّل هنا مع المنفّذ والوقت وعنوان IP ومعرّف الترابط. السجل مُلحق فقط (append-only) ولا يمكن تعديله أو حذفه.',
+        )}
       />
 
       <Card className="mb-4">
@@ -73,7 +77,7 @@ export function AdminAuditPage() {
             }}
           >
             <Input
-              label="نوع الكيان"
+              label={t('نوع الكيان')}
               dir="ltr"
               value={entityType}
               onChange={(event) => setEntityType(event.target.value)}
@@ -87,21 +91,21 @@ export function AdminAuditPage() {
               ))}
             </datalist>
             <Input
-              label="الإجراء"
+              label={t('الإجراء')}
               dir="ltr"
               value={action}
               onChange={(event) => setAction(event.target.value.toUpperCase())}
               placeholder="USER_UPDATED"
             />
             <Input
-              label="معرّف الكيان"
+              label={t('معرّف الكيان')}
               dir="ltr"
               value={entityId}
               onChange={(event) => setEntityId(event.target.value)}
               placeholder="UUID"
             />
             <Input
-              label="من"
+              label={t('من')}
               type="datetime-local"
               value={from}
               onChange={(event) => {
@@ -110,7 +114,7 @@ export function AdminAuditPage() {
               }}
             />
             <Input
-              label="إلى"
+              label={t('إلى')}
               type="datetime-local"
               value={to}
               onChange={(event) => {
@@ -120,7 +124,7 @@ export function AdminAuditPage() {
             />
             <div className="flex items-end">
               <Button type="submit" variant="outline" className="w-full">
-                تطبيق
+                {t('تطبيق')}
               </Button>
             </div>
           </form>
@@ -133,8 +137,8 @@ export function AdminAuditPage() {
         <ErrorState message={errorMessage(query.error)} onRetry={() => void query.refetch()} />
       ) : rows.length === 0 ? (
         <EmptyState
-          title="لا توجد سجلات"
-          description="جرّب توسيع نطاق التاريخ أو إزالة عوامل التصفية."
+          title={t('لا توجد سجلات')}
+          description={t('جرّب توسيع نطاق التاريخ أو إزالة عوامل التصفية.')}
           icon={<ScrollText className="h-6 w-6" />}
         />
       ) : (
@@ -144,12 +148,12 @@ export function AdminAuditPage() {
               <Table>
                 <THead>
                   <Tr>
-                    <Th>الوقت</Th>
-                    <Th>المنفّذ</Th>
-                    <Th>الإجراء</Th>
-                    <Th>الكيان</Th>
+                    <Th>{t('الوقت')}</Th>
+                    <Th>{t('المنفّذ')}</Th>
+                    <Th>{t('الإجراء')}</Th>
+                    <Th>{t('الكيان')}</Th>
                     <Th>IP</Th>
-                    <Th>التفاصيل</Th>
+                    <Th>{t('التفاصيل')}</Th>
                   </Tr>
                 </THead>
                 <TBody>
@@ -157,7 +161,7 @@ export function AdminAuditPage() {
                     <Tr key={row.id}>
                       <Td className="whitespace-nowrap text-xs">{formatDate(row.created_at, true)}</Td>
                       <Td>
-                        <p className="text-sm font-semibold text-ink-900">{row.actor_name ?? 'النظام'}</p>
+                        <p className="text-sm font-semibold text-ink-900">{row.actor_name ?? t('النظام')}</p>
                         {row.actor_id && (
                           <p className="font-mono text-[10px] text-ink-400">{row.actor_id.slice(0, 8)}…</p>
                         )}
@@ -178,11 +182,13 @@ export function AdminAuditPage() {
                       </Td>
                       <Td>
                         <details className="max-w-xs">
-                          <summary className="cursor-pointer text-xs font-semibold text-brand-700">عرض JSON</summary>
+                          <summary className="cursor-pointer text-xs font-semibold text-brand-700">
+                            {t('عرض JSON')}
+                          </summary>
                           <div className="mt-2 space-y-2">
                             <div>
                               <p className="text-[10px] font-bold uppercase text-ink-400">before</p>
-                              <pre className="max-h-40 overflow-auto rounded-lg bg-ink-950 p-2 text-[10px] leading-4 text-ink-100" dir="ltr">
+                              <pre className="max-h-40 overflow-auto rounded-lg bg-code p-2 text-[10px] leading-4 text-code-fg" dir="ltr">
                                 {JSON.stringify(row.before ?? null, null, 2)}
                               </pre>
                             </div>

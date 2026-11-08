@@ -5,6 +5,7 @@ from typing import Any
 
 from ..config import get_settings
 from ..data import RegulationData
+from .generate import NO_RELEVANT_INFO, generate_answer
 from .store import PolicyChunk, store
 
 INJECTION_PATTERNS = [
@@ -552,9 +553,15 @@ def _citations(chunks: list[tuple[PolicyChunk, float]]) -> list[dict[str, Any]]:
 
 
 def answer_question(
-    data: RegulationData, question: str, language: str = "auto", open_anomaly_ids: list[str] | None = None
+    data: RegulationData,
+    question: str,
+    language: str = "auto",
+    open_anomaly_ids: list[str] | None = None,
+    history: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """Extractive, citation-first RAG. There is no LLM tool access and no student data."""
+    """Citation-first RAG: deterministic branches first, then retrieval with
+    optional LLM synthesis over the retrieved excerpts. No student data is ever
+    sent to the model; on generation failure the extractive answer is used."""
     settings = get_settings()
     lang = detect_language(question) if language == "auto" else language
     flags: list[str] = []
@@ -678,6 +685,43 @@ def answer_question(
             "escalate_reason": "LOW_CONFIDENCE",
             "anomaly_ids": [],
             "flags": flags,
+        }
+
+    # High-confidence retrieval: ask the LLM to synthesise an answer that is
+    # grounded in (and cites) the retrieved excerpts, or fall back to the
+    # extractive answerer when generation is disabled/fails.
+    generated = generate_answer(
+        question=question,
+        chunks=[chunk for chunk, _score in results],
+        language=lang,
+        history=history,
+    )
+    if generated == NO_RELEVANT_INFO:
+        return {
+            "answer": (
+                "لا يحتوي نص اللائحة المسترجع على إجابة لهذا السؤال؛ تم تحويل الحالة إلى المرشد الأكاديمي."
+                if lang == "ar"
+                else "The retrieved bylaw text does not answer this question; the case has been "
+                "escalated to an academic advisor."
+            ),
+            "answer_language": lang,
+            "citations": citations,
+            "confidence": 0.0,
+            "escalate": True,
+            "escalate_reason": "NO_RELEVANT_INFO",
+            "anomaly_ids": [],
+            "flags": flags + ["NO_RELEVANT_INFO"],
+        }
+    if generated:
+        return {
+            "answer": generated,
+            "answer_language": lang,
+            "citations": citations,
+            "confidence": confidence,
+            "escalate": False,
+            "escalate_reason": None,
+            "anomaly_ids": [],
+            "flags": flags + ["LLM_GENERATED"],
         }
 
     return {

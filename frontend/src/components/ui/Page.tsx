@@ -136,7 +136,7 @@ export function JsonBlock({ value, className }: { value: unknown; className?: st
   return (
     <pre
       className={cn(
-        'max-h-72 overflow-auto rounded-xl bg-ink-950 p-4 text-xs leading-5 text-ink-100',
+        'max-h-72 overflow-auto rounded-xl bg-code p-4 text-xs leading-5 text-code-fg',
         className,
       )}
       dir="ltr"
