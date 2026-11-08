@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BookOpenCheck, GraduationCap, ShieldCheck } from 'lucide-react';
 import { BuaLogo } from '../../components/brand/BuaLogo';
+import { useTheme } from '../../theme/ThemeProvider';
 import buaCampus from '../../assets/bua-campus.jpg';
 
 const FEATURES = [
@@ -35,6 +36,7 @@ export function AuthLayout({
   footer?: ReactNode;
 }) {
   const { t } = useTranslation();
+  const { resolvedTheme } = useTheme();
   return (
     <div className="grid min-h-screen bg-canvas lg:grid-cols-[1.08fr_1fr]">
       <section className="relative hidden overflow-hidden text-white lg:flex lg:flex-col lg:justify-between">
@@ -78,7 +80,7 @@ export function AuthLayout({
             {FEATURES.map(({ icon: Icon, title: featureTitle, text }) => (
               <div
                 key={featureTitle}
-                className="flex gap-3 rounded-2xl border border-white/15 bg-black/35 p-4 shadow-sm backdrop-blur-md"
+                className="flex gap-3 rounded-2xl border border-gold-300/45 bg-black/25 p-4 shadow-[0_0_24px_rgba(229,174,50,0.08)] backdrop-blur-xl"
               >
                 <div className="mt-0.5 shrink-0">
                   <Icon className="h-5 w-5 text-gold-300" />
@@ -113,7 +115,7 @@ export function AuthLayout({
 
         <div className="relative w-full max-w-md">
           <div className="mb-7 flex flex-col items-start gap-2 lg:hidden">
-            <BuaLogo globeClassName="h-11 w-11" wordmarkClassName="h-[40px] w-auto" />
+            <BuaLogo variant={resolvedTheme === 'dark' ? 'white' : 'navy'} globeClassName="h-11 w-11" wordmarkClassName="h-[40px] w-auto" />
             <p className="text-[11px] font-semibold text-ink-500">
               {t('المرشد الأكاديمي الذكي · جامعة بدر بأسيوط')}
             </p>
@@ -121,7 +123,7 @@ export function AuthLayout({
 
           <div className="relative overflow-hidden rounded-3xl border border-ink-100 bg-surface shadow-float ring-1 ring-black/[0.04] dark:ring-white/5">
             <div className="relative h-1.5" aria-hidden>
-              <div className="absolute inset-0 bg-gradient-to-l from-brand-800 via-brand-500 to-gold-400" />
+              <div className="absolute inset-0 bg-gradient-to-l from-brand-800 via-brand-500 to-brand-300" />
               <div className="aidm-sheen absolute inset-y-0 w-2/3 bg-gradient-to-r from-transparent via-white/60 to-transparent" />
             </div>
             <div className="p-6 sm:p-8">
@@ -130,7 +132,7 @@ export function AuthLayout({
                   <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white/90" aria-hidden />
                   {t('منصة الإرشاد الأكاديمي')}
                 </div>
-                <h2 className="bg-gradient-to-l from-brand-800 to-ink-950 bg-clip-text font-display text-2xl font-extrabold text-transparent dark:from-brand-300 dark:to-ink-50">
+                <h2 className="bg-gradient-to-l from-brand-800 to-ink-950 bg-clip-text font-display text-2xl font-extrabold text-transparent dark:from-brand-300 dark:to-ink-950">
                   {title}
                 </h2>
                 <p className="mt-2 text-sm leading-6 text-ink-500">{subtitle}</p>
