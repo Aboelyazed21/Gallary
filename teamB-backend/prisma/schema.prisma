@@ -1,0 +1,394 @@
+// Smart Academic Advisor — Team B — Prisma schema (MySQL)
+// Run: npm run db:push  |  npm run db:migrate
+// Configure DATABASE_URL in .env — see .env.example
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------- enums
+
+enum Role {
+  STUDENT
+  ADVISOR
+  ADMIN
+}
+
+enum StudentStatus {
+  ACTIVE
+  SUSPENDED
+  GRADUATED
+  ON_LEAVE
+}
+
+enum SemesterType {
+  FALL
+  SPRING
+  SUMMER
+}
+
+enum SemesterStatus {
+  UPCOMING
+  OPEN
+  CLOSED
+}
+
+enum CourseStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum RecordStatus {
+  PASSED
+  FAILED
+  IN_PROGRESS
+  WITHDRAWN
+}
+
+enum RegistrationStatus {
+  REGISTERED
+  DROPPED
+  WITHDRAWN
+  COMPLETED
+}
+
+enum RequirementKind {
+  REQUIRED
+  ELECTIVE
+  CORE
+}
+
+enum WarningSeverity {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum EligibilityStatus {
+  ELIGIBLE
+  NOT_ELIGIBLE
+  UNKNOWN
+  REVIEW_REQUIRED
+}
+
+enum WarningReason {
+  LOW_GPA
+  REPEATED_FAILURES
+  CREDIT_LIMIT_EXCEEDED
+  OVERDUE_PREREQUISITES
+  MANUAL
+}
+
+// ---------------------------------------------------------------- identity
+
+model User {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique @db.VarChar(160)
+  passwordHash String    @db.VarChar(100)
+  role         Role      @default(STUDENT)
+  isActive     Boolean   @default(true)
+  emailVerifiedAt DateTime?
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  studentProfile   Student?
+  refreshTokens    RefreshToken[]
+  auditLogs        AuditLog[]      @relation("AuditActor")
+  escalations      Escalation[]    @relation("EscalationAdvisor")
+
+  @@index([role])
+}
+
+model RefreshToken {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  tokenHash  String   @unique @db.VarChar(128)
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  actorId   Int?
+  actor     User?    @relation("AuditActor", fields: [actorId], references: [id], onDelete: SetNull)
+  action    String   @db.VarChar(80)
+  entity    String   @db.VarChar(60)
+  entityId  Int?
+  payload   Json?
+  createdAt DateTime @default(now())
+
+  @@index([actorId])
+  @@index([entity, entityId])
+  @@index([createdAt])
+}
+
+// ---------------------------------------------------------------- academic structure
+
+model AcademicProgram {
+  id          Int      @id @default(autoincrement())
+  code        String   @unique @db.VarChar(20)
+  nameEn      String   @db.VarChar(200)
+  nameAr      String?  @db.VarChar(200)
+  totalRequiredHours Int @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  students           Student[]
+  courses            Course[]
+  degreeRequirements DegreeRequirement[]
+
+  @@index([isActive])
+}
+
+model AcademicYear {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique @db.VarChar(20)
+  nameEn    String   @db.VarChar(120)
+  nameAr    String?  @db.VarChar(120)
+  createdAt DateTime @default(now())
+
+  semesters Semester[]
+  students  Student[]
+}
+
+model Semester {
+  id             Int            @id @default(autoincrement())
+  academicYearId Int
+  code           String         @db.VarChar(24)   // e.g. FALL / SPRING / SUMMER
+  nameEn         String         @db.VarChar(120)
+  type           SemesterType   @default(FALL)
+  status         SemesterStatus @default(UPCOMING)
+  addDropDeadline    DateTime?
+  withdrawDeadline   DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  academicYear   AcademicYear   @relation(fields: [academicYearId], references: [id], onDelete: Cascade)
+
+  studentSemesters   StudentSemester[]
+  records            StudentAcademicRecord[]
+  registrations      CourseRegistration[]
+  availableCourses   Course[] @relation("SemesterCourses")
+
+  @@unique([academicYearId, code])
+  @@index([status])
+}
+
+model Course {
+  id                  Int          @id @default(autoincrement())
+  code                String       @unique @db.VarChar(24)
+  titleEn             String       @db.VarChar(240)
+  titleAr             String?      @db.VarChar(240)
+  creditHours         Int
+  descriptionEn       String?      @db.Text
+  descriptionAr       String?      @db.Text
+  level               Int          @default(1)
+  status              CourseStatus @default(ACTIVE)
+  programId           Int?         // null = common course
+  program             AcademicProgram? @relation(fields: [programId], references: [id], onDelete: SetNull)
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  prerequisites        CoursePrerequisite[] @relation("CoursePrerequisites")
+  requiredBy           CoursePrerequisite[] @relation("PrerequisiteOf")
+
+  records              StudentAcademicRecord[]
+  registrations       CourseRegistration[]
+  degreeRequirements   DegreeRequirement[]
+  offeredInSemesters   Semester[] @relation("SemesterCourses")
+
+  @@index([programId])
+  @@index([status])
+}
+
+model CoursePrerequisite {
+  id                    Int    @id @default(autoincrement())
+  courseId              Int
+  prerequisiteCourseId  Int
+  isRequired            Boolean @default(true)
+  note                  String? @db.VarChar(500)
+  course                Course @relation("CoursePrerequisites", fields: [courseId], references: [id], onDelete: Cascade)
+  prerequisiteCourse    Course @relation("PrerequisiteOf", fields: [prerequisiteCourseId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, prerequisiteCourseId])
+  @@index([courseId])
+}
+
+model AcademicRule {
+  id            Int       @id @default(autoincrement())
+  key           String    @unique @db.VarChar(80)   // e.g. GRADING_SCALE, CREDIT_LIMIT_BY_CGPA
+  category      String    @db.VarChar(60)
+  titleEn       String    @db.VarChar(240)
+  descriptionEn String?   @db.Text
+  value         Json      // rule payload (scale map, brackets, thresholds...)
+  version       Int       @default(1)
+  effectiveFrom DateTime  @default(now()) @db.Date
+  effectiveTo   DateTime? @db.Date
+  sourceRef     String?   @db.VarChar(240)          // regulation article reference
+  requiresConfirmation Boolean @default(false)      // true => must be adopted officially before use
+  isActive      Boolean   @default(true)
+  approvedById  Int?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([category])
+  @@index([isActive])
+}
+
+// ---------------------------------------------------------------- students
+
+model Student {
+  id                 Int        @id @default(autoincrement())
+  userId             Int        @unique
+  user               User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  universityId       String     @unique @db.VarChar(32)
+  fullName           String     @db.VarChar(200)
+  programId          Int
+  program            AcademicProgram @relation(fields: [programId], references: [id])
+  academicYearId     Int?
+  academicYear       AcademicYear? @relation(fields: [academicYearId], references: [id], onDelete: SetNull)
+  level              Int        @default(1)
+  status             StudentStatus @default(ACTIVE)
+  advisorId          Int?       // advising relationship, set by admin
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+
+  records            StudentAcademicRecord[]
+  registrations      CourseRegistration[]
+  studentSemesters   StudentSemester[]
+  warnings           AcademicWarning[]
+  escalations        Escalation[]
+  degreeProgress     DegreeProgress[]
+
+  @@index([programId])
+  @@index([status])
+}
+
+model StudentAcademicRecord {
+  id           Int          @id @default(autoincrement())
+  studentId    Int
+  courseId     Int
+  semesterId   Int
+  grade        String?      @db.VarChar(8)     // grade symbol per active GRADING_SCALE
+  gradePoints  Decimal?     @db.Decimal(4, 2)  // cached points per the active scale
+  creditsEarned Int         @default(0)
+  isRepeat     Boolean      @default(false)
+  attemptNo    Int          @default(1)
+  status       RecordStatus @default(IN_PROGRESS)
+  recordedAt   DateTime     @default(now())
+  student      Student      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course       Course       @relation(fields: [courseId], references: [id])
+  semester     Semester     @relation(fields: [semesterId], references: [id])
+
+  @@unique([studentId, courseId, semesterId, attemptNo])
+  @@index([studentId])
+  @@index([courseId])
+  @@index([status])
+}
+
+model CourseRegistration {
+  id         Int                @id @default(autoincrement())
+  studentId  Int
+  courseId   Int
+  semesterId Int
+  status     RegistrationStatus @default(REGISTERED)
+  registeredAt DateTime         @default(now())
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course     Course   @relation(fields: [courseId], references: [id])
+  semester   Semester @relation(fields: [semesterId], references: [id])
+
+  @@unique([studentId, courseId, semesterId])
+  @@index([semesterId])
+  @@index([status])
+}
+
+model StudentSemester {
+  id              Int       @id @default(autoincrement())
+  studentId       Int
+  semesterId      Int
+  gpa             Decimal?  @db.Decimal(4, 2)
+  registeredHours Int       @default(0)
+  status          String    @default("ENROLLED") @db.VarChar(32)
+  student         Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  semester        Semester  @relation(fields: [semesterId], references: [id])
+
+  @@unique([studentId, semesterId])
+  @@index([studentId])
+}
+
+model DegreeRequirement {
+  id        Int             @id @default(autoincrement())
+  programId Int
+  courseId  Int?
+  kind      RequirementKind @default(REQUIRED)
+  minHours  Int             @default(0)
+  descriptionEn String?     @db.VarChar(400)
+  sortOrder Int             @default(0)
+  program   AcademicProgram @relation(fields: [programId], references: [id], onDelete: Cascade)
+  course    Course?         @relation(fields: [courseId], references: [id], onDelete: SetNull)
+
+  @@index([programId])
+}
+
+model AcademicWarning {
+  id          Int             @id @default(autoincrement())
+  studentId   Int
+  semesterId  Int?
+  reason      WarningReason
+  severity    WarningSeverity @default(MEDIUM)
+  details     String?         @db.Text
+  resolved    Boolean         @default(false)
+  resolvedById Int?
+  createdAt   DateTime        @default(now())
+  student     Student         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
+  @@index([resolved])
+}
+
+model DegreeProgress {
+  id                   Int      @id @default(autoincrement())
+  studentId            Int
+  programId            Int
+  requiredHoursTotal   Int
+  completedHours       Int
+  remainingHours       Int
+  requiredCoursesTotal Int
+  requiredCoursesDone  Int
+  electiveHoursTotal   Int
+  electiveHoursDone    Int
+  graduationEligible   Boolean  @default(false)
+  updatedAt            DateTime @updatedAt
+  student              Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId])
+  @@index([studentId])
+}
+
+model Escalation {
+  id          Int       @id @default(autoincrement())
+  studentId   Int
+  advisorId   Int?
+  advisor     User?     @relation("EscalationAdvisor", fields: [advisorId], references: [id], onDelete: SetNull)
+  category    String    @db.VarChar(60)
+  description String    @db.Text
+  status      String    @default("OPEN") @db.VarChar(32)
+  response    String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  student     Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
+  @@index([status])
+}
